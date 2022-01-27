@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -31,17 +31,17 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-brand-centered">
             <ul class="nav navbar-nav">
-                <li><a href="index.jsp"><fmt:message key = "header_home" /></a></li>
+                <li><a href="main.jsp"><fmt:message key = "header_home" /></a></li>
                 <li><a href="seances.jsp"><fmt:message key = "header_seances" /></a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <c:if test="${requestScope.userIsAuthorized != true}">
+                <c:if test="${sessionScope.userIsAuthorized != true}">
                     <li><a href="login.jsp"><fmt:message key = "index_signIn" /></a></li>
                     <li><a href="registration.jsp"><fmt:message key = "index_signUp" /></a></li>
                 </c:if>
-                <c:if test="${requestScope.userIsAuthorized == true}">
-                    <li><a href="#"><fmt:message key = "index_logOut" /></a></li>
+                <c:if test="${sessionScope.userIsAuthorized == true}">
+                    <li><a href="controller?command=logout"><fmt:message key = "index_logOut" /></a></li>
                 </c:if>
 
 

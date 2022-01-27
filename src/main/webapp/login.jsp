@@ -24,7 +24,11 @@
 <div class="main">
     <div class="col-md-6 col-sm-12">
         <div class="login-form">
-            <form action="login" method="post">
+
+            <form action="controller" method="post">
+
+                <input type="hidden" name="command" value="Login">
+
                 <div class="form-group">
                     <label>Email</label>
                     <input name="email" type="email" class="form-control" placeholder="johnmarston@gmail.com">
@@ -34,8 +38,11 @@
                     <input name="password" type="password" class="form-control" placeholder="********">
                 </div>
                 <button type="submit" class="btn btn-black">Login</button>
-                <h2>${loginStatus}</h2>
+                <h5>${errorLoginPassMessage}</h5>
+                <h5>${wrongAction}</h5>
+                <h5>${nullPage}</h5>
             </form>
+
         </div>
     </div>
 </div>

@@ -38,6 +38,7 @@ public class UserDao {
 
         return user;
     }
+
     public boolean authorize(String email, String password) {
         ResultSet resSet;
 

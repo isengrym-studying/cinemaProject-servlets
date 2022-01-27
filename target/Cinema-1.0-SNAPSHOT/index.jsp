@@ -13,7 +13,8 @@
 
 </head>
 <body>
-<jsp:include page="header.jsp" />
+<%--<jsp:include page="header.jsp" />--%>
+<jsp:forward page="main.jsp"/>
 
 </body>
 </html>

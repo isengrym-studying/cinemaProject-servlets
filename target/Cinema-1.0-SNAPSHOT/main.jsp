@@ -1,9 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>${role} page</title>
 </head>
 <body>
-<h1>Welcome, ${role}</h1>
+<jsp:include page="header.jsp" />
 </body>
 </html>

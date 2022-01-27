@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -13,16 +13,6 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<%--<form action="registrate" method="post">--%>
-<%--    Sign up:--%>
-<%--    <input type="text" name="name" placeholder="Name" />--%>
-<%--    <input type="text" name="surname" placeholder="Surname" />--%>
-<%--    <input type="text" name="email" placeholder="Email" />--%>
-<%--    <input type="text" name="password" placeholder="Password" />--%>
-<%--    <input type="submit" value="Submit" />--%>
-<%--</form>--%>
-<%--<h2>${registrationStatus}</h2>--%>
 
 <div class="sidenav">
     <div class="login-main-text">

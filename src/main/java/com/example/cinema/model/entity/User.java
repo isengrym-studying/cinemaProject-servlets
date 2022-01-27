@@ -36,15 +36,6 @@ public class User {
         this.role = user.role;
     }
 
-    public static User getUserByEmail(String email) {
-        UserDao userDao = UserDao.getInstance();
-        return userDao.getUserByEmail(email);
-    }
-
-    public static boolean authorize(String email, String password) {
-        UserDao userDao = UserDao.getInstance();
-        return userDao.authorize(email, password);
-    }
 
     public boolean register() {
         UserDao userDao = UserDao.getInstance();
