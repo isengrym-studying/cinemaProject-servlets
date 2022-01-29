@@ -1,5 +1,7 @@
 package com.example.cinema.model.dao;
 
+import com.example.cinema.model.dao.exceptions.DaoConfigurationException;
+
 import java.io.*;
 import java.util.Properties;
 

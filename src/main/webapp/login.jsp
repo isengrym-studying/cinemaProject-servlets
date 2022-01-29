@@ -10,14 +10,14 @@
 <head>
     <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>Sign in</title>
+    <title><fmt:message key = "signIn.title" /></title>
 </head>
 <body>
 
 <div class="sidenav">
     <div class="login-main-text">
-        <h2><fmt:message key = "signIn_label" /></h2>
-        <p><fmt:message key = "signIn_description" /></p>
+        <h2><fmt:message key = "signIn.label" /></h2>
+        <p><fmt:message key = "signIn.description" /></p>
     </div>
 </div>
 

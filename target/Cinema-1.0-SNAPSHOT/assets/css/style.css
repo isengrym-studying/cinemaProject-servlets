@@ -92,10 +92,48 @@ body {
 }
 
 .navbar {
-    padding-bottom: 5px;
     padding-top: 5px;
 }
 
+.navbar a {
+    transition: 0.25s;
+}
+.navbar a:hover {
+    bottom-border: 2px solid #000;
+}
+
 .dropdown {
-    margin: 13px;
+    margin-top: 12px;
+    margin-left: 13px;
+}
+
+/*FILMS*/
+
+.film-page-title {
+    margin-bottom: 20px;
+}
+
+.film-item h5 {
+
+}
+
+.film-items {
+    padding-left: 100px;
+    padding-right: 100px;
+    text-align: center;
+
+}
+.film_item {
+    transition: 0.25s;
+    text-align: center;
+    margin-bottom: 10px;
+}
+h5 {
+    text-decoration: none;
+    text-underline: none;
+    color: black;
+    font-weight: 400;
+}
+.film_item:hover {
+    transform: scale(1.06);
 }

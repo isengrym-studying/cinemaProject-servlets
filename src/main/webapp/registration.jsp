@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sign up</title>
+    <title><fmt:message key = "signUp.title" /></title>
     <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -16,14 +16,18 @@
 
 <div class="sidenav">
     <div class="login-main-text">
-        <h2><fmt:message key = "signUp_label" /></h2>
-        <p><fmt:message key = "signUp_description" /></p>
+        <h2><fmt:message key = "signUp.label" /></h2>
+        <p><fmt:message key = "signUp.description" /></p>
     </div>
 </div>
 <div class="main">
     <div class="col-md-6 col-sm-12">
         <div class="login-form">
-            <form action="register" method="post">
+            <form action="controller" method="post">
+
+                <input type="hidden" name="command" value="signup">
+                <input type="hidden" name="role" value="User">
+
                 <div class="form-group">
                     <label>User Name</label>
                     <input name="name" type="text" class="form-control" placeholder="John">
@@ -41,7 +45,9 @@
                     <input name="password" type="password" class="form-control" placeholder="********">
                 </div>
                 <button type="submit" class="btn btn-black">Login</button>
-                <h2>${registrationStatus}</h2>
+                <h5>${errorRegistrationMessage}</h5>
+                <h5>${wrongAction}</h5>
+                <h5>${nullPage}</h5>
             </form>
         </div>
     </div>

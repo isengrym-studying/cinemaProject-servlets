@@ -10,7 +10,28 @@ public enum CommandEnum {
         {
             this.command = new LogoutCommand();
         }
+    },
+    SIGNUP {
+        {
+            this.command = new SignupCommand();
+        }
+    },
+    GETFILMS {
+        {
+            this.command = new GetFilmsCommand();
+        }
+    },
+    CHANGELANGUAGE {
+        {
+            this.command = new ChangeLanguageCommand();
+        }
+    },
+    SETLANGUAGE{
+        {
+            this.command = new SetLanguageCommand();
+        }
     };
+
     ActionCommand command;
     public ActionCommand getCurrentCommand() {
         return command;

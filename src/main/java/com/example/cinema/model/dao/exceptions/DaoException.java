@@ -1,4 +1,4 @@
-package com.example.cinema.model.dao;
+package com.example.cinema.model.dao.exceptions;
 
 public class DaoException extends RuntimeException{
 

@@ -37,16 +37,6 @@ public class User {
     }
 
 
-    public boolean register() {
-        UserDao userDao = UserDao.getInstance();
-        return userDao.register(this.getName(), this.getSurname(), this.getEmail(), this.getPassword(), this.getRole());
-    }
-
-    public boolean checkUserExistence() {
-        UserDao userDao = UserDao.getInstance();
-        return userDao.checkUserExistence(this.getEmail());
-    }
-
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
