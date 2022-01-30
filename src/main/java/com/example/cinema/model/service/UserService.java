@@ -1,9 +1,15 @@
 package com.example.cinema.model.service;
 
 import com.example.cinema.model.dao.UserDao;
+import com.example.cinema.model.entity.User;
 import com.example.cinema.validator.EmailValidator;
 import com.example.cinema.validator.NameValidator;
 import com.example.cinema.validator.PasswordValidator;
+
+import javax.naming.Name;
+import javax.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserService {
     private final UserDao userDao = UserDao.getInstance();
@@ -25,20 +31,34 @@ public class UserService {
         }
         return false;
     }
-    public boolean signUp(String name, String surname, String email, String password, String role) {
 
-        if (EmailValidator.validate(email)
-                && PasswordValidator.validate(password)
-                && NameValidator.validate(name)
-                && NameValidator.validate(surname)
-                && !userDao.findUserByEmail(email))
-        {
-            CipherService cipherService = CipherService.getInstance();
-            byte[] salt = cipherService.generateSalt();
-            byte[] cipheredPassword = cipherService.getEncryptedPassword(password, salt);
-            return userDao.addUser(name, surname, email, cipheredPassword, salt, role);
+
+    public boolean signUp(User givenUser) {
+        User user = new User(givenUser);
+
+        CipherService cipherService = CipherService.getInstance();
+        byte[] salt = cipherService.generateSalt();
+        byte[] cipheredPassword = cipherService.getEncryptedPassword(user.getPassword(), salt);
+        return userDao.addUser(user.getName(), user.getSurname(), user.getEmail(), cipheredPassword, salt, user.getRole());
+
+    }
+
+    public List getSignUpIssues(User givenUser) {
+        User user = new User(givenUser);
+        List<String> list = new ArrayList<>();
+        if (!NameValidator.validate(user.getName()) || !NameValidator.validate(user.getSurname())) {
+            list.add("nameIssue");
         }
-        else return false;
+        if (!EmailValidator.validate(user.getEmail())) {
+            list.add("emailIssue");
+        }
+        if (!PasswordValidator.validate(user.getPassword())) {
+            list.add("passwordIssue");
+        }
+        if (userDao.findUserByEmail(user.getEmail())) {
+            list.add("userExistsIssue");
+        }
+        return list;
     }
 
 

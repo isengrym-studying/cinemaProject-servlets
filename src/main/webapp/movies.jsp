@@ -7,7 +7,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="assets/css/style.css">
-    <title><fmt:message key = "films.title" /></title>
+    <title><fmt:message key = "${pageTitleProperty}" /></title>
 </head>
 <body>
 <jsp:include page="header.jsp" />
@@ -16,17 +16,18 @@
 
 <div class="film-items">
     <div class="film-page-title">
-        <h2><fmt:message key = "films.headline" /></h2>
+        <h2><fmt:message key = "${pageHeadlineProperty}" /></h2>
     </div>
 
-    <c:forEach var="film" items="${films}">
-        <a href="#">
+
+    <c:forEach var="movie" items="${movies}">
+        <a href="controller?command=getfullmovie&movieId=${movie.id}">
         <div class = "film_item col-md-4 col-lg-2">
             <div class="poster">
-                <img src="${film.imagePath}" alt="" width="218" height="322">
+                <img src="${movie.imagePath}" alt="" width="218" height="322">
             </div>
             <div class="film_item_body">
-                <h5>${film.title}</h5>
+                <h5>${movie.title}</h5>
             </div>
         </div>
         </a>

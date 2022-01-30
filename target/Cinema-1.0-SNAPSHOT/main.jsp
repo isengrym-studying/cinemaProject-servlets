@@ -2,8 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="language" value="en"/>
-
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="language">
 
@@ -13,7 +11,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
-
+<h5>Main</h5>
 </body>
 </html>
 </fmt:bundle>

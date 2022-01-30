@@ -1,5 +1,8 @@
 package com.example.cinema.controller.comand;
 
+import com.example.cinema.controller.comand.language.ChangeLanguageCommand;
+import com.example.cinema.controller.comand.language.SetLanguageCommand;
+
 public enum CommandEnum {
     LOGIN {
         {
@@ -18,7 +21,7 @@ public enum CommandEnum {
     },
     GETFILMS {
         {
-            this.command = new GetFilmsCommand();
+            this.command = new GetMoviesCommand();
         }
     },
     CHANGELANGUAGE {
@@ -29,6 +32,16 @@ public enum CommandEnum {
     SETLANGUAGE{
         {
             this.command = new SetLanguageCommand();
+        }
+    },
+    GETFULLMOVIE{
+        {
+            this.command = new GetFullMovieCommand();
+        }
+    },
+    GETSEANCES{
+        {
+            this.command = new GetSeancesCommand();
         }
     };
 

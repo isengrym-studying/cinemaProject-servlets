@@ -137,3 +137,12 @@ h5 {
 .film_item:hover {
     transform: scale(1.06);
 }
+
+/*DISTINCT_FILM_PAGE*/
+
+.film-body img {
+    height: 600px;
+}
+.film-body span {
+    color: #172029;
+}

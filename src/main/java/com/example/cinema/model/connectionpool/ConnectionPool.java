@@ -1,5 +1,8 @@
 package com.example.cinema.model.connectionpool;
 
+import com.example.cinema.model.dao.UserDao;
+import org.apache.log4j.Logger;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,6 +16,7 @@ public class ConnectionPool {
     }
 
     private static ConnectionPool instance = null;
+    private static Logger log = Logger.getLogger(ConnectionPool.class);
 
     public static ConnectionPool getInstance(){
         if (instance==null)
@@ -30,6 +34,7 @@ public class ConnectionPool {
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
         }
+        log.info("Connection was opened");
         return connection;
     }
 

@@ -30,14 +30,14 @@
                 <input type="hidden" name="command" value="Login">
 
                 <div class="form-group">
-                    <label>Email</label>
+                    <label><fmt:message key = "signUp.email" /></label>
                     <input name="email" type="email" class="form-control" placeholder="johnmarston@gmail.com">
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
+                    <label><fmt:message key = "signUp.password" /></label>
                     <input name="password" type="password" class="form-control" placeholder="********">
                 </div>
-                <button type="submit" class="btn btn-black">Login</button>
+                <button type="submit" class="btn btn-black"><fmt:message key = "signIn.action" /></button>
                 <h5>${errorLoginPassMessage}</h5>
                 <h5>${wrongAction}</h5>
                 <h5>${nullPage}</h5>

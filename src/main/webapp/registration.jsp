@@ -29,23 +29,39 @@
                 <input type="hidden" name="role" value="User">
 
                 <div class="form-group">
-                    <label>User Name</label>
-                    <input name="name" type="text" class="form-control" placeholder="John">
+                    <label><fmt:message key = "signUp.name" /></label>
+                    <input name="name" type="text"  class="form-control" placeholder="John">
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
+                    <label><fmt:message key = "signUp.surname" /></label>
                     <input name="surname" type="text" class="form-control" placeholder="Marston">
                 </div>
                 <div class="form-group">
-                    <label>User Name</label>
+                    <label><fmt:message key = "signUp.email" /></label>
                     <input name="email" type="email" class="form-control" placeholder="johnmarston@gmail.com">
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
+                    <label><fmt:message key = "signUp.password" /></label>
                     <input name="password" type="password" class="form-control" placeholder="********">
                 </div>
-                <button type="submit" class="btn btn-black">Login</button>
-                <h5>${errorRegistrationMessage}</h5>
+                <button type="submit" class="btn btn-black"><fmt:message key = "signUp.action" /></button>
+
+                <c:if test="${not empty nameIssue}" >
+                    <h5><fmt:message key = "${nameIssue}" /></h5>
+                </c:if>
+
+                <c:if test="${not empty emailIssue}" >
+                    <h5><fmt:message key = "${emailIssue}" /></h5>
+                </c:if>
+
+                <c:if test="${not empty passwordIssue}" >
+                    <h5><fmt:message key = "${passwordIssue}" /></h5>
+                </c:if>
+
+                <c:if test="${not empty userExistsIssue}" >
+                    <h5><fmt:message key = "${userExistsIssue}" /></h5>
+                </c:if>
+
                 <h5>${wrongAction}</h5>
                 <h5>${nullPage}</h5>
             </form>
