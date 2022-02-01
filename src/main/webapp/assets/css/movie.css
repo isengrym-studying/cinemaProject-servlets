@@ -1,0 +1,54 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+/*DISTINCT_FILM_PAGE*/
+
+.film-body img {
+    height: 600px;
+}
+
+.film-body .right-half .movie-title {
+    margin-top: 0px;
+    font-size: 35px;
+    font-weight: 900;
+}
+
+.film-body .right-half h4 span {
+    margin-top: 0px;
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(10, 10, 10, 0.36);
+}
+.film-body .right-half h4 {
+    font-size: 19px;
+    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.bottom-block h2 {
+    margin-top: 0px;
+    font-size: 35px;
+    font-weight: 200;
+}
+
+.bottom-block .seance-item {
+    background-color: transparent;
+    margin-right: 5px;
+    border: 1px solid #414141;
+}
+
+.bottom-block .seance-item button {
+    color: #414141;
+}
+.bottom-block .day-item {
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #414141;
+}
+.bottom-block .day-item h5 {
+    margin-top: 10px;
+    font-size: 19px;
+}

@@ -2,12 +2,10 @@ package com.example.cinema.model.service;
 
 import com.example.cinema.model.dao.UserDao;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.validator.EmailValidator;
-import com.example.cinema.validator.NameValidator;
-import com.example.cinema.validator.PasswordValidator;
+import com.example.cinema.model.service.validator.EmailValidator;
+import com.example.cinema.model.service.validator.NameValidator;
+import com.example.cinema.model.service.validator.PasswordValidator;
 
-import javax.naming.Name;
-import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class UserService {
 
     public boolean authorize(String email, String password) {
         CipherService cipherService = CipherService.getInstance();
-        if (userDao.findUserByEmail(email)) {
+        if (userDao.checkUserExistence(email)) {
             byte[] salt = userDao.getSalt(email);
             byte[] cipheredPassword = cipherService.getEncryptedPassword(password, salt);
             return userDao.confirmUserExistence(email, cipheredPassword);
@@ -32,30 +30,33 @@ public class UserService {
         return false;
     }
 
+    public User getUserInstance(String email) {
+        return userDao.getUserByEmail(email);
+    }
 
-    public boolean signUp(User givenUser) {
-        User user = new User(givenUser);
+
+    public boolean signUp(String name, String surname, String email, String password, String role) {
 
         CipherService cipherService = CipherService.getInstance();
         byte[] salt = cipherService.generateSalt();
-        byte[] cipheredPassword = cipherService.getEncryptedPassword(user.getPassword(), salt);
-        return userDao.addUser(user.getName(), user.getSurname(), user.getEmail(), cipheredPassword, salt, user.getRole());
+        byte[] cipheredPassword = cipherService.getEncryptedPassword(password, salt);
+        return userDao.addUser(name, surname, email, cipheredPassword, salt, role);
 
     }
 
-    public List getSignUpIssues(User givenUser) {
-        User user = new User(givenUser);
+    public List getSignUpIssues(String name, String surname, String email, String password, String role) {
+
         List<String> list = new ArrayList<>();
-        if (!NameValidator.validate(user.getName()) || !NameValidator.validate(user.getSurname())) {
+        if (!NameValidator.validate(name) || !NameValidator.validate(surname)) {
             list.add("nameIssue");
         }
-        if (!EmailValidator.validate(user.getEmail())) {
+        if (!EmailValidator.validate(email)) {
             list.add("emailIssue");
         }
-        if (!PasswordValidator.validate(user.getPassword())) {
+        if (!PasswordValidator.validate(password)) {
             list.add("passwordIssue");
         }
-        if (userDao.findUserByEmail(user.getEmail())) {
+        if (userDao.checkUserExistence(email)) {
             list.add("userExistsIssue");
         }
         return list;

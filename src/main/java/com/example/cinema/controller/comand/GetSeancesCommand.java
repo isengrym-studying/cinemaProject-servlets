@@ -15,10 +15,9 @@ public class GetSeancesCommand implements ActionCommand {
 
     @Override
     public String execute(HttpServletRequest req) {
-        SeanceDao seanceDao = SeanceDao.getInstance();
         MovieSeanceService service = MovieSeanceService.getInstance();
 
-        List<Seance> seancesList = seanceDao.getAllSeances();
+        List<Seance> seancesList = service.getAllSeances();
         List<Movie> moviesList = service.getUniqueMovies(seancesList);
 
 //        req.setAttribute("seances", seancesList);

@@ -1,4 +1,4 @@
-package com.example.cinema.validator;
+package com.example.cinema.model.service.validator;
 
 import java.util.regex.Pattern;
 

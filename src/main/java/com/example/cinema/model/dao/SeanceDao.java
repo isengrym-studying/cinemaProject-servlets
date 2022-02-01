@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,10 +30,10 @@ public class SeanceDao {
 
     public List<Seance> getAllSeances() {
         LinkedList<Seance> list = new LinkedList<>();
+        log.info("Getting all `seance` objects from DB");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.GET_ALL_SEANCES);
-        ) {
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.GET_ALL_SEANCES)) {
 
             try (ResultSet resSet = statement.executeQuery()) {
                 while(resSet.next()) {
@@ -62,7 +61,39 @@ public class SeanceDao {
             }
 
         } catch (SQLException e) {
-            log.error(e.getMessage());
+            log.error("SQLException in SeanceDao.getAllSeances() " + e.getMessage());
+            throw new DaoException("Couldn't get films from DB", e);
+        }
+        return list;
+    }
+
+    public List<Seance> getCertainMovieSeances(Movie movie) {
+        LinkedList<Seance> list = new LinkedList<>();
+        log.info("Getting `seance` objects from DB for certain `movie` object");
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.GET_SEANCES_FOR_MOVIE)) {
+            statement.setInt(1,movie.getId());
+            try (ResultSet resSet = statement.executeQuery()) {
+                while(resSet.next()) {
+
+                    Seance seance = new Seance();
+                    int seanceId = resSet.getInt("seance_id");
+                    int year = resSet.getInt("year");
+                    int month = resSet.getInt("month");
+                    int day = resSet.getInt("day");
+                    int hour = resSet.getInt("hour");
+                    int minute = resSet.getInt("minute");
+                    seance.setId(seanceId);
+                    seance.setStartDate(LocalDateTime.of(year,month,day,hour,minute));
+                    seance.setMovie(movie);
+
+                    list.add(seance);
+                }
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.getCertainMovieSeances() " + e.getMessage());
             throw new DaoException("Couldn't get films from DB", e);
         }
         return list;

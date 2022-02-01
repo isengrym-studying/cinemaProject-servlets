@@ -7,21 +7,32 @@ public class User {
     private String name;
     private String surname;
     private String email;
-    private String password;
+    private byte[] password;
+    private byte[] salt;
     private String role;
 
-    public User(String name, String surname, String email, String password) {
+    public User(String name, String surname, String email, byte[] password) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
     }
 
-    public User(String name, String surname, String email, String password, String role) {
+    public User(String name, String surname, String email, byte[] password, String role) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.role = role;
+    }
+
+    public User(int id, String name, String surname, String email, byte[] password, byte[] salt, String role) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.salt = salt;
         this.role = role;
     }
 
@@ -65,12 +76,20 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(byte[] password) {
         this.password = password;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     public String getRole() { return role; }

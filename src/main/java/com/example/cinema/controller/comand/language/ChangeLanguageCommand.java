@@ -25,8 +25,6 @@ public class ChangeLanguageCommand implements ActionCommand {
             session.setAttribute("languageButtonLabel", "EN");
             log.info("Attribute language is set to `ru`");
         }
-        System.out.println(req.getRequestURL());
-        System.out.println(req.getRequestURI());
         page = "/main.jsp";
         return page;
     }

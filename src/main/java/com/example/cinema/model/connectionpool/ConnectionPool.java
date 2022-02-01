@@ -1,5 +1,6 @@
 package com.example.cinema.model.connectionpool;
 
+import com.example.cinema.controller.comand.LoginCommand;
 import com.example.cinema.model.dao.UserDao;
 import org.apache.log4j.Logger;
 
@@ -11,9 +12,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionPool {
-    private ConnectionPool(){
-        //private constructor
-    }
+
+    private ConnectionPool(){ }
 
     private static ConnectionPool instance = null;
     private static Logger log = Logger.getLogger(ConnectionPool.class);
@@ -28,13 +28,16 @@ public class ConnectionPool {
         Context context;
         Connection connection = null;
         try {
+
             context = new InitialContext();
             DataSource ds = (DataSource)context.lookup("java:comp/env/jdbc/connectionPool");
             connection = ds.getConnection();
+            log.trace("Connection was opened successfully");
         } catch (SQLException | NamingException e) {
+            log.trace("Couldn't open connection");
             e.printStackTrace();
         }
-        log.info("Connection was opened");
+
         return connection;
     }
 

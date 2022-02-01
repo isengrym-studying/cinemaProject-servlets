@@ -6,7 +6,7 @@
 <fmt:bundle basename="language">
 <html>
 <head>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/movies.css">
     <title><fmt:message key = "${pageTitleProperty}" /></title>
 </head>
 <body>

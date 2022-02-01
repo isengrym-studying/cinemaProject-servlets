@@ -8,7 +8,7 @@
 <html>
 <head>
     <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css' id="bootstrap-css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/header.css">
     <script src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     <title><fmt:message key = "header.home" /></title>
@@ -37,11 +37,11 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <c:if test="${sessionScope.userIsAuthorized != true}">
+                <c:if test="${empty sessionScope.user}">
                     <li><a href="login.jsp"><fmt:message key = "main.signIn" /></a></li>
                     <li><a href="registration.jsp"><fmt:message key = "main.signUp" /></a></li>
                 </c:if>
-                <c:if test="${sessionScope.userIsAuthorized == true}">
+                <c:if test="${sessionScope.user.role == 'User' || sessionScope.user.role == 'Admin'}">
                     <li><a href="controller?command=logout"><fmt:message key = "main.logOut" /></a></li>
                 </c:if>
 

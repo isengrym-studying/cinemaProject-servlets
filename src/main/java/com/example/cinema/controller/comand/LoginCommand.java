@@ -2,6 +2,7 @@ package com.example.cinema.controller.comand;
 
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.MessageManager;
+import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.UserService;
 import org.apache.log4j.Logger;
 
@@ -21,20 +22,21 @@ public class LoginCommand implements ActionCommand {
         String email = req.getParameter(PARAM_NAME_EMAIL);
         String password = req.getParameter(PARAM_NAME_PASSWORD);
 
-        log.info("Authorization process started");
+        log.info("Authorization process for user with emailstarted");
 
         if (userService.authorize(email,password)) {
+            User user = userService.getUserInstance(email);
+
             HttpSession session = req.getSession();
-            session.setAttribute("user", email);
-            session.setAttribute("role","User");
-            session.setAttribute("userIsAuthorized", true);
+            session.setAttribute("user", user);
+
             page = ConfigurationManager.getProperty("path.page.main");
-            log.info("Authorization process finished successfully");
+            log.info("Authorization process for user with email " + email + " finished successfully");
         }
         else {
             req.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
             page = ConfigurationManager.getProperty("path.page.login");
-            log.info("Authorization process failed");
+            log.warn("Authorization process for user " + email + " failed.");
         }
         return page;
     }

@@ -36,7 +36,7 @@ public enum CommandEnum {
     },
     GETFULLMOVIE{
         {
-            this.command = new GetFullMovieCommand();
+            this.command = new GetCertainMovieCommand();
         }
     },
     GETSEANCES{

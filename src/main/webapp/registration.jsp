@@ -10,7 +10,7 @@
 <head>
     <title><fmt:message key = "signUp.title" /></title>
     <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/signUpSignIn.css">
 </head>
 <body>
 

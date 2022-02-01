@@ -1,20 +1,18 @@
 package com.example.cinema.model.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class Seance {
     private int id;
     private Movie movie;
-    private LocalDateTime startTime;
+    private LocalDateTime startDate;
 
     public Seance() { }
 
-    public Seance(int id, Movie movie, LocalDateTime startTime) {
+    public Seance(int id, Movie movie, LocalDateTime startDate) {
         this.id = id;
         this.movie = movie;
-        this.startTime = startTime;
+        this.startDate = startDate;
     }
 
     public int getId() {
@@ -33,11 +31,10 @@ public class Seance {
         this.movie = movie;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public void setStartDate(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
+    public void setStartDate(LocalDateTime startTime) { this.startDate = startTime; }
+
 }

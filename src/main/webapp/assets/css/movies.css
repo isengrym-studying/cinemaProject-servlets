@@ -1,0 +1,29 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.film-page-title {
+    margin-bottom: 20px;
+
+}
+
+.film-items {
+
+    padding-left: 100px;
+    padding-right: 100px;
+    text-align: center;
+
+}
+.film_item {
+    color: #000;
+    transition: 0.25s;
+    text-align: center;
+    margin-bottom: 10px;
+}
+h5 {
+
+    font-weight: 400;
+}
+.film_item:hover {
+    transform: scale(1.06);
+}

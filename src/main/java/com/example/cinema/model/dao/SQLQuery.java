@@ -11,6 +11,8 @@ public class SQLQuery {
         public static final String GET_MOVIE_BY_ID = "SELECT * FROM `movies` INNER JOIN `genres` ON `genre`=`genre_id` WHERE `movie_id` = ?";
 
         public static final String GET_ALL_SEANCES = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id`";
+        public static final String GET_SEANCES_FOR_MOVIE = "SELECT * FROM `seances` WHERE `movie_id`=? ORDER BY `day`";
+
 
     }
 }

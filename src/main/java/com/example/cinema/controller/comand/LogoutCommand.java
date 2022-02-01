@@ -12,7 +12,7 @@ public class LogoutCommand implements ActionCommand {
     public String execute(HttpServletRequest req) {
         String page = ConfigurationManager.getProperty("path.page.index");
         req.getSession().invalidate();
-        log.info("User has logged out");
+        log.info("User with email has logged out");
         return page;
     }
 }

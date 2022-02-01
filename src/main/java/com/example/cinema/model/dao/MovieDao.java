@@ -29,6 +29,7 @@ public class MovieDao {
 
     public List<Movie> getAllMovies() {
         LinkedList<Movie> list = new LinkedList<>();
+        log.info("Getting all `movie` objects from DB");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.GET_ALL_MOVIES);
@@ -48,7 +49,7 @@ public class MovieDao {
             }
 
         } catch (SQLException e) {
-            log.error(e.getMessage());
+            log.error("SQLException in MovieDao.getAllMovies() " + e.getMessage());
             throw new DaoException("Couldn't get films from DB", e);
         }
         return list;
@@ -56,6 +57,8 @@ public class MovieDao {
 
     public Movie getMovieById(int id) {
         Movie movie = new Movie();
+        log.info("Getting all `movie` objects from DB by `id` = "+ id +" attribute");
+
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.GET_MOVIE_BY_ID)) {
 
@@ -63,6 +66,7 @@ public class MovieDao {
 
             try (ResultSet resSet = statement.executeQuery()) {
                 if (resSet.next()) {
+                    log.info("Found at least one `movie` by given `id`= " + id +" attribute");
                     movie.setId(id);
                     movie.setTitle(resSet.getString("title"));
                     movie.setDirector(resSet.getString("director"));
@@ -71,11 +75,14 @@ public class MovieDao {
                     movie.setAgeRestriction(resSet.getInt("age_restriction"));
                     movie.setDuration(Duration.ofMinutes(resSet.getInt("duration_minutes")));
                     movie.setImagePath(resSet.getString("image_path"));
-            }
+                }
+                else {
+                    log.warn("No `movie` objects by given `id`= " + id +" attribute were found");
+                }
 
             }
         } catch (SQLException e) {
-            log.error(e.getMessage());
+            log.error("SQLException in MovieDao.getMovieById() " + e.getMessage());
             throw new DaoException("Couldn't find film by given id (" + id +")", e);
         }
         return movie;
