@@ -1,7 +1,9 @@
 package com.example.cinema.model.entity;
 
-import com.example.cinema.model.dao.UserDao;
-
+/**
+ * Class represents 'user' entity.
+ *
+ */
 public class User {
     private int id;
     private String name;
@@ -10,21 +12,6 @@ public class User {
     private byte[] password;
     private byte[] salt;
     private String role;
-
-    public User(String name, String surname, String email, byte[] password) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(String name, String surname, String email, byte[] password, String role) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
 
     public User(int id, String name, String surname, String email, byte[] password, byte[] salt, String role) {
         this.id = id;
@@ -36,7 +23,14 @@ public class User {
         this.role = role;
     }
 
-    public User() { }
+    public User(String name, String surname, String email, byte[] password, byte[] salt, String role) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.salt = salt;
+        this.role = role;
+    }
 
     public User(User user) {
         this.id = user.id;
@@ -46,6 +40,8 @@ public class User {
         this.password = user.password;
         this.role = user.role;
     }
+
+    public User() { }
 
 
     public int getId() { return id; }

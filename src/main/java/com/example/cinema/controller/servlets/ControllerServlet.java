@@ -13,6 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Controller, that redirects the request to certain command,
+ * which is specified as a parameter by calling it (controller)
+ *
+ */
+
 @WebServlet("/controller")
 public class ControllerServlet extends HttpServlet {
     @Override

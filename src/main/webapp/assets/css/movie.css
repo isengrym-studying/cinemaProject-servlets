@@ -7,12 +7,17 @@ body {
     height: 600px;
 }
 
-.film-body .right-half .movie-title {
+.left-half .movie-title {
     margin-top: 0px;
     font-size: 35px;
     font-weight: 900;
 }
 
+.film-body .right-half .about-line {
+    margin-top: 20px;
+    font-size: 35px;
+    font-weight: 900;
+}
 .film-body .right-half h4 span {
     margin-top: 0px;
     font-size: 17px;
@@ -36,6 +41,12 @@ body {
     background-color: transparent;
     margin-right: 5px;
     border: 1px solid #414141;
+}
+
+.bottom-block .seances-headline {
+    margin-top: 0px;
+    font-size: 35px;
+    font-weight: 900;
 }
 
 .bottom-block .seance-item button {

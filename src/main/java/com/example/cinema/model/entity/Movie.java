@@ -3,6 +3,10 @@ package com.example.cinema.model.entity;
 import java.time.Duration;
 import java.util.Objects;
 
+/**
+ * Class represents 'movie' entity.
+ *
+ */
 public class Movie {
     private int id;
     private String title;

@@ -8,6 +8,6 @@
 
 </head>
 <body>
-<jsp:forward page="controller?command=setlanguage"/>
+<jsp:forward page="controller?command=fillmainpage"/>
 </body>
 </html>

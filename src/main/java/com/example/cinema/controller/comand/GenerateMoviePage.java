@@ -1,17 +1,22 @@
 package com.example.cinema.controller.comand;
 
 import com.example.cinema.controller.ConfigurationManager;
-import com.example.cinema.model.dao.MovieDao;
 import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.service.MovieSeanceService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedList;
 
-public class GetMoviesCommand implements ActionCommand{
-    String page = null;
+/**
+ * The command that is responsible for getting and sending back all movies
+ *
+ */
+public class GenerateMoviePage implements ActionCommand{
     @Override
     public String execute(HttpServletRequest req) {
+        ActionCommand.pageAdress(req);
+        String page = null;
+
         MovieSeanceService service = MovieSeanceService.getInstance();
         LinkedList<Movie> list = (LinkedList<Movie>) service.getAllMovies();
 

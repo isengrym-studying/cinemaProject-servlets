@@ -1,5 +1,9 @@
 package com.example.cinema.model.entity;
 
+/**
+ * Enum represents all available roles of users.
+ *
+ */
 public enum Role {
     USER {
         {

@@ -1,14 +1,18 @@
 package com.example.cinema.model.service;
 
 import com.example.cinema.model.dao.UserDao;
+import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.validator.EmailValidator;
 import com.example.cinema.model.service.validator.NameValidator;
 import com.example.cinema.model.service.validator.PasswordValidator;
 
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * The class contains all the logic for working with users.
+ * It handles data, that is given from DAO, and then sends the result to certain command or another service.
+ *
+ */
 public class UserService {
     private final UserDao userDao = UserDao.getInstance();
     private static UserService userService;
@@ -20,6 +24,19 @@ public class UserService {
         return userService;
     }
 
+    public boolean checkUserExistence(String email) {
+        UserDao userDao = UserDao.getInstance();
+        return userDao.checkUserExistence(email);
+    }
+
+    /**
+     * Method is the main part of authorization. The given password is being encrypted and then compared with one in DB.
+     * @param email email of potential User. (DB TABLE `users` COLUMN `email`)
+     * @param password password of potential User. (DB TABLE `users` COLUMN `password`)
+     * @return Returns true (If the data has been verified and the user can be authorized).
+     * Returns false (If user cannot be authorized).
+     * @exception DaoException catches SQLException and throws custom DAO-layer exception.
+     */
     public boolean authorize(String email, String password) {
         CipherService cipherService = CipherService.getInstance();
         if (userDao.checkUserExistence(email)) {
@@ -30,36 +47,72 @@ public class UserService {
         return false;
     }
 
+
+    /**
+     * Method is being used for getting User object by email
+     * @param email email of potential User. (DB TABLE `users` COLUMN `email`)
+     * @return Returns User-object filled with DB data of field, where `email` column equals to given email.
+     * Returns empty User-object (If there were no fields with given email)
+     */
     public User getUserInstance(String email) {
         return userDao.getUserByEmail(email);
     }
 
 
+    /**
+     * Method is registration itself. The given password is being encrypted, the salt is being created,
+     * after what the user is being added to DB. Returns the boolean result of adding user to DB
+     * @param name name of potential User. (DB TABLE `users` COLUMN `name`)
+     * @param surname surname of potential User. (DB TABLE `users` COLUMN `surname`)
+     * @param email email of potential User. (DB TABLE `users` COLUMN `email`)
+     * @param password password of potential User. (DB TABLE `users` COLUMN `password`)
+     * @param role role of potential User. (DB TABLE `users` COLUMN `role`)
+     * @return Returns true (If user was successfully added to DB).
+     * Returns false (If user wasn't added to DB).
+     *
+     */
     public boolean signUp(String name, String surname, String email, String password, String role) {
 
         CipherService cipherService = CipherService.getInstance();
         byte[] salt = cipherService.generateSalt();
         byte[] cipheredPassword = cipherService.getEncryptedPassword(password, salt);
-        return userDao.addUser(name, surname, email, cipheredPassword, salt, role);
+        User user = new User(name, surname, email, cipheredPassword, salt, role);
+        return userDao.addUser(user);
 
     }
 
-    public List getSignUpIssues(String name, String surname, String email, String password, String role) {
+    /**
+     * The method is being used for getting exact information about which fields were filled in with errors.
+     * Validators are used to find issues. Final result is a List of String objects
+     * @param name name of potential User. (DB TABLE `users` COLUMN `name`)
+     * @param surname surname of potential User. (DB TABLE `users` COLUMN `surname`)
+     * @param email email of potential User. (DB TABLE `users` COLUMN `email`)
+     * @param password password of potential User. (DB TABLE `users` COLUMN `password`)
+     * @return Returns List<String> (If there were any issues).
+     * Returns empty List<String> (If there were no issues).
+     *
+     */
+    public boolean signUpDataValid(String name, String surname, String email, String password) {
 
-        List<String> list = new ArrayList<>();
         if (!NameValidator.validate(name) || !NameValidator.validate(surname)) {
-            list.add("nameIssue");
+            return false;
         }
         if (!EmailValidator.validate(email)) {
-            list.add("emailIssue");
+            return false;
         }
         if (!PasswordValidator.validate(password)) {
-            list.add("passwordIssue");
+            return false;
         }
         if (userDao.checkUserExistence(email)) {
-            list.add("userExistsIssue");
+            return false;
         }
-        return list;
+        return true;
+    }
+
+    public boolean updateUser(User user) {
+        UserDao userDao = UserDao.getInstance();
+        userDao.updateUser(user);
+        return true;
     }
 
 

@@ -9,6 +9,11 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The command that is responsible for getting and sending back user authorization result
+ * If authorization was successful, user object is set as attribute
+ *
+ */
 public class LoginCommand implements ActionCommand {
     private static Logger log = Logger.getLogger(LoginCommand.class);
     private static final String PARAM_NAME_EMAIL = "email";
@@ -18,7 +23,9 @@ public class LoginCommand implements ActionCommand {
 
     @Override
     public String execute(HttpServletRequest req) {
+        ActionCommand.pageAdress(req);
         String page = null;
+
         String email = req.getParameter(PARAM_NAME_EMAIL);
         String password = req.getParameter(PARAM_NAME_PASSWORD);
 
@@ -34,10 +41,11 @@ public class LoginCommand implements ActionCommand {
             log.info("Authorization process for user with email " + email + " finished successfully");
         }
         else {
-            req.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
+            req.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginError"));
             page = ConfigurationManager.getProperty("path.page.login");
             log.warn("Authorization process for user " + email + " failed.");
         }
+
         return page;
     }
 }

@@ -15,6 +15,11 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Data access object for Seance-entity. (Singleton pattern is implemented)
+ *
+ */
+
 public class SeanceDao {
     private static Logger log = Logger.getLogger(SeanceDao.class);
     public static SeanceDao instance = null;
@@ -28,12 +33,20 @@ public class SeanceDao {
 
     private SeanceDao() {}
 
+
+    /**
+     * Method is being used for getting all seances (all fields from DB `seances` TABLE) as list.
+     * Returns empty list if nothing was found
+     * @return Returns List<Seance> (if there are fields in `seances` TABLE).
+     * Returns empty list (if there are no fields in `seances` TABLE).
+     * @exception DaoException catches SQLException and throws custom DAO-layer exception.
+     */
     public List<Seance> getAllSeances() {
-        LinkedList<Seance> list = new LinkedList<>();
+        List<Seance> list = new LinkedList<>();
         log.info("Getting all `seance` objects from DB");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.GET_ALL_SEANCES)) {
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_ALL_SEANCES)) {
 
             try (ResultSet resSet = statement.executeQuery()) {
                 while(resSet.next()) {
@@ -67,12 +80,20 @@ public class SeanceDao {
         return list;
     }
 
+
+    /**
+     * Method is being used for getting all seances (fields from DB `seances` TABLE) for certain movie, which is given as parameter
+     * Returns empty list if nothing was found
+     * @return Returns List<Seance> (if there are seances for given movie).
+     * Returns empty list (if there are no seances for given movie).
+     * @exception DaoException catches SQLException and throws custom DAO-layer exception.
+     */
     public List<Seance> getCertainMovieSeances(Movie movie) {
-        LinkedList<Seance> list = new LinkedList<>();
+        List<Seance> list = new LinkedList<>();
         log.info("Getting `seance` objects from DB for certain `movie` object");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.GET_SEANCES_FOR_MOVIE)) {
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_SEANCES_FOR_MOVIE)) {
             statement.setInt(1,movie.getId());
             try (ResultSet resSet = statement.executeQuery()) {
                 while(resSet.next()) {

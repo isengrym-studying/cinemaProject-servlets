@@ -12,6 +12,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * The class contains all the logic for working with movies and seances.
+ * It handles data, that is given from DAO, and then sends the result to certain command or another service.
+ *
+ */
 public class MovieSeanceService {
     private static MovieSeanceService movieSeanceService;
 
@@ -84,7 +90,4 @@ public class MovieSeanceService {
         return map;
     }
 
-    {
-
-    }
 }

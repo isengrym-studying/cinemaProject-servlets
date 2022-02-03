@@ -1,7 +1,5 @@
 package com.example.cinema.model.connectionpool;
 
-import com.example.cinema.controller.comand.LoginCommand;
-import com.example.cinema.model.dao.UserDao;
 import org.apache.log4j.Logger;
 
 import javax.naming.Context;
@@ -10,6 +8,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+
 
 public class ConnectionPool {
 

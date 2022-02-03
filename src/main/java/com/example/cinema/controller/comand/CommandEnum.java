@@ -1,12 +1,16 @@
 package com.example.cinema.controller.comand;
 
-import com.example.cinema.controller.comand.language.ChangeLanguageCommand;
-import com.example.cinema.controller.comand.language.SetLanguageCommand;
+import com.example.cinema.controller.comand.updateCommands.*;
 
+/**
+ * Enum of all existing commands
+ *
+ */
 public enum CommandEnum {
     LOGIN {
         {
             this.command = new LoginCommand();
+
         }
     },
     LOGOUT {
@@ -21,7 +25,7 @@ public enum CommandEnum {
     },
     GETFILMS {
         {
-            this.command = new GetMoviesCommand();
+            this.command = new GenerateMoviePage();
         }
     },
     CHANGELANGUAGE {
@@ -29,19 +33,44 @@ public enum CommandEnum {
             this.command = new ChangeLanguageCommand();
         }
     },
-    SETLANGUAGE{
-        {
-            this.command = new SetLanguageCommand();
-        }
-    },
     GETFULLMOVIE{
         {
-            this.command = new GetCertainMovieCommand();
+            this.command = new GenerateMoviePageCommand();
         }
     },
     GETSEANCES{
         {
-            this.command = new GetSeancesCommand();
+            this.command = new GenerateSeancesPage();
+        }
+    },
+    FILLMAINPAGE{
+        {
+            this.command = new MainPageFillerCommand();
+        }
+    },
+    PROFILE{
+        {
+            this.command = new ProfileCommand();
+        }
+    },
+    UPDATEUSERNAME {
+        {
+            this.command = new UpdateUserNameCommand();
+        }
+    },
+    UPDATEUSERSURNAME {
+        {
+            this.command = new UpdateUserSurnameCommand();
+        }
+    },
+    UPDATEUSEREMAIL {
+        {
+            this.command = new UpdateUserEmailCommand();
+        }
+    },
+    UPDATEUSERPASSWORD {
+        {
+            this.command = new UpdateUserPasswordCommand();
         }
     };
 

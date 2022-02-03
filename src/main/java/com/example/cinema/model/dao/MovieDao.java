@@ -13,6 +13,11 @@ import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 
+
+/**
+ * Data access object for Movie-entity. (Singleton pattern is implemented)
+ *
+ */
 public class MovieDao {
     private static Logger log = Logger.getLogger(MovieDao.class);
     private static MovieDao movieDao;
@@ -27,12 +32,19 @@ public class MovieDao {
     private MovieDao() {
     }
 
+
+    /**
+     * Method is being used for getting all movies (all fields from DB `movies` TABLE) as list.
+     * Returns empty list if nothing was found
+     * @return Returns List<Movie> (if there are fields in `movies` TABLE). Returns empty list (if there are no fields in `movies` TABLE).
+     * @exception DaoException catches SQLException and throws custom DAO-layer exception.
+     */
     public List<Movie> getAllMovies() {
         LinkedList<Movie> list = new LinkedList<>();
         log.info("Getting all `movie` objects from DB");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.GET_ALL_MOVIES);
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_ALL_MOVIES);
              ) {
 
             try (ResultSet resSet = statement.executeQuery()) {
@@ -55,12 +67,20 @@ public class MovieDao {
         return list;
     }
 
+
+    /**
+     * Method is being used for getting movie (field from DB `movies` TABLE) by given id.
+     * Returns empty Movie-object if nothing was found
+     * @return Returns Movie (if there are fields with given id in `movies` TABLE).
+     * Returns empty Movie (if there are no fields with given id in `movies` TABLE).
+     * @exception DaoException catches SQLException and throws custom DAO-layer exception.
+     */
     public Movie getMovieById(int id) {
         Movie movie = new Movie();
         log.info("Getting all `movie` objects from DB by `id` = "+ id +" attribute");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.GET_MOVIE_BY_ID)) {
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_MOVIE_BY_ID)) {
 
             statement.setInt(1,id);
 
@@ -87,6 +107,8 @@ public class MovieDao {
         }
         return movie;
     }
+
+
 
 
 }

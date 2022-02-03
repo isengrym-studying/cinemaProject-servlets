@@ -5,6 +5,10 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Simple empty command
+ *
+ */
 public class EmptyCommand implements ActionCommand{
     private static Logger log = Logger.getLogger(EmptyCommand.class);
     @Override

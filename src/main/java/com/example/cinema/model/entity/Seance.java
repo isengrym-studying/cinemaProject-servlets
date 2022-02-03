@@ -2,6 +2,10 @@ package com.example.cinema.model.entity;
 
 import java.time.LocalDateTime;
 
+/**
+ * Class represents 'seance' entity.
+ *
+ */
 public class Seance {
     private int id;
     private Movie movie;
