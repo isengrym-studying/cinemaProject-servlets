@@ -12,10 +12,9 @@ import java.util.List;
  *
  *
  */
-public class MainPageFillerCommand implements ActionCommand {
+public class FillMainPageCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
-        ActionCommand.pageAdress(req);
         String page = null;
 
         MovieSeanceService service = MovieSeanceService.getInstance();
@@ -27,6 +26,7 @@ public class MainPageFillerCommand implements ActionCommand {
         req.setAttribute("moviesList", moviesList);
         page = ConfigurationManager.getProperty("path.page.main");
 
+        ActionCommand.pageAdress(req);
         return page;
     }
 }

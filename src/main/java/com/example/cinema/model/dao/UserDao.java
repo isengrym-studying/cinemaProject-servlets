@@ -3,6 +3,7 @@ package com.example.cinema.model.dao;
 import com.example.cinema.model.connectionpool.ConnectionPool;
 import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.entity.User;
+import com.example.cinema.model.service.CipherService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -188,20 +189,37 @@ public class UserDao {
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.UPDATE_USER)) {
+
+
             statement.setString(1, user.getName());
-            statement.setString(2, "'"+user.getSurname()+"'");
-            statement.setString(3, "'"+user.getEmail()+"'");
+            statement.setString(2, user.getSurname());
+            statement.setString(3, user.getEmail());
             statement.setBytes(4, user.getPassword());
             statement.setInt(5, user.getId());
 
-            System.out.println(user.getId());
-
-            statement.executeUpdate();
+            statement.execute();
             log.info("Updating user ("+ user + ") to DB was successfully finished");
             return true;
         } catch (SQLException e) {
             log.error("SQLException in UserDao.updateUser() " + e.getMessage());
             throw new DaoException("Couldn't update user", e);
+        }
+    }
+
+    public boolean deleteUser(User user) {
+        log.info("Deleting user (" + user +")");
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.UserQuery.DELETE_USER)) {
+
+            statement.setInt(1, user.getId());
+
+            statement.execute();
+            log.info("Deleting user ("+ user + ") from DB was successfully finished");
+            return true;
+        } catch (SQLException e) {
+            log.error("SQLException in UserDao.deleteUser() " + e.getMessage());
+            throw new DaoException("Couldn't delete user", e);
         }
     }
 

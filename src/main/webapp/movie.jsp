@@ -39,7 +39,9 @@
                                         <fmt:message key = "${date.key.getDayOfWeek()}"/></h5>
 
                                     <c:forEach var="seance" items="${date.value}">
-                                        <button type="button">${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if></button>
+                                        <a href="controller?command=ticketChoicePage&seanceId=${seance.id}"type="button">
+                                            <button >${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if></button>
+                                        </a>
                                     </c:forEach>
 
                                 </div>

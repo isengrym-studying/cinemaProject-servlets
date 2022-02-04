@@ -13,8 +13,8 @@ import java.util.Optional;
  * pageQuery attribute is being used for building the path to the page from which the command was called
  *
  */
-public class ChangeLanguageCommand implements ActionCommand {
-    private static Logger log = Logger.getLogger(ChangeLanguageCommand.class);
+public class ChangeLanguage implements ActionCommand {
+    private static Logger log = Logger.getLogger(ChangeLanguage.class);
     String page = null;
 
     @Override

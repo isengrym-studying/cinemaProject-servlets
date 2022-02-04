@@ -90,4 +90,9 @@ public class MovieSeanceService {
         return map;
     }
 
+    public Seance getSeanceById(int id) {
+        SeanceDao seanceDao = SeanceDao.getInstance();
+        return seanceDao.getSeanceById(id);
+    }
+
 }

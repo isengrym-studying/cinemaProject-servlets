@@ -81,6 +81,43 @@ public class SeanceDao {
     }
 
 
+    public Seance getSeanceById(int id) {
+        Seance seance = new Seance();
+        Movie movie = new Movie();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_SEANCE_BY_ID)) {
+            statement.setInt(1, id);
+            try (ResultSet resSet = statement.executeQuery()) {
+                while(resSet.next()) {
+
+                    movie.setId(resSet.getInt("movie_id"));
+                    movie.setTitle(resSet.getString("title"));
+                    movie.setDirector(resSet.getString("director"));
+                    movie.setProductionYear(resSet.getInt("production_year"));
+                    movie.setGenre(resSet.getString("genre"));
+                    movie.setAgeRestriction(resSet.getInt("age_restriction"));
+                    movie.setDuration(Duration.ofMinutes(resSet.getInt("duration_minutes")));
+                    movie.setImagePath(resSet.getString("image_path"));
+
+                    int year = resSet.getInt("year");
+                    int month = resSet.getInt("month");
+                    int day = resSet.getInt("day");
+                    int hour = resSet.getInt("hour");
+                    int minute = resSet.getInt("minute");
+
+                    seance.setId(resSet.getInt("seance_id"));
+                    seance.setStartDate(LocalDateTime.of(year,month,day,hour,minute));
+                    seance.setMovie(movie);
+                }
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.getSeanceById() " + e.getMessage());
+            throw new DaoException("Couldn't get seance by id", e);
+        }
+        return seance;
+    }
+
     /**
      * Method is being used for getting all seances (fields from DB `seances` TABLE) for certain movie, which is given as parameter
      * Returns empty list if nothing was found

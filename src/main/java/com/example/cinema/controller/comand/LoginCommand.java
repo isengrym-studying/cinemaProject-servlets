@@ -23,13 +23,13 @@ public class LoginCommand implements ActionCommand {
 
     @Override
     public String execute(HttpServletRequest req) {
-        ActionCommand.pageAdress(req);
+
         String page = null;
 
         String email = req.getParameter(PARAM_NAME_EMAIL);
         String password = req.getParameter(PARAM_NAME_PASSWORD);
 
-        log.info("Authorization process for user with emailstarted");
+        log.info("Authorization process for potential user with email +" + email + "+started");
 
         if (userService.authorize(email,password)) {
             User user = userService.getUserInstance(email);
@@ -45,6 +45,8 @@ public class LoginCommand implements ActionCommand {
             page = ConfigurationManager.getProperty("path.page.login");
             log.warn("Authorization process for user " + email + " failed.");
         }
+
+        ActionCommand.pageAdress(req);
 
         return page;
     }

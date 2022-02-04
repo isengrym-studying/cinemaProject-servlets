@@ -7,6 +7,7 @@ body {
     height: 600px;
 }
 
+
 .left-half .movie-title {
     margin-top: 0px;
     font-size: 35px;
@@ -37,10 +38,15 @@ body {
     font-weight: 200;
 }
 
-.bottom-block .seance-item {
+.bottom-block .day-item {
     background-color: transparent;
+    transition: 0.15s;
     margin-right: 5px;
-    border: 1px solid #414141;
+}
+
+.bottom-block .day-item a {
+    text-decoration: none;
+    color: black;
 }
 
 .bottom-block .seances-headline {
@@ -49,7 +55,7 @@ body {
     font-weight: 900;
 }
 
-.bottom-block .seance-item button {
+.bottom-block .day-item button {
     color: #414141;
 }
 .bottom-block .day-item {

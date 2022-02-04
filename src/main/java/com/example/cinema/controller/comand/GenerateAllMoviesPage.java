@@ -11,11 +11,12 @@ import java.util.LinkedList;
  * The command that is responsible for getting and sending back all movies
  *
  */
-public class GenerateMoviePage implements ActionCommand{
+public class GenerateAllMoviesPage implements ActionCommand{
     @Override
     public String execute(HttpServletRequest req) {
-        ActionCommand.pageAdress(req);
         String page = null;
+        ActionCommand.pageAdress(req);
+
 
         MovieSeanceService service = MovieSeanceService.getInstance();
         LinkedList<Movie> list = (LinkedList<Movie>) service.getAllMovies();
@@ -26,6 +27,7 @@ public class GenerateMoviePage implements ActionCommand{
 
         page = ConfigurationManager.getProperty("path.page.movies");
 
+        ActionCommand.pageAdress(req);
         return page;
     }
 }

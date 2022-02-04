@@ -22,7 +22,7 @@
             <input type="hidden" name="command" value="updateUserName">
             <div class="form-group">
                 <label><fmt:message key = "signUp.name" /></label>
-                <input name="name" type="text" required pattern="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$" placeholder="John" class="form-control"/>
+                <input name="name" type="text" required pattern="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$" placeholder="<fmt:message key = "field.name" />" class="form-control"/>
             </div>
 
             <div class="form-group">

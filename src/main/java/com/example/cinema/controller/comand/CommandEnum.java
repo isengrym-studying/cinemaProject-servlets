@@ -10,7 +10,6 @@ public enum CommandEnum {
     LOGIN {
         {
             this.command = new LoginCommand();
-
         }
     },
     LOGOUT {
@@ -25,17 +24,17 @@ public enum CommandEnum {
     },
     GETFILMS {
         {
-            this.command = new GenerateMoviePage();
+            this.command = new GenerateAllMoviesPage();
         }
     },
     CHANGELANGUAGE {
         {
-            this.command = new ChangeLanguageCommand();
+            this.command = new ChangeLanguage();
         }
     },
     GETFULLMOVIE{
         {
-            this.command = new GenerateMoviePageCommand();
+            this.command = new GenerateCertainMoviePage();
         }
     },
     GETSEANCES{
@@ -45,7 +44,7 @@ public enum CommandEnum {
     },
     FILLMAINPAGE{
         {
-            this.command = new MainPageFillerCommand();
+            this.command = new FillMainPageCommand();
         }
     },
     PROFILE{
@@ -66,6 +65,26 @@ public enum CommandEnum {
     UPDATEUSEREMAIL {
         {
             this.command = new UpdateUserEmailCommand();
+        }
+    },
+    TICKETCHOICEPAGE {
+        {
+            this.command = new GenerateTicketChoicePage();
+        }
+    },
+    CONFIRMTICKET {
+        {
+            this.command = new TicketConfirmationCommand();
+        }
+    },
+    TICKETPAGE {
+        {
+            this.command = new GenerateTicketPage();
+        }
+    },
+    DELETEUSER {
+        {
+            this.command = new DeleteUserCommand();
         }
     },
     UPDATEUSERPASSWORD {

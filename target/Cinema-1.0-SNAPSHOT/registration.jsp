@@ -29,19 +29,19 @@
 
                 <div class="form-group">
                     <label><fmt:message key = "signUp.name" /></label>
-                    <input name="name" type="text" required pattern="^[a-zA-Zа-яА-Яєїё']+$" class="form-control" placeholder="John">
+                    <input name="name" type="text" required pattern="^[a-zA-Zа-яА-Яєїё']+$" class="form-control" placeholder="<fmt:message key = "field.name" />">
                 </div>
                 <div class="form-group">
                     <label><fmt:message key = "signUp.surname" /></label>
-                    <input name="surname" type="text" required pattern="^[a-zA-Zа-яА-Яєїё']+$" class="form-control" placeholder="Marston">
+                    <input name="surname" type="text" required pattern="^[a-zA-Zа-яА-Яєїё']+$" class="form-control" placeholder="<fmt:message key = "field.surname" />">
                 </div>
                 <div class="form-group">
                     <label><fmt:message key = "signUp.email" /></label>
-                    <input name="email" type="email" required pattern="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$" class="form-control" placeholder="johnmarston@gmail.com">
+                    <input name="email" type="email" required pattern="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$" class="form-control" placeholder="<fmt:message key = "field.email" />">
                 </div>
                 <div class="form-group">
                     <label><fmt:message key = "signUp.password" /></label>
-                    <input name="password" type="password" required pattern="^(?=.*?[0-9]).{8,}$" class="form-control" placeholder="********">
+                    <input name="password" type="password" required pattern="^(?=.*?[0-9]).{8,}$" class="form-control" placeholder="<fmt:message key = "field.password" />">
                 </div>
                 <button type="submit" class="btn btn-black"><fmt:message key = "signUp.action" /></button>
 

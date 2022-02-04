@@ -22,12 +22,12 @@
             <input type="hidden" name="command" value="updateUserPassword">
             <div class="form-group">
                 <label><fmt:message key = "signUp.password" /></label>
-                <input name="password" type="password" required pattern="^(?=.*?[0-9]).{8,}$" placeholder="********" class="form-control"/>
+                <input name="newPassword" type="password" required pattern="^(?=.*?[0-9]).{8,}$" placeholder= "<fmt:message key = "field.password" />" class="form-control"/>
             </div>
 
             <div class="form-group">
                 <label><fmt:message key = "edit.passwordConfirmation" /></label>
-                <input name="password" type="password" required pattern="^(?=.*?[0-9]).{8,}$" class="form-control" placeholder="********">
+                <input name="oldPassword" type="password" required pattern="^(?=.*?[0-9]).{8,}$" class="form-control" placeholder="********">
             </div>
 
             <button type="submit" class="btn btn-black"><fmt:message key = "edit.save" /></button>

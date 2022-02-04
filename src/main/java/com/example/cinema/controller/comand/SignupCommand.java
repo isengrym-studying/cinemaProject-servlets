@@ -28,7 +28,6 @@ public class SignupCommand implements ActionCommand{
 
     @Override
     public String execute(HttpServletRequest req) {
-        ActionCommand.pageAdress(req);
         String page = null;
 
         String name = req.getParameter(PARAM_NAME_NAME);
@@ -55,6 +54,9 @@ public class SignupCommand implements ActionCommand{
             page = ConfigurationManager.getProperty("path.page.registration");
             log.warn("Registration process failed");
         }
+
+        ActionCommand.pageAdress(req);
+
         return page;
     }
 }

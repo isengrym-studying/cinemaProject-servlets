@@ -1,7 +1,5 @@
 package com.example.cinema.model.service;
 
-import com.example.cinema.controller.comand.ChangeLanguageCommand;
-import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 

@@ -44,4 +44,27 @@ body {
     background-color: rgba(147, 147, 147, 0.29);
 }
 
+.ticket-item  {
+    margin-top:20px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+}
+.ticket-item .ticket-data {
+    float: left;
+}
 
+.page-number-block {
+    text-align: center;
+    color: #6c757d;
+}
+.page-number-item {
+    display: inline-block;
+}
+.page-number-block a {
+    text-decoration: none;
+    color: #6c757d;
+    transition: 0.15s;
+}
+.page-number-block a:hover {
+    color: black;
+}

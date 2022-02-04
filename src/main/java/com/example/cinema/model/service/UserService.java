@@ -82,14 +82,14 @@ public class UserService {
     }
 
     /**
-     * The method is being used for getting exact information about which fields were filled in with errors.
-     * Validators are used to find issues. Final result is a List of String objects
+     * The method is being used for validating information given by user of application.
+     * Validators are used to find issues. Final result is boolean value
      * @param name name of potential User. (DB TABLE `users` COLUMN `name`)
      * @param surname surname of potential User. (DB TABLE `users` COLUMN `surname`)
      * @param email email of potential User. (DB TABLE `users` COLUMN `email`)
      * @param password password of potential User. (DB TABLE `users` COLUMN `password`)
-     * @return Returns List<String> (If there were any issues).
-     * Returns empty List<String> (If there were no issues).
+     * @return Returns true (If there were no issues).
+     * Returns false (If there are issues).
      *
      */
     public boolean signUpDataValid(String name, String surname, String email, String password) {
@@ -111,8 +111,12 @@ public class UserService {
 
     public boolean updateUser(User user) {
         UserDao userDao = UserDao.getInstance();
-        userDao.updateUser(user);
-        return true;
+        return userDao.updateUser(user);
+    }
+
+    public boolean deleteUser(User user) {
+        UserDao userDao = UserDao.getInstance();
+        return userDao.deleteUser(user);
     }
 
 

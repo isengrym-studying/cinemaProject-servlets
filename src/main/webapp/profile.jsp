@@ -36,24 +36,27 @@
                     <a class="change" href="passwordUpdate.jsp"><fmt:message key = "profile.change" />
                     </a>
                 </h4>
-                <a href="controller?command=deleteAccount">
+                <a href="controller?command=deleteUser">
                     <button class="command-button" type="button" ><fmt:message key = "profile.deleteAcc" /></button>
                 </a>
             </div>
 
-            <div class="ticket-list col-sm-12 col-md-4 col-lg-3">
+            <div class="ticket-list col-sm-12 col-md-12 col-lg-3">
                 <h3><fmt:message key = "profile.tickets" /></h3>
-                    <%--            <c:forEach var="ticket" items="tickets">--%>
-                    <%--                <div class="ticket-item">--%>
-                    <%--                    <h6>${ticket.movie.title}</h6>--%>
-                    <%--                    <h6>${ticket.movie.startTime}</h6>--%>
-                    <%--                    <h6>Row: ${ticket.row}, place: ${ticket.place}</h6>--%>
-                    <%--                    <h6>${ticket.price} hrn</h6>--%>
-                    <%--                </div>--%>
-                    <%--            </c:forEach>--%>
-                <a href="controller?command=deleteAccount">
-                    <button class="command-button" type="button"><fmt:message key = "profile.printTicket" /></button>
-                </a>
+                                <c:forEach var="ticket" items="${ticketList}">
+                                    <div class="ticket-item col-lg-12">
+                                        <h6 class="ticket-data"><span> Seance id </span> <br> ${ticket.seanceId}</h6>
+                                        <h6 class="ticket-data"><span> Row number </span> <br>${ticket.rowNumber}</h6>
+                                        <h6 class="ticket-data"><span> Seat number </span> <br>${ticket.placeNumber}</h6>
+                                    </div>
+                                </c:forEach>
+
+                <div class="page-number-block">
+                    <% for(int i = 1; i < (Integer)request.getAttribute("ticketPagesQuantity")+1; i+=1) { %>
+                        <c:set var="number" scope="request" value="<%= i %>"></c:set>
+                        <a href="/controller?command=profile&ticketPage=${number}"><p class="page-number-item">${number}</p></a>
+                    <%}%>
+                </div>
             </div>
 
             <div class="col-sm-0 col-md-0 col-lg-2">

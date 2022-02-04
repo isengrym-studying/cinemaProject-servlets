@@ -23,23 +23,27 @@ public class UpdateUserPasswordCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null) {
+            page = ConfigurationManager.getProperty("path.page.login");
+            return page;
+        }
+
         ActionCommand.pageAdress(req);
 
         String newPassword = req.getParameter(PARAM_NAME_NEWPASSWORD);
         String oldPassword = req.getParameter(PARAM_NAME_OLDPASSWORD);
 
-        User user = (User) req.getSession().getAttribute("user");
-
         UserService userService = UserService.getInstance();
         CipherService cipherService = CipherService.getInstance();
 
-        byte[] salt = cipherService.generateSalt();
-        byte[] oldPasswordEncrypted = cipherService.getEncryptedPassword(oldPassword, salt);
-        byte[] newPasswordEncrypted = cipherService.getEncryptedPassword(newPassword, salt);
+        byte[] oldPasswordEncrypted = cipherService.getEncryptedPassword(oldPassword, user.getSalt());
+        byte[] newPasswordEncrypted = cipherService.getEncryptedPassword(newPassword, user.getSalt());
 
         if (PasswordValidator.validate(newPassword) && Arrays.equals(oldPasswordEncrypted, user.getPassword())) {
-            userService.updateUser(user);
             user.setPassword(newPasswordEncrypted);
+            userService.updateUser(user);
+
 
             ProfileCommand profileCommand = new ProfileCommand();
             page = profileCommand.execute(req);

@@ -16,7 +16,6 @@ public class GenerateSeancesPage implements ActionCommand {
 
     @Override
     public String execute(HttpServletRequest req) {
-        ActionCommand.pageAdress(req);
         String page = null;
 
         MovieSeanceService service = MovieSeanceService.getInstance();
@@ -29,7 +28,9 @@ public class GenerateSeancesPage implements ActionCommand {
         req.setAttribute("movies", moviesList);
         req.setAttribute("pageTitleProperty", "seances.title");
         req.setAttribute("pageHeadlineProperty", "seances.headline");
+
         page = ConfigurationManager.getProperty("path.page.movies");
+        ActionCommand.pageAdress(req);
 
         return page;
     }

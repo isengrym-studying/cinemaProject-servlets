@@ -24,12 +24,17 @@ public class UpdateUserSurnameCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null) {
+            page = ConfigurationManager.getProperty("path.page.login");
+            return page;
+        }
+
         ActionCommand.pageAdress(req);
 
         String surname = req.getParameter(PARAM_NAME_SURNAME);
         String password = req.getParameter(PARAM_NAME_PASSWORD);
 
-        User user = (User) req.getSession().getAttribute("user");
         UserService userService = UserService.getInstance();
         CipherService cipherService = CipherService.getInstance();
 
@@ -37,8 +42,8 @@ public class UpdateUserSurnameCommand implements ActionCommand {
         byte[] passwordEncrypted = cipherService.getEncryptedPassword(password, salt);
 
         if (NameValidator.validate(surname) && Arrays.equals(passwordEncrypted, user.getPassword())) {
-            userService.updateUser(user);
             user.setSurname(surname);
+            userService.updateUser(user);
 
             ProfileCommand profileCommand = new ProfileCommand();
             page = profileCommand.execute(req);

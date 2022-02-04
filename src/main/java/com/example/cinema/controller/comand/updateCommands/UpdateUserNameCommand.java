@@ -9,11 +9,9 @@ import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.CipherService;
 import com.example.cinema.model.service.UserService;
 import com.example.cinema.model.service.validator.NameValidator;
-import com.example.cinema.model.service.validator.PasswordValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.validation.Validator;
 import java.util.Arrays;
 
 public class UpdateUserNameCommand implements ActionCommand {
@@ -24,13 +22,19 @@ public class UpdateUserNameCommand implements ActionCommand {
 
     @Override
     public String execute(HttpServletRequest req) {
+
         String page = null;
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null) {
+            page = ConfigurationManager.getProperty("path.page.login");
+            return page;
+        }
+
         ActionCommand.pageAdress(req);
 
         String name = req.getParameter(PARAM_NAME_NAME);
         String password = req.getParameter(PARAM_NAME_PASSWORD);
 
-        User user = (User) req.getSession().getAttribute("user");
 
         UserService userService = UserService.getInstance();
         CipherService cipherService = CipherService.getInstance();
@@ -39,8 +43,8 @@ public class UpdateUserNameCommand implements ActionCommand {
         byte[] passwordEncrypted = cipherService.getEncryptedPassword(password, salt);
 
         if (NameValidator.validate(name) && Arrays.equals(passwordEncrypted, user.getPassword())) {
-            userService.updateUser(user);
             user.setName(name);
+            userService.updateUser(user);
 
             ProfileCommand profileCommand = new ProfileCommand();
             page = profileCommand.execute(req);

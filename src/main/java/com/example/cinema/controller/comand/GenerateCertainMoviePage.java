@@ -14,11 +14,11 @@ import java.util.Map;
  * The command that is responsible for getting and sending all information and seances for certain movie
  *
  */
-public class GenerateMoviePageCommand implements ActionCommand {
+public class GenerateCertainMoviePage implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
-        ActionCommand.pageAdress(req);
+
 
         MovieSeanceService service = MovieSeanceService.getInstance();
         int movieId = Integer.parseInt(req.getParameter("movieId"));
@@ -35,6 +35,8 @@ public class GenerateMoviePageCommand implements ActionCommand {
 
         req.setAttribute("seancesMap", mapDateSeance);
         page = ConfigurationManager.getProperty("path.page.movie");
+
+        ActionCommand.pageAdress(req);
         return page;
     }
 

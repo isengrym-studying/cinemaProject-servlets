@@ -1,6 +1,7 @@
 package com.example.cinema.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Class represents 'seance' entity.
@@ -39,6 +40,25 @@ public class Seance {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startTime) { this.startDate = startTime; }
+    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
 
+    @Override
+    public String toString() {
+        return "Seance{" +
+                "id=" + id +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seance seance = (Seance) o;
+        return id == seance.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

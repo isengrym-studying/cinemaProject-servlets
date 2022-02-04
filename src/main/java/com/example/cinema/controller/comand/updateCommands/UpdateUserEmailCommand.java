@@ -24,12 +24,16 @@ public class UpdateUserEmailCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null) {
+            page = ConfigurationManager.getProperty("path.page.login");
+            return page;
+        }
+
         ActionCommand.pageAdress(req);
 
         String email = req.getParameter(PARAM_NAME_EMAIL);
         String password = req.getParameter(PARAM_NAME_PASSWORD);
-
-        User user = (User) req.getSession().getAttribute("user");
 
         UserService userService = UserService.getInstance();
         CipherService cipherService = CipherService.getInstance();
@@ -37,16 +41,14 @@ public class UpdateUserEmailCommand implements ActionCommand {
         byte[] salt = user.getSalt();
         byte[] passwordEncrypted = cipherService.getEncryptedPassword(password, salt);
 
-
-        if (EmailValidator.validate(email) && Arrays.equals(passwordEncrypted, user.getPassword())) {
-            userService.updateUser(user);
+        if (EmailValidator.validate(email) && Arrays.equals(passwordEncrypted, user.getPassword()) && !userService.checkUserExistence(email)) {
             user.setEmail(email);
+            userService.updateUser(user);
 
             ProfileCommand profileCommand = new ProfileCommand();
             page = profileCommand.execute(req);
 
             return page;
-
         }
         else if (!EmailValidator.validate(email)) {
             req.setAttribute("errorEmailMessage", MessageManager.getProperty("message.update.emailError"));
@@ -54,9 +56,12 @@ public class UpdateUserEmailCommand implements ActionCommand {
         else if (!Arrays.equals(passwordEncrypted, user.getPassword())) {
             req.setAttribute("errorOldPasswordMessage", MessageManager.getProperty("message.update.oldPasswordError"));
         }
-
+        else if (userService.checkUserExistence(email)) {
+            req.setAttribute("errorOldPasswordMessage", MessageManager.getProperty("message.userAlreadyExists"));
+        }
 
         page = ConfigurationManager.getProperty("path.page.emailUpdate");
         return page;
     }
+
 }
