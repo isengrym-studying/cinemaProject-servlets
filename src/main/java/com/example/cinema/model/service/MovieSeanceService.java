@@ -1,10 +1,16 @@
 package com.example.cinema.model.service;
 
-import com.example.cinema.model.dao.MovieDao;
-import com.example.cinema.model.dao.SeanceDao;
+import com.example.cinema.model.connectionpool.ConnectionPool;
+import com.example.cinema.model.dao.*;
+import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Seance;
+import org.apache.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -19,6 +25,9 @@ import java.util.Map;
  *
  */
 public class MovieSeanceService {
+    private static Logger log = Logger.getLogger(UserDao.class);
+    private final SeanceDao seanceDao = SeanceDao.getInstance();
+    private final MovieDao movieDao = MovieDao.getInstance();
     private static MovieSeanceService movieSeanceService;
 
     public static synchronized MovieSeanceService getInstance() {
@@ -31,18 +40,26 @@ public class MovieSeanceService {
     private MovieSeanceService() { }
 
     public List<Movie> getAllMovies() {
-        MovieDao movieDao = MovieDao.getInstance();
         return movieDao.getAllMovies();
     }
 
     public List<Seance> getAllSeances() {
-        SeanceDao seanceDao = SeanceDao.getInstance();
         return seanceDao.getAllSeances();
     }
 
     public Movie getMovieById(int movieId) {
-        MovieDao movieDao = MovieDao.getInstance();
         return movieDao.getMovieById(movieId);
+    }
+
+    public List<Seance> getUniqueFutureSeancesPaginated(int startId, int total) {
+        return seanceDao.getUniqueFutureSeancesPaginated(startId, total);
+    }
+    public List<Seance> getFutureSeancesPaginated(int startId, int total) {
+        return seanceDao.getFutureSeancesPaginated(startId,total);
+    }
+
+    public int getUniqueSeancesQuantity() {
+        return seanceDao.getUniqueSeancesQuantity();
     }
 
     public List<Movie> getUniqueMovies(List<Seance> seanceList) {
@@ -54,7 +71,6 @@ public class MovieSeanceService {
     }
 
     public List<Seance> getCertainMovieSeances(Movie movie) {
-        SeanceDao seanceDao = SeanceDao.getInstance();
         return seanceDao.getCertainMovieSeances(movie);
     }
 
@@ -91,8 +107,11 @@ public class MovieSeanceService {
     }
 
     public Seance getSeanceById(int id) {
-        SeanceDao seanceDao = SeanceDao.getInstance();
         return seanceDao.getSeanceById(id);
     }
 
+
+    public int getFutureSeancesQuantity() {
+        return seanceDao.getFutureSeancesQuantity();
+    }
 }

@@ -26,7 +26,7 @@
 <%--                <span class="icon-bar"></span>--%>
 <%--                <span class="icon-bar"></span>--%>
 <%--            </button>--%>
-            <div class="navbar-brand navbar-brand-centered"><fmt:message key = "header_title" /></div>
+            <div class="navbar-brand navbar-brand-centered"><fmt:message key = "header.title" /></div>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -34,8 +34,8 @@
         <div  id="navbar-brand-centered">
             <ul class="nav navbar-nav">
                 <li><a href="controller?command=fillmainpage"><fmt:message key = "header.home" /></a></li>
+                <li><a href="controller?command=getmovies"><fmt:message key = "header.movies" /></a></li>
                 <li><a href="controller?command=getseances"><fmt:message key = "header.seances" /></a></li>
-                <li><a href="controller?command=getfilms"><fmt:message key = "header.films" /></a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">

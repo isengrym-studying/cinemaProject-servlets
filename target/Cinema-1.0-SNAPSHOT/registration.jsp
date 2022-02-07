@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="assets/css/signUpSignIn.css">
 </head>
 <body>
+<jsp:include page="header.jsp" />
+
 <div class="sidenav">
     <div class="login-main-text">
         <h2><fmt:message key = "signUp.label" /></h2>

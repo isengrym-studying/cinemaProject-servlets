@@ -22,11 +22,6 @@ public enum CommandEnum {
             this.command = new SignupCommand();
         }
     },
-    GETFILMS {
-        {
-            this.command = new GenerateAllMoviesPage();
-        }
-    },
     CHANGELANGUAGE {
         {
             this.command = new ChangeLanguage();
@@ -34,7 +29,12 @@ public enum CommandEnum {
     },
     GETFULLMOVIE{
         {
-            this.command = new GenerateCertainMoviePage();
+            this.command = new GenerateMoviePage();
+        }
+    },
+    GETMOVIES{
+        {
+            this.command = new GenerateMoviesPage();
         }
     },
     GETSEANCES{
@@ -49,7 +49,7 @@ public enum CommandEnum {
     },
     PROFILE{
         {
-            this.command = new ProfileCommand();
+            this.command = new GenerateProfilePage();
         }
     },
     UPDATEUSERNAME {

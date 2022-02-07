@@ -15,7 +15,7 @@ public class GenerateTicketChoicePage implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
-        ActionCommand.pageAdress(req);
+
 
         User user = (User) req.getSession().getAttribute("user");
         if (user == null) {

@@ -2,7 +2,9 @@ package com.example.cinema.model.dao;
 
 import com.example.cinema.model.connectionpool.ConnectionPool;
 import com.example.cinema.model.dao.exceptions.DaoException;
+import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.entity.Ticket;
+import com.example.cinema.model.service.MovieSeanceService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -48,9 +50,14 @@ public class TicketDao {
             try (ResultSet resSet = statement.executeQuery()) {
                 while (resSet.next()) {
                     Ticket ticket = new Ticket();
+                    SeanceDao seanceDao = SeanceDao.getInstance();
+
                     ticket.setTicketId(resSet.getInt("ticket_id"));
                     ticket.setUserId(resSet.getInt("user_id"));
-                    ticket.setSeanceId(resSet.getInt("seance_id"));
+
+                    Seance seance = seanceDao.getSeanceById(resSet.getInt("seance_id"));
+                    ticket.setSeance(seance);
+
                     ticket.setRowNumber(resSet.getInt("row_number"));
                     ticket.setPlaceNumber(resSet.getInt("place_number"));
                     ticket.setPrice(resSet.getInt("price"));
@@ -73,7 +80,7 @@ public class TicketDao {
              PreparedStatement statement = connection.prepareStatement(SQLQuery.TicketQuery.ADD_TICKET)) {
 
             statement.setInt(1, ticket.getUserId());
-            statement.setInt(2, ticket.getSeanceId());
+            statement.setInt(2, ticket.getSeance().getId());
             statement.setInt(3, ticket.getRowNumber());
             statement.setInt(4, ticket.getPlaceNumber());
 
@@ -99,9 +106,14 @@ public class TicketDao {
             try (ResultSet resSet = statement.executeQuery()) {
                 while (resSet.next()) {
                     Ticket ticket = new Ticket();
+                    SeanceDao seanceDao = SeanceDao.getInstance();
+
                     ticket.setTicketId(resSet.getInt("ticket_id"));
                     ticket.setUserId(resSet.getInt("user_id"));
-                    ticket.setSeanceId(resSet.getInt("seance_id"));
+
+                    Seance seance = seanceDao.getSeanceById(resSet.getInt("seance_id"));
+                    ticket.setSeance(seance);
+
                     ticket.setRowNumber(resSet.getInt("row_number"));
                     ticket.setPlaceNumber(resSet.getInt("place_number"));
                     ticket.setPrice(resSet.getInt("price"));

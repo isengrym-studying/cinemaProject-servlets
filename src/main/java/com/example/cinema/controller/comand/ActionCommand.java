@@ -11,17 +11,4 @@ import java.util.Optional;
 public interface ActionCommand {
     String execute(HttpServletRequest req);
 
-    /**
-     * Adding pageQuery attribute to session scope
-     * pageQuery attribute is being used for building the path to the page from which the command was called
-     *
-     */
-    static void pageAdress(HttpServletRequest req) {
-        String queryString = Optional.ofNullable(req.getQueryString())
-                .map(Object::toString)
-                .map(String::trim)
-                .orElse("");
-
-        req.getSession().setAttribute("pageQuery", queryString);
-    }
 }

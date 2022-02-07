@@ -11,8 +11,9 @@ public class Seance {
     private int id;
     private Movie movie;
     private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    public Seance() { }
+    public Seance() {}
 
     public Seance(int id, Movie movie, LocalDateTime startDate) {
         this.id = id;
@@ -40,7 +41,13 @@ public class Seance {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() { return this.endDate = this.getStartDate().plus(this.getMovie().getDuration()); }
+
+    public void setEndDate(LocalDateTime startDate, Movie movie) { this.endDate = startDate.plus(movie.getDuration()); }
 
     @Override
     public String toString() {

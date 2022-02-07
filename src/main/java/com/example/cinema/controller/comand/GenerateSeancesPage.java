@@ -1,36 +1,40 @@
 package com.example.cinema.controller.comand;
 
 import com.example.cinema.controller.ConfigurationManager;
-import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.service.MovieSeanceService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Random;
 
-/**
- * The command that is responsible for getting and sending back all films, that have active seances
- *
- */
 public class GenerateSeancesPage implements ActionCommand {
-
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
 
         MovieSeanceService service = MovieSeanceService.getInstance();
 
-        List<Seance> seancesList = service.getAllSeances();
-        List<Seance> futureSeances = service.getOnlyFutureSeances(seancesList);
-        List<Movie> moviesList = service.getUniqueMovies(futureSeances);
+        int seancePage;
+        int totalOnPage = 5;
 
-//        req.setAttribute("seances", seancesList);
-        req.setAttribute("movies", moviesList);
+        if (req.getParameter("seancePage") == null) seancePage = 1;
+        else seancePage = Integer.parseInt(req.getParameter("seancePage"));
+
+        List<Seance> list = service.getFutureSeancesPaginated((seancePage-1)*totalOnPage, totalOnPage);
+
+        int seancesQuantity = service.getFutureSeancesQuantity();
+        int seancePagesQuantity;
+
+        if (seancesQuantity % totalOnPage != 0) seancePagesQuantity = seancesQuantity/totalOnPage + 1;
+        else seancePagesQuantity = seancesQuantity/totalOnPage;
+
+        req.setAttribute("seances", list);
+        req.setAttribute("seancePagesQuantity",seancePagesQuantity);
         req.setAttribute("pageTitleProperty", "seances.title");
         req.setAttribute("pageHeadlineProperty", "seances.headline");
 
-        page = ConfigurationManager.getProperty("path.page.movies");
-        ActionCommand.pageAdress(req);
+        page = ConfigurationManager.getProperty("path.page.seances");
 
         return page;
     }

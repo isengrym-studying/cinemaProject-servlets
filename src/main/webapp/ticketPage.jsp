@@ -15,7 +15,7 @@
 
 <div class="cardWrap">
     <div class="card cardLeft">
-        <h1><fmt:message key = "header_title"/></h1>
+        <h1><fmt:message key = "header.title"/></h1>
         <div class="title">
             <h2>${seance.movie.title}</h2>
             <span><fmt:message key = "ticket.movie"/></span>

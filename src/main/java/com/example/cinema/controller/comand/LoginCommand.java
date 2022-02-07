@@ -46,7 +46,6 @@ public class LoginCommand implements ActionCommand {
             log.warn("Authorization process for user " + email + " failed.");
         }
 
-        ActionCommand.pageAdress(req);
 
         return page;
     }

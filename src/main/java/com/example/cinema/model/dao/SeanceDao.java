@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class SeanceDao {
                     movie.setImagePath(resSet.getString("image_path"));
 
                     Seance seance = new Seance();
+
                     int seanceId = resSet.getInt("seance_id");
                     int year = resSet.getInt("year");
                     int month = resSet.getInt("month");
@@ -67,6 +69,7 @@ public class SeanceDao {
                     int minute = resSet.getInt("minute");
                     seance.setId(seanceId);
                     seance.setStartDate(LocalDateTime.of(year,month,day,hour,minute));
+
                     seance.setMovie(movie);
 
                     list.add(seance);
@@ -99,14 +102,11 @@ public class SeanceDao {
                     movie.setDuration(Duration.ofMinutes(resSet.getInt("duration_minutes")));
                     movie.setImagePath(resSet.getString("image_path"));
 
-                    int year = resSet.getInt("year");
-                    int month = resSet.getInt("month");
-                    int day = resSet.getInt("day");
-                    int hour = resSet.getInt("hour");
-                    int minute = resSet.getInt("minute");
+
+                    long epoch = resSet.getInt("startDateSeconds");
 
                     seance.setId(resSet.getInt("seance_id"));
-                    seance.setStartDate(LocalDateTime.of(year,month,day,hour,minute));
+                    seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
                     seance.setMovie(movie);
                 }
             }
@@ -136,14 +136,10 @@ public class SeanceDao {
                 while(resSet.next()) {
 
                     Seance seance = new Seance();
-                    int seanceId = resSet.getInt("seance_id");
-                    int year = resSet.getInt("year");
-                    int month = resSet.getInt("month");
-                    int day = resSet.getInt("day");
-                    int hour = resSet.getInt("hour");
-                    int minute = resSet.getInt("minute");
-                    seance.setId(seanceId);
-                    seance.setStartDate(LocalDateTime.of(year,month,day,hour,minute));
+                    long epoch = resSet.getInt("startDateSeconds");
+
+                    seance.setId(resSet.getInt("seance_id"));
+                    seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
                     seance.setMovie(movie);
 
                     list.add(seance);
@@ -157,4 +153,121 @@ public class SeanceDao {
         return list;
     }
 
+    public List<Seance> getUniqueFutureSeancesPaginated(int startId, int total) {
+        List<Seance> list = new LinkedList<>();
+        log.info("Getting " + startId + " unique future `seance` objects from DB");
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_UNIQUE_FUTURE_SEANCES_PAGINATED)) {
+            statement.setLong(1, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setInt(2,startId);
+            statement.setInt(3,total);
+
+            try (ResultSet resSet = statement.executeQuery()) {
+                while(resSet.next()) {
+                    Movie movie = new Movie();
+                    movie.setId(resSet.getInt("movie_id"));
+                    movie.setTitle(resSet.getString("title"));
+                    movie.setDirector(resSet.getString("director"));
+                    movie.setProductionYear(resSet.getInt("production_year"));
+                    movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
+                    movie.setImagePath(resSet.getString("image_path"));
+
+                    Seance seance = new Seance();
+                    long epoch = resSet.getInt("startDateSeconds");
+
+                    seance.setId(resSet.getInt("seance_id"));
+                    seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
+                    seance.setMovie(movie);
+
+                    list.add(seance);
+                }
+                log.info("Successfully got " + startId + " unique future `seance` objects from DB");
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.getUniqueFutureSeancesPaginated() " + e.getMessage());
+            throw new DaoException("Couldn't get unique future seances from DB", e);
+        }
+        return list;
+    }
+
+    public int getUniqueSeancesQuantity() {
+        log.info("Counting seances with unique movie id`s");
+        int numberOfSeances = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.COUNT_UNIQUE_FUTURE_SEANCES)) {
+            statement.setLong(1,LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            try (ResultSet resSet = statement.executeQuery()) {
+                if (resSet.next()) {
+                    numberOfSeances = resSet.getInt("count");
+                    log.info("Successfully got number of seances with unique movies (" +numberOfSeances +")");
+                }
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.getUniqueSeancesQuantity() " + e.getMessage());
+            throw new DaoException("Couldn't get number of unique seances", e);
+        }
+        return numberOfSeances;
+    }
+
+    public List<Seance> getFutureSeancesPaginated(int startId, int total) {
+        List<Seance> list = new LinkedList<>();
+        log.info("Getting " + startId + " unique future `seance` objects from DB");
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_FUTURE_SEANCES_PAGINATED)) {
+            statement.setLong(1, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setInt(2,startId);
+            statement.setInt(3,total);
+
+            try (ResultSet resSet = statement.executeQuery()) {
+                while(resSet.next()) {
+                    Movie movie = new Movie();
+                    movie.setId(resSet.getInt("movie_id"));
+                    movie.setTitle(resSet.getString("title"));
+                    movie.setDirector(resSet.getString("director"));
+                    movie.setProductionYear(resSet.getInt("production_year"));
+                    movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
+                    movie.setImagePath(resSet.getString("image_path"));
+
+                    Seance seance = new Seance();
+                    long epoch = resSet.getInt("startDateSeconds");
+
+                    seance.setId(resSet.getInt("seance_id"));
+                    seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
+                    seance.setMovie(movie);
+
+                    list.add(seance);
+                }
+                log.info("Successfully got " + startId + " unique future `seance` objects from DB");
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.getUniqueFutureSeancesPaginated() " + e.getMessage());
+            throw new DaoException("Couldn't get unique future seances from DB", e);
+        }
+        return list;
+    }
+
+    public int getFutureSeancesQuantity() {
+        log.info("Counting future seances");
+        int numberOfSeances = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.COUNT_FUTURE_SEANCES)) {
+            statement.setLong(1,LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            try (ResultSet resSet = statement.executeQuery()) {
+                if (resSet.next()) {
+                    numberOfSeances = resSet.getInt("count");
+                    log.info("Successfully got number of future seances (" +numberOfSeances +")");
+                }
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.getFutureSeancesQuantity() " + e.getMessage());
+            throw new DaoException("Couldn't get number of future seances", e);
+        }
+        return numberOfSeances;
+    }
 }

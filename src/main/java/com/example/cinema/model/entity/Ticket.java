@@ -7,7 +7,7 @@ package com.example.cinema.model.entity;
 public class Ticket {
     int ticketId;
     int userId;
-    int seanceId;
+    Seance seance;
     int rowNumber;
     int placeNumber;
     int price;
@@ -35,12 +35,12 @@ public class Ticket {
         this.userId = userId;
     }
 
-    public int getSeanceId() {
-        return seanceId;
+    public Seance getSeance() {
+        return seance;
     }
 
-    public void setSeanceId(int seanceId) {
-        this.seanceId = seanceId;
+    public void setSeance(Seance seance) {
+        this.seance = seance;
     }
 
     public int getRowNumber() {
@@ -72,7 +72,7 @@ public class Ticket {
         return "Ticket{" +
                 "ticketId=" + ticketId +
                 ", userId=" + userId +
-                ", seanceId=" + seanceId +
+                ", seanceId=" + seance +
                 '}';
     }
 }

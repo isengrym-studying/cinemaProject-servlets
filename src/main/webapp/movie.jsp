@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="language">
     <html>
@@ -40,16 +39,17 @@
 
                                     <c:forEach var="seance" items="${date.value}">
                                         <a href="controller?command=ticketChoicePage&seanceId=${seance.id}"type="button">
-                                            <button >${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if></button>
+                                            <button>
+                                                    ${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if>
+                                            </button>
+
                                         </a>
                                     </c:forEach>
-
                                 </div>
 
                             </c:forEach>
 
                         </div>
-
                     </div>
 
                     <div class="right-half">

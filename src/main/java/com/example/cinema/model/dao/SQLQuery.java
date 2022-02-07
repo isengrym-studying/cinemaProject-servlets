@@ -17,13 +17,22 @@ public class SQLQuery {
         public static final String GET_ALL_MOVIES = "SELECT * FROM `movies`";
         public static final String GET_MOVIE_BY_ID = "SELECT * FROM `movies` INNER JOIN `genres` ON `genre`=`genre_id` WHERE `movie_id` = ?";
         public static final String GET_ALL_SEANCES = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id`";
-        public static final String GET_SEANCES_FOR_MOVIE = "SELECT * FROM `seances` WHERE `movie_id`=? ORDER BY `day`";
+        public static final String GET_UNIQUE_FUTURE_SEANCES_PAGINATED = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id`" +
+                "WHERE `startDateSeconds`>= ? GROUP BY `movies`.`movie_id` LIMIT ?,?";
+        public static final String GET_FUTURE_SEANCES_PAGINATED = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id` " +
+                "WHERE `startDateSeconds`>= ? LIMIT ?,?";
+        public static final String COUNT_UNIQUE_FUTURE_SEANCES = "SELECT COUNT(*) AS count FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id`" +
+                "WHERE `startDateSeconds`>= ? GROUP BY `movies`.`movie_id`";
+        public static final String COUNT_FUTURE_SEANCES = "SELECT COUNT(*) AS count FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id`" +
+                "WHERE `startDateSeconds`>= ?";
+        public static final String GET_SEANCES_FOR_MOVIE = "SELECT * FROM `seances` WHERE `movie_id`=?";
         public static final String GET_SEANCE_BY_ID = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id` WHERE `seance_id` = ?";
+
     }
     static class TicketQuery {
         public static final String GET_TICKETS_FOR_SEANCE = "SELECT * FROM `tickets` WHERE `seance_id`=?";
         public static final String ADD_TICKET = "INSERT INTO `tickets` VALUES(DEFAULT,?,?,?,?,DEFAULT)";
-        public static final String GET_USER_TICKETS_PAGINATED = "SELECT * FROM `tickets` WHERE `user_id`=? LIMIT ?,?";
+        public static final String GET_USER_TICKETS_PAGINATED = "SELECT * FROM `tickets` WHERE `user_id`=? ORDER BY `ticket_id` DESC LIMIT ?,? ";
         public static final String COUNT_USER_TICKETS = "SELECT COUNT(*) AS count FROM `tickets` WHERE `user_id`=?";
     }
 }

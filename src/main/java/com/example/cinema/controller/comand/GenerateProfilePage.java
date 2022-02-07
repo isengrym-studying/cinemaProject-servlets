@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  * including registration data and tickets
  *
  */
-public class ProfileCommand implements  ActionCommand {
+public class GenerateProfilePage implements  ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
@@ -28,7 +28,7 @@ public class ProfileCommand implements  ActionCommand {
         TicketService ticketService = TicketService.getInstance();
 
         int ticketPage;
-        int totalOnPage = 5;
+        int totalOnPage = 4;
         int ticketsQuantity = ticketService.getTicketsQuantity(user.getId());
         int ticketPagesQuantity;
         if (ticketsQuantity % totalOnPage != 0) {
@@ -51,7 +51,6 @@ public class ProfileCommand implements  ActionCommand {
 
 
         page = ConfigurationManager.getProperty("path.page.profile");
-        ActionCommand.pageAdress(req);
         return page;
     }
 }

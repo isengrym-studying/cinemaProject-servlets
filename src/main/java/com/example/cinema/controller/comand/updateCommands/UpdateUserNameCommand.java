@@ -4,7 +4,7 @@ import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.MessageManager;
 import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.controller.comand.LoginCommand;
-import com.example.cinema.controller.comand.ProfileCommand;
+import com.example.cinema.controller.comand.GenerateProfilePage;
 import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.CipherService;
 import com.example.cinema.model.service.UserService;
@@ -30,7 +30,6 @@ public class UpdateUserNameCommand implements ActionCommand {
             return page;
         }
 
-        ActionCommand.pageAdress(req);
 
         String name = req.getParameter(PARAM_NAME_NAME);
         String password = req.getParameter(PARAM_NAME_PASSWORD);
@@ -46,8 +45,7 @@ public class UpdateUserNameCommand implements ActionCommand {
             user.setName(name);
             userService.updateUser(user);
 
-            ProfileCommand profileCommand = new ProfileCommand();
-            page = profileCommand.execute(req);
+            page = "/controller?command=profile";
 
             return page;
         }

@@ -13,25 +13,6 @@ public class User {
     private byte[] salt;
     private String role;
 
-    public User(int id, String name, String surname, String email, byte[] password, byte[] salt, String role) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.salt = salt;
-        this.role = role;
-    }
-
-    public User(String name, String surname, String email, byte[] password, byte[] salt, String role) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.salt = salt;
-        this.role = role;
-    }
-
     public User(User user) {
         this.id = user.id;
         this.name = user.name;
@@ -42,7 +23,6 @@ public class User {
     }
 
     public User() { }
-
 
     public int getId() { return id; }
 

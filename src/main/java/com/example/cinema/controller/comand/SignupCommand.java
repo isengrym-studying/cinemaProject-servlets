@@ -55,7 +55,6 @@ public class SignupCommand implements ActionCommand{
             log.warn("Registration process failed");
         }
 
-        ActionCommand.pageAdress(req);
 
         return page;
     }

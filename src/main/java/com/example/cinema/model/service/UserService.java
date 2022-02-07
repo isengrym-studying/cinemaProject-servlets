@@ -76,7 +76,13 @@ public class UserService {
         CipherService cipherService = CipherService.getInstance();
         byte[] salt = cipherService.generateSalt();
         byte[] cipheredPassword = cipherService.getEncryptedPassword(password, salt);
-        User user = new User(name, surname, email, cipheredPassword, salt, role);
+        User user = new User();
+        user.setName(name);
+        user.setSurname(surname);
+        user.setEmail(email);
+        user.setPassword(cipheredPassword);
+        user.setSalt(salt);
+        user.setRole(role);
         return userDao.addUser(user);
 
     }

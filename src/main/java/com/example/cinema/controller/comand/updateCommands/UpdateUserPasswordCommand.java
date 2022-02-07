@@ -4,11 +4,10 @@ import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.MessageManager;
 import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.controller.comand.LoginCommand;
-import com.example.cinema.controller.comand.ProfileCommand;
+import com.example.cinema.controller.comand.GenerateProfilePage;
 import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.CipherService;
 import com.example.cinema.model.service.UserService;
-import com.example.cinema.model.service.validator.EmailValidator;
 import com.example.cinema.model.service.validator.PasswordValidator;
 import org.apache.log4j.Logger;
 
@@ -29,7 +28,6 @@ public class UpdateUserPasswordCommand implements ActionCommand {
             return page;
         }
 
-        ActionCommand.pageAdress(req);
 
         String newPassword = req.getParameter(PARAM_NAME_NEWPASSWORD);
         String oldPassword = req.getParameter(PARAM_NAME_OLDPASSWORD);
@@ -45,8 +43,7 @@ public class UpdateUserPasswordCommand implements ActionCommand {
             userService.updateUser(user);
 
 
-            ProfileCommand profileCommand = new ProfileCommand();
-            page = profileCommand.execute(req);
+            page = "/controller?command=profile";
 
             return page;
         }

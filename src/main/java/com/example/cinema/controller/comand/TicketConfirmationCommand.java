@@ -8,7 +8,6 @@ import com.example.cinema.model.service.TicketService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Objects;
 
 public class TicketConfirmationCommand implements  ActionCommand {
     @Override
@@ -30,7 +29,7 @@ public class TicketConfirmationCommand implements  ActionCommand {
 
             ticket.setRowNumber((Integer) session.getAttribute("rowId"));
             ticket.setPlaceNumber((Integer) session.getAttribute("placeId"));
-            ticket.setSeanceId(seance.getId());
+            ticket.setSeance(seance);
             ticket.setUserId(user.getId());
 
             service.createTicket(ticket);
@@ -43,7 +42,6 @@ public class TicketConfirmationCommand implements  ActionCommand {
         session.removeAttribute("rowId");
         session.removeAttribute("placeId");
 
-        ActionCommand.pageAdress(req);
         return page;
     }
 }

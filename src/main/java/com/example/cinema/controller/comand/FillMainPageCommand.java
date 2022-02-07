@@ -6,6 +6,8 @@ import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.service.MovieSeanceService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -18,15 +20,8 @@ public class FillMainPageCommand implements ActionCommand {
         String page = null;
 
         MovieSeanceService service = MovieSeanceService.getInstance();
-
-        List<Seance> seancesList = service.getAllSeances();
-        List<Seance> futureSeances = service.getOnlyFutureSeances(seancesList);
-        List<Movie> moviesList = service.getUniqueMovies(futureSeances);
-
-        req.setAttribute("moviesList", moviesList);
         page = ConfigurationManager.getProperty("path.page.main");
 
-        ActionCommand.pageAdress(req);
         return page;
     }
 }

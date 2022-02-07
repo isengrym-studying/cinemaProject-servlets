@@ -17,8 +17,10 @@ public class ChangeLanguage implements ActionCommand {
     private static Logger log = Logger.getLogger(ChangeLanguage.class);
     String page = null;
 
+
     @Override
     public String execute(HttpServletRequest req) {
+        log.info("Got into ChangeLanguage command");
         HttpSession session = req.getSession();
         String language = (String) session.getAttribute("language");
 
@@ -39,8 +41,9 @@ public class ChangeLanguage implements ActionCommand {
                 .map(String::trim)
                 .orElse("");
 
-        if (queryString != "") page = "/controller?" + queryString;
-        else page = ConfigurationManager.getProperty("path.page.index");
+        if (queryString.contains("command=")) page = "/controller?" + queryString;
+        else if (queryString.equals("/controller")) page = ConfigurationManager.getProperty("path.page.index");
+        else page = queryString;
 
         log.info("Going back to" + page);
         return page;

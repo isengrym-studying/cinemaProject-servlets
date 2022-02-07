@@ -1,3 +1,7 @@
 body {
     font-family: "Lato", sans-serif;
 }
+.seance-page-title h2 {
+    font-size: 35px;
+    font-weight: 900;
+}
