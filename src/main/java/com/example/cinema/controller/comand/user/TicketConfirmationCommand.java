@@ -1,6 +1,7 @@
-package com.example.cinema.controller.comand;
+package com.example.cinema.controller.comand.user;
 
 import com.example.cinema.controller.ConfigurationManager;
+import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.entity.Ticket;
 import com.example.cinema.model.entity.User;
@@ -9,7 +10,7 @@ import com.example.cinema.model.service.TicketService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class TicketConfirmationCommand implements  ActionCommand {
+public class TicketConfirmationCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
@@ -21,12 +22,11 @@ public class TicketConfirmationCommand implements  ActionCommand {
 
         String action = req.getParameter("action");
         HttpSession session = req.getSession();
+        Seance seance = (Seance)session.getAttribute("seance");
 
         if (action.equals("confirm")) {
             TicketService service = TicketService.getInstance();
             Ticket ticket = new Ticket();
-            Seance seance = (Seance)session.getAttribute("seance");
-
             ticket.setRowNumber((Integer) session.getAttribute("rowId"));
             ticket.setPlaceNumber((Integer) session.getAttribute("placeId"));
             ticket.setSeance(seance);
@@ -35,7 +35,7 @@ public class TicketConfirmationCommand implements  ActionCommand {
             service.createTicket(ticket);
         }
 
-        page = "/controller?"+session.getAttribute("pageQuery");
+        page = "/controller?command=ticketChoicePage&seanceId="+seance.getId();
 
         System.out.println(page);
         session.removeAttribute("seance");

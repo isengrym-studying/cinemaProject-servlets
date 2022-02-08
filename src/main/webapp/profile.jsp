@@ -8,6 +8,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="assets/css/profile.css">
+        <link rel="stylesheet" href="assets/css/style.css">
         <title><fmt:message key = "profile.title" /></title>
     </head>
     <body>
@@ -19,7 +20,7 @@
             </div>
 
             <div class="ticket-list col-sm-12 col-md-6 col-lg-4">
-                <h3><fmt:message key = "profile.tickets" /></h3>
+                <h3 class="headline"><fmt:message key = "profile.tickets" /></h3>
                                 <c:forEach var="ticket" items="${ticketList}">
                                     <div class="ticket-item">
                                         <div class="left-side">
@@ -53,7 +54,7 @@
             </div>
 
             <div class = "personal-data col-sm-12 col-md-6 col-lg-4">
-                <h3><fmt:message key = "profile.personalData" /></h3>
+                <h3 class="headline"><fmt:message key = "profile.personalData" /></h3>
                 <h4>
                     <fmt:message key = "signUp.name" /> : ${userName}
                     <a class="change" href="nameUpdate.jsp"> <fmt:message key = "profile.change" /></a>

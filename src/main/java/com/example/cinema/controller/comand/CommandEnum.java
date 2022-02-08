@@ -1,6 +1,12 @@
 package com.example.cinema.controller.comand;
 
-import com.example.cinema.controller.comand.updateCommands.*;
+import com.example.cinema.controller.comand.admin.*;
+import com.example.cinema.controller.comand.common.*;
+import com.example.cinema.controller.comand.user.*;
+import com.example.cinema.controller.comand.user.updateCommands.UpdateUserEmailCommand;
+import com.example.cinema.controller.comand.user.updateCommands.UpdateUserNameCommand;
+import com.example.cinema.controller.comand.user.updateCommands.UpdateUserPasswordCommand;
+import com.example.cinema.controller.comand.user.updateCommands.UpdateUserSurnameCommand;
 
 /**
  * Enum of all existing commands
@@ -90,6 +96,36 @@ public enum CommandEnum {
     UPDATEUSERPASSWORD {
         {
             this.command = new UpdateUserPasswordCommand();
+        }
+    },
+    NEWMOVIEPAGE {
+        {
+            this.command = new GenerateNewMoviePage();
+        }
+    },
+    ADDNEWMOVIE {
+        {
+            this.command = new AddMovieCommand();
+        }
+    },
+    DELETEMOVIE {
+        {
+            this.command = new DeleteMovieCommand();
+        }
+    },
+    NEWSEANCEPAGE {
+        {
+            this.command = new GenerateNewSeancePage();
+        }
+    },
+    ADDNEWSEANCE {
+        {
+            this.command = new AddSeanceCommand();
+        }
+    },
+    DELETESEANCE {
+        {
+            this.command = new DeleteSeanceCommand();
         }
     };
 

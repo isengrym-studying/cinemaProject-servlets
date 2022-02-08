@@ -1,6 +1,7 @@
-package com.example.cinema.controller.comand;
+package com.example.cinema.controller.comand.common;
 
 import com.example.cinema.controller.ConfigurationManager;
+import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.service.MovieSeanceService;
 
@@ -20,7 +21,7 @@ public class GenerateMoviesPage implements ActionCommand {
         MovieSeanceService service = MovieSeanceService.getInstance();
 
         int moviePage;
-        int totalOnPage = 12;
+        int totalOnPage = 8;
 
         if (req.getParameter("moviePage") == null) moviePage = 1;
         else moviePage = Integer.parseInt(req.getParameter("moviePage"));

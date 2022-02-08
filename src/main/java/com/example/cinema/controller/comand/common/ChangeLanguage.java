@@ -1,6 +1,6 @@
-package com.example.cinema.controller.comand;
+package com.example.cinema.controller.comand.common;
 
-import com.example.cinema.controller.ConfigurationManager;
+import com.example.cinema.controller.comand.ActionCommand;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +42,6 @@ public class ChangeLanguage implements ActionCommand {
                 .orElse("");
 
         if (queryString.contains("command=")) page = "/controller?" + queryString;
-        else if (queryString.equals("/controller")) page = ConfigurationManager.getProperty("path.page.index");
-        else page = queryString;
 
         log.info("Going back to" + page);
         return page;

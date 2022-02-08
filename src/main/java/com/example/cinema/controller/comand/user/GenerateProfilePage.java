@@ -1,6 +1,7 @@
-package com.example.cinema.controller.comand;
+package com.example.cinema.controller.comand.user;
 
 import com.example.cinema.controller.ConfigurationManager;
+import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.TicketService;
 
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * including registration data and tickets
  *
  */
-public class GenerateProfilePage implements  ActionCommand {
+public class GenerateProfilePage implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;

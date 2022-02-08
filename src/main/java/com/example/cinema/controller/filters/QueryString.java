@@ -26,8 +26,8 @@ public class QueryString implements Filter {
                 .map(String::trim)
                 .orElse("");
 
+
         if (!queryString.equals("command=changelanguage")) request.getSession().setAttribute("pageQuery", queryString);
-        if (queryString.isEmpty()) request.getSession().setAttribute("pageQuery", request.getServletPath());
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

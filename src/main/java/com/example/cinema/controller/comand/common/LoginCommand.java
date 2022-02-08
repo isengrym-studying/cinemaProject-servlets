@@ -1,7 +1,8 @@
-package com.example.cinema.controller.comand;
+package com.example.cinema.controller.comand.common;
 
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.MessageManager;
+import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.UserService;
 import org.apache.log4j.Logger;

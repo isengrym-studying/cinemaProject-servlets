@@ -7,7 +7,6 @@
     <html>
     <head>
         <link rel="stylesheet" href="assets/css/ticketChoice.css">
-        <script src="assets/js/scripts.js"></script>
         <title>${movie.title}</title>
     </head>
 
@@ -74,7 +73,7 @@
                     ${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if>
             </h4>
             <h4 class="movie-info"><span><fmt:message key = "movieItem.endTime"/></span><br>
-
+                    ${seance.endDate.getHour()}:${seance.endDate.getMinute()}<c:if test="${seance.endDate.getMinute() == 0}">0</c:if>
             </h4>
         </div>
     </div>

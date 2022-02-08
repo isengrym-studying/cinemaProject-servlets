@@ -23,6 +23,7 @@ public class TicketService {
     public boolean createTicket(Ticket ticket) {
         return ticketDao.createTicket(ticket);
     }
+
     public List<Ticket> getPaginatedTickets(int userId, int startId, int total) {
         return ticketDao.getUserTicketsPaginated(userId,startId,total);
     }

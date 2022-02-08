@@ -13,7 +13,6 @@
     <title><fmt:message key = "signIn.title" /></title>
 </head>
 <body>
-<jsp:include page="header.jsp" />
 
 <div class="sidenav">
     <div class="login-main-text">

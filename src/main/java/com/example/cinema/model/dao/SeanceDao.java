@@ -270,4 +270,37 @@ public class SeanceDao {
         }
         return numberOfSeances;
     }
+
+    public void addSeance(int movieId, long seconds) {
+        log.info("Adding new seance to DB");
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.ADD_SEANCE)) {
+
+            statement.setInt(1, movieId);
+            statement.setLong(2, seconds);
+
+            statement.execute();
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.addSeance() " + e.getMessage());
+            throw new DaoException("Couldn't add seance to DB", e);
+        }
+    }
+
+    public void deleteSeance(int seanceId) {
+        log.info("Deleting seance with id " + seanceId);
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.DELETE_SEANCE)) {
+
+            statement.setInt(1, seanceId);
+
+            statement.execute();
+            log.info("Deleting seance ("+ seanceId + ") from DB was successfully finished");
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.deleteSeance() " + e.getMessage());
+            throw new DaoException("Couldn't delete seance", e);
+        }
+    }
 }

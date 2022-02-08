@@ -1,6 +1,7 @@
-package com.example.cinema.controller.comand;
+package com.example.cinema.controller.comand.common;
 
 import com.example.cinema.controller.ConfigurationManager;
+import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.service.MovieSeanceService;
 

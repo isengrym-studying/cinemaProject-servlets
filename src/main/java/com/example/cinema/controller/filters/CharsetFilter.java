@@ -1,8 +1,5 @@
 package com.example.cinema.controller.filters;
 
-import com.example.cinema.controller.comand.LoginCommand;
-import org.apache.log4j.Logger;
-
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;

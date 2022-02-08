@@ -1,18 +1,7 @@
 body {
     color: rgba(10, 10, 10, 0.36);
 }
-.personal-data h3 {
-    margin-top: 0px;
-    font-size: 35px;
-    font-weight: 900;
-    padding-bottom: 30px;
-}
-.ticket-list h3 {
-    margin-top: 0px;
-    padding-bottom: 20px;
-    font-size: 35px;
-    font-weight: 900;
-}
+
 .page-body h4 {
     font-size: 19px;
     font-weight: 400;
@@ -82,18 +71,3 @@ body {
 }
 
 
-.page-number-block {
-    text-align: center;
-    color: #6c757d;
-}
-.page-number-item {
-    display: inline-block;
-}
-.page-number-block a {
-    text-decoration: none;
-    color: #6c757d;
-    transition: 0.15s;
-}
-.page-number-block a:hover {
-    color: black;
-}

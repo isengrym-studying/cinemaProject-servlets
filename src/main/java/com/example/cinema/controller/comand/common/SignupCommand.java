@@ -1,7 +1,8 @@
-package com.example.cinema.controller.comand;
+package com.example.cinema.controller.comand.common;
 
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.MessageManager;
+import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.Role;
 import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.UserService;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
  * If registration was successful, user object is set as attribute
  *
  */
-public class SignupCommand implements ActionCommand{
+public class SignupCommand implements ActionCommand {
     private static Logger log = Logger.getLogger(LoginCommand.class);
 
     private static final String PARAM_NAME_NAME = "name";

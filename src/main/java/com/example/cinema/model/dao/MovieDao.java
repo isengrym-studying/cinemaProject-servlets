@@ -109,6 +109,44 @@ public class MovieDao {
     }
 
 
+    public boolean addMovie(String title, String director, int year, int genreId, int duration, int age, String imagePath) {
+        log.info("Adding new movie to DB");
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.ADD_MOVIE)) {
+
+            statement.setString(1, title);
+            statement.setString(2, director);
+            statement.setInt(3, year);
+            statement.setInt(4, genreId);
+            statement.setInt(5, duration);
+            statement.setInt(6, age);
+            statement.setString(7, imagePath);
+            return statement.execute();
+
+        } catch (SQLException e) {
+            log.error("SQLException in MovieDao.addMovie() " + e.getMessage());
+            throw new DaoException("Couldn't add movie to DB", e);
+        }
+
+    }
+
+    public boolean deleteMovie(int movieId) {
+        log.info("Deleting movie with id " + movieId);
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.DELETE_MOVIE)) {
+
+            statement.setInt(1, movieId);
+
+            statement.execute();
+            log.info("Deleting movie ("+ movieId + ") from DB was successfully finished");
+            return true;
+        } catch (SQLException e) {
+            log.error("SQLException in MovieDao.deleteMovie() " + e.getMessage());
+            throw new DaoException("Couldn't delete movie", e);
+        }
+    }
 
 
 }

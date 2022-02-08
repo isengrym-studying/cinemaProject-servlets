@@ -1,7 +1,22 @@
 body {
     font-family: "Lato", sans-serif;
 }
-.seance-page-title h2 {
+.headline {
     font-size: 35px;
     font-weight: 900;
+}
+
+.page-number-block {
+    margin-top: 20px;
+    text-align: center;
+    color: #6c757d;
+}
+.page-number-block a {
+    text-decoration: none;
+    color: #6c757d;
+    transition: 0.15s;
+    display: inline-block;
+}
+.page-number-block a:hover {
+    color: black;
 }

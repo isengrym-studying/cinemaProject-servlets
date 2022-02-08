@@ -62,13 +62,13 @@ public class MovieSeanceService {
         return seanceDao.getUniqueSeancesQuantity();
     }
 
-    public List<Movie> getUniqueMovies(List<Seance> seanceList) {
-        List<Movie> movieList = new LinkedList<>();
-        for (Seance seance : seanceList) {
-            if (!movieList.contains(seance.getMovie())) movieList.add(seance.getMovie());
-        }
-        return movieList;
-    }
+//    public List<Movie> getUniqueMovies(List<Seance> seanceList) {
+//        List<Movie> movieList = new LinkedList<>();
+//        for (Seance seance : seanceList) {
+//            if (!movieList.contains(seance.getMovie())) movieList.add(seance.getMovie());
+//        }
+//        return movieList;
+//    }
 
     public List<Seance> getCertainMovieSeances(Movie movie) {
         return seanceDao.getCertainMovieSeances(movie);
@@ -113,5 +113,21 @@ public class MovieSeanceService {
 
     public int getFutureSeancesQuantity() {
         return seanceDao.getFutureSeancesQuantity();
+    }
+
+    public boolean addMovie(String title, String director, int year, int genreId, int duration, int age, String imagePath) {
+        return movieDao.addMovie(title, director, year, genreId, duration, age, imagePath);
+    }
+
+    public boolean deleteMovie(int movieId) {
+        return movieDao.deleteMovie(movieId);
+    }
+
+    public void addSeance(int movieId, long seconds) {
+        seanceDao.addSeance(movieId, seconds);
+    }
+
+    public void deleteSeance(int seanceId) {
+        seanceDao.deleteSeance(seanceId);
     }
 }

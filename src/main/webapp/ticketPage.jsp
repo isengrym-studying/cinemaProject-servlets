@@ -7,7 +7,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="assets/css/ticketPage.css">
-    <script src="assets/js/scripts.js"></script>
     <title>Title</title>
 </head>
 <body>

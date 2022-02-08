@@ -25,7 +25,6 @@ public class UserService {
     }
 
     public boolean checkUserExistence(String email) {
-        UserDao userDao = UserDao.getInstance();
         return userDao.checkUserExistence(email);
     }
 
@@ -116,12 +115,10 @@ public class UserService {
     }
 
     public boolean updateUser(User user) {
-        UserDao userDao = UserDao.getInstance();
         return userDao.updateUser(user);
     }
 
     public boolean deleteUser(User user) {
-        UserDao userDao = UserDao.getInstance();
         return userDao.deleteUser(user);
     }
 
