@@ -1,16 +1,10 @@
 package com.example.cinema.model.service;
 
-import com.example.cinema.model.connectionpool.ConnectionPool;
 import com.example.cinema.model.dao.*;
-import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Seance;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -43,6 +37,8 @@ public class MovieSeanceService {
         return movieDao.getAllMovies();
     }
 
+    public int getMoviesQuantity() { return movieDao.getMovieQuantity(); }
+
     public List<Seance> getAllSeances() {
         return seanceDao.getAllSeances();
     }
@@ -51,9 +47,15 @@ public class MovieSeanceService {
         return movieDao.getMovieById(movieId);
     }
 
-    public List<Seance> getUniqueFutureSeancesPaginated(int startId, int total) {
+    public List<Movie> getAllMoviesPaginated(int startId, int totalOnPage) {
+        return movieDao.getAllMoviesPaginated(startId,totalOnPage);
+    }
+
+    public List<Movie> getUniqueFutureSeancesPaginated(int startId, int total) {
         return seanceDao.getUniqueFutureSeancesPaginated(startId, total);
     }
+
+
     public List<Seance> getFutureSeancesPaginated(int startId, int total) {
         return seanceDao.getFutureSeancesPaginated(startId,total);
     }
@@ -62,7 +64,7 @@ public class MovieSeanceService {
         return seanceDao.getUniqueSeancesQuantity();
     }
 
-//    public List<Movie> getUniqueMovies(List<Seance> seanceList) {
+//    public List<Movie> getUniqueMoviesWithSeances(List<Seance> seanceList) {
 //        List<Movie> movieList = new LinkedList<>();
 //        for (Seance seance : seanceList) {
 //            if (!movieList.contains(seance.getMovie())) movieList.add(seance.getMovie());
@@ -112,11 +114,11 @@ public class MovieSeanceService {
 
 
     public int getFutureSeancesQuantity() {
-        return seanceDao.getFutureSeancesQuantity();
+        return seanceDao.getSeancesQuantity();
     }
 
-    public boolean addMovie(String title, String director, int year, int genreId, int duration, int age, String imagePath) {
-        return movieDao.addMovie(title, director, year, genreId, duration, age, imagePath);
+    public boolean addMovie(Movie movie) {
+        return movieDao.addMovie(movie);
     }
 
     public boolean deleteMovie(int movieId) {
@@ -130,4 +132,29 @@ public class MovieSeanceService {
     public void deleteSeance(int seanceId) {
         seanceDao.deleteSeance(seanceId);
     }
+
+    public List<Seance> getSeancesByParametersPaginated(int movieId, String sorting, String order, int i, int totalOnPage) {
+        final String sortByDate = "date";
+        final String sortBySeats = "freeSeats";
+
+        if (movieId == -1) {
+            if (sorting.equals(sortByDate)) return seanceDao.getSeancesByDatePaginated(order, i, totalOnPage);
+            else if (sorting.equals(sortBySeats)) return seanceDao.getSeancesBySeatsPaginated(order, i, totalOnPage);
+            else return seanceDao.getSeancesByDatePaginated(order, i, totalOnPage);
+        }
+        else {
+            if (sorting.equals(sortByDate)) return seanceDao.getSeancesForMovieByDatePaginated(movieId, order, i, totalOnPage);
+            else if (sorting.equals(sortBySeats)) return seanceDao.getSeancesForMovieBySeatsPaginated(movieId, order, i, totalOnPage);
+            else return seanceDao.getSeancesForMovieByDatePaginated(movieId, order, i, totalOnPage);
+
+        }
+    }
+
+    public int getSeancesQuantityByParameters(int movieId) {
+        if (movieId == -1) return seanceDao.getSeancesQuantity();
+        else return seanceDao.getSeancesQuantityForMovie(movieId);
+
+    }
+
+
 }

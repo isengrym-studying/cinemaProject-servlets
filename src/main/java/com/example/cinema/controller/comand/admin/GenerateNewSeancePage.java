@@ -2,11 +2,9 @@ package com.example.cinema.controller.comand.admin;
 
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
-import com.example.cinema.model.entity.Genre;
 import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Role;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.model.service.GenreService;
 import com.example.cinema.model.service.MovieSeanceService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +20,7 @@ public class GenerateNewSeancePage implements ActionCommand {
             page = ConfigurationManager.getProperty("path.page.index");
             return page;
         }
+
 
         MovieSeanceService movieService = MovieSeanceService.getInstance();
 

@@ -7,7 +7,7 @@ body {
 }
 
 .page-number-block {
-    margin-top: 20px;
+    margin-top: 10px;
     text-align: center;
     color: #6c757d;
 }
@@ -19,4 +19,6 @@ body {
 }
 .page-number-block a:hover {
     color: black;
+    transform: scale(1.03);
+    text-decoration: none;
 }

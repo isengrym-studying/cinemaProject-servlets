@@ -10,7 +10,7 @@
     <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
     <link rel="stylesheet" href="assets/css/movies.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>Title</title>
+    <title><fmt:message key = "admin.addSeance" /></title>
 </head>
 <body>
 

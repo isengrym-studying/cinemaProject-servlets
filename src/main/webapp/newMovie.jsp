@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="assets/css/movies.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <title>Title</title>
+    <title><fmt:message key = "admin.addMovie" /></title>
 </head>
 <body>
     <jsp:include page="header.jsp" />

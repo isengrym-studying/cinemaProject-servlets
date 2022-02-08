@@ -8,6 +8,7 @@ import com.example.cinema.model.service.MovieSeanceService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Duration;
 
 public class AddMovieCommand implements ActionCommand {
 
@@ -49,7 +50,15 @@ public class AddMovieCommand implements ActionCommand {
 //        }
 
         MovieSeanceService service = MovieSeanceService.getInstance();
-        if (service.addMovie(title, director, year, genreId, duration, age, "/images/uncharted.jpg")) {
+        Movie movie = new Movie();
+        movie.setTitle(title);
+        movie.setDirector(director);
+        movie.setProductionYear(year);
+        movie.setGenre(String.valueOf(genreId));
+        movie.setDuration(Duration.ofMinutes(duration));
+        movie.setAgeRestriction(age);
+        movie.setImagePath("/images/uncharted.jpg");
+        if (service.addMovie(movie)) {
             page = "/controller?command=getmovies";
         }
         else page = (String)req.getAttribute("queryString");

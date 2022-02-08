@@ -15,6 +15,7 @@ public class SQLQuery {
     }
     static class MoviesSeancesQuery {
         public static final String GET_ALL_MOVIES = "SELECT * FROM `movies`";
+        public static final String GET_ALL_MOVIES_PAGINATED = "SELECT * FROM `movies` LIMIT ?,?";
         public static final String GET_MOVIE_BY_ID = "SELECT * FROM `movies` INNER JOIN `genres` ON `genre`=`genre_id` WHERE `movie_id` = ?";
         public static final String GET_ALL_SEANCES = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id` ORDER BY `startDateSeconds`";
         public static final String GET_UNIQUE_FUTURE_SEANCES_PAGINATED = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id`" +
@@ -25,12 +26,19 @@ public class SQLQuery {
                 "WHERE `startDateSeconds`>= ? GROUP BY `movies`.`movie_id`";
         public static final String COUNT_FUTURE_SEANCES = "SELECT COUNT(*) AS count FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id`" +
                 "WHERE `startDateSeconds`>= ?";
+        public static final String COUNT_MOVIES = "SELECT COUNT(`movie_id`) AS count FROM `movies`";
         public static final String GET_SEANCES_FOR_MOVIE = "SELECT * FROM `seances` WHERE `movie_id`=?";
         public static final String GET_SEANCE_BY_ID = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id` WHERE `seance_id` = ?";
         public static final String ADD_MOVIE = "INSERT INTO `movies` VALUES(DEFAULT,?,?,?,?,?,?,?)";
         public static final String DELETE_MOVIE = "DELETE FROM `movies` WHERE `movie_id` = ?";
         public static final String ADD_SEANCE = "INSERT INTO `seances` VALUES(DEFAULT,?,?)";;
         public static final String DELETE_SEANCE = "DELETE FROM `seances` WHERE `seance_id` = ?";
+
+        public static final String GET_SEANCES_BY_DATE_PAGINATED = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id` " +
+                "WHERE `startDateSeconds`>= ? ORDER BY `startDateSeconds` %s LIMIT ?,? ";
+        public static final String GET_SEANCES_FOR_MOVIE_BY_DATE_PAGINATED = "SELECT * FROM `seances` INNER JOIN `movies` ON `seances`.`movie_id` = `movies`.`movie_id` " +
+                "WHERE `startDateSeconds`>= ? and `seances`.`movie_id`=? ORDER BY `startDateSeconds` %s LIMIT ?,? ";
+        public static final String COUNT_SEANCES_FOR_MOVIE = "SELECT COUNT(`seance_id`) AS count FROM `seances` WHERE `startDateSeconds`>= ? and `movie_id`=?";
     }
     static class TicketQuery {
         public static final String GET_TICKETS_FOR_SEANCE = "SELECT * FROM `tickets` WHERE `seance_id`=?";

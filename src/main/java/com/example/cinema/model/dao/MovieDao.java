@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,8 +46,7 @@ public class MovieDao {
         log.info("Getting all `movie` objects from DB");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_ALL_MOVIES);
-             ) {
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_ALL_MOVIES)) {
 
             try (ResultSet resSet = statement.executeQuery()) {
                 while(resSet.next()) {
@@ -62,6 +63,35 @@ public class MovieDao {
 
         } catch (SQLException e) {
             log.error("SQLException in MovieDao.getAllMovies() " + e.getMessage());
+            throw new DaoException("Couldn't get films from DB", e);
+        }
+        return list;
+    }
+
+    public List<Movie> getAllMoviesPaginated(int startId, int totalOnPage) {
+        LinkedList<Movie> list = new LinkedList<>();
+        log.info("Getting " + totalOnPage + " `movie` objects from DB");
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_ALL_MOVIES_PAGINATED)) {
+
+            statement.setInt(1,startId);
+            statement.setInt(2,totalOnPage);
+            try (ResultSet resSet = statement.executeQuery()) {
+                while(resSet.next()) {
+                    Movie movie = new Movie();
+                    movie.setId(resSet.getInt("movie_id"));
+                    movie.setTitle(resSet.getString("title"));
+                    movie.setDirector(resSet.getString("director"));
+                    movie.setProductionYear(resSet.getInt("production_year"));
+                    movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
+                    movie.setImagePath(resSet.getString("image_path"));
+                    list.add(movie);
+                }
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in MovieDao.getAllMoviesPaginated() " + e.getMessage());
             throw new DaoException("Couldn't get films from DB", e);
         }
         return list;
@@ -109,19 +139,26 @@ public class MovieDao {
     }
 
 
-    public boolean addMovie(String title, String director, int year, int genreId, int duration, int age, String imagePath) {
+    public boolean addMovie(Movie movie) {
         log.info("Adding new movie to DB");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.ADD_MOVIE)) {
 
-            statement.setString(1, title);
-            statement.setString(2, director);
-            statement.setInt(3, year);
-            statement.setInt(4, genreId);
-            statement.setInt(5, duration);
-            statement.setInt(6, age);
-            statement.setString(7, imagePath);
+            statement.setString(1, movie.getTitle());
+            statement.setString(2, movie.getDirector());
+            statement.setInt(3, movie.getProductionYear());
+
+            try {
+                statement.setInt(4, Integer.parseInt(movie.getGenre()));
+            } catch (NumberFormatException e) {
+                log.error("Genre in movie object contained value that cannot be converted into int");
+                throw new DaoException(e);
+            }
+
+            statement.setInt(5, (int)movie.getDuration().getSeconds()/60);
+            statement.setInt(6, movie.getAgeRestriction());
+            statement.setString(7, movie.getImagePath());
             return statement.execute();
 
         } catch (SQLException e) {
@@ -149,4 +186,22 @@ public class MovieDao {
     }
 
 
+    public int getMovieQuantity() {
+        log.info("Counting movies ");
+        int numberOfMovies = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.COUNT_MOVIES)) {
+            try (ResultSet resSet = statement.executeQuery()) {
+                if (resSet.next()) {
+                    numberOfMovies = resSet.getInt("count");
+                    log.info("Successfully got number of movies");
+                }
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.getMovieQuantity() " + e.getMessage());
+            throw new DaoException("Couldn't get number of movies", e);
+        }
+        return numberOfMovies;
+    }
 }

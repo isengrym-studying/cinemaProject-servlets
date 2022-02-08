@@ -2,8 +2,11 @@ package com.example.cinema.controller.comand.common;
 
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
-import com.example.cinema.model.entity.Seance;
+import com.example.cinema.model.entity.Movie;
+import com.example.cinema.model.entity.Role;
+import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.MovieSeanceService;
+import com.example.cinema.model.service.PaginationService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -17,29 +20,42 @@ public class GenerateMoviesPage implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
-
         MovieSeanceService service = MovieSeanceService.getInstance();
+        PaginationService paginationService = PaginationService.getInstance();
+        User user;
 
         int moviePage;
         int totalOnPage = 8;
+        if (req.getSession().getAttribute("user") != null) {
+            user = (User) req.getSession().getAttribute("user");
+            if (user.getRole().equalsIgnoreCase(Role.ADMIN.getString())) totalOnPage -= 1;
+        }
 
         if (req.getParameter("moviePage") == null) moviePage = 1;
         else moviePage = Integer.parseInt(req.getParameter("moviePage"));
 
-        List<Seance> list = service.getUniqueFutureSeancesPaginated((moviePage-1)*totalOnPage, totalOnPage);
-
-
-        int moviesQuantity = service.getUniqueSeancesQuantity();
+        int moviesQuantity;
         int moviePagesQuantity;
 
-        if (moviesQuantity % totalOnPage != 0) moviePagesQuantity = moviesQuantity/totalOnPage + 1;
-        else moviePagesQuantity = moviesQuantity/totalOnPage;
+        List<Movie> list;
 
-        req.setAttribute("seances", list);
+        String movieView = req.getParameter("view");
+        if (movieView == null || movieView.equalsIgnoreCase("futureOnly")) {
+            list = service.getUniqueFutureSeancesPaginated((moviePage-1)*totalOnPage, totalOnPage);
+            moviesQuantity = service.getUniqueSeancesQuantity();
+            req.setAttribute("view","futureOnly");
+        }
+        else {
+            list = service.getAllMoviesPaginated((moviePage-1)*totalOnPage, totalOnPage);
+            moviesQuantity = service.getMoviesQuantity();
+            req.setAttribute("view","all");
+
+        }
+
+        moviePagesQuantity = paginationService.сountPagesQuantity(totalOnPage, moviesQuantity);
+
+        req.setAttribute("movies", list);
         req.setAttribute("moviePagesQuantity",moviePagesQuantity);
-
-        req.setAttribute("pageTitleProperty", "seances.title");
-        req.setAttribute("pageHeadlineProperty", "seances.headline");
 
         page = ConfigurationManager.getProperty("path.page.movies");
 

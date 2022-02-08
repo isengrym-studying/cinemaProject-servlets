@@ -3,6 +3,7 @@ package com.example.cinema.controller.comand.user;
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.User;
+import com.example.cinema.model.service.PaginationService;
 import com.example.cinema.model.service.TicketService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,25 +28,17 @@ public class GenerateProfilePage implements ActionCommand {
         req.setAttribute("userEmail", user.getEmail());
 
         TicketService ticketService = TicketService.getInstance();
+        PaginationService paginationService = PaginationService.getInstance();
 
         int ticketPage;
         int totalOnPage = 4;
         int ticketsQuantity = ticketService.getTicketsQuantity(user.getId());
         int ticketPagesQuantity;
-        if (ticketsQuantity % totalOnPage != 0) {
-            ticketPagesQuantity = ticketsQuantity/totalOnPage + 1;
-        }
-        else {
-            ticketPagesQuantity = ticketsQuantity/totalOnPage;
-        }
 
+        ticketPagesQuantity = paginationService.сountPagesQuantity(totalOnPage, ticketsQuantity);
 
-        if (req.getParameter("ticketPage") == null) {
-            ticketPage = 1;
-        }
-        else {
-            ticketPage = Integer.parseInt(req.getParameter("ticketPage"));
-        }
+        if (req.getParameter("ticketPage") == null) ticketPage = 1;
+        else ticketPage = Integer.parseInt(req.getParameter("ticketPage"));
 
         req.setAttribute("ticketList", ticketService.getPaginatedTickets(user.getId(), (ticketPage-1)*totalOnPage, totalOnPage));
         req.setAttribute("ticketPagesQuantity",ticketPagesQuantity);
