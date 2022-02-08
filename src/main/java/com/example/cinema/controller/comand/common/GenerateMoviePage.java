@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The command that is responsible for getting and sending all information and seances for certain movie
+ * The command that is responsible for generating definite movie page
  *
  */
 public class GenerateMoviePage implements ActionCommand {

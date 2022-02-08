@@ -7,6 +7,10 @@ import com.example.cinema.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The command that is responsible for deleting user
+ *
+ */
 public class DeleteUserCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {

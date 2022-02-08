@@ -14,6 +14,10 @@ import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Data access object for Genre-entity. (Singleton pattern is implemented)
+ *
+ */
 public class GenreDao {
     private static Logger log = Logger.getLogger(GenreDao.class);
     private static GenreDao genreDao;
@@ -42,6 +46,7 @@ public class GenreDao {
 
                     list.add(genre);
                 }
+                log.info("Successfully got all `genre` objects from DB");
             }
 
         } catch (SQLException e) {

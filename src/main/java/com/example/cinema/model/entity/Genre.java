@@ -1,5 +1,9 @@
 package com.example.cinema.model.entity;
 
+/**
+ * Class represents 'genre' entity.
+ *
+ */
 public class Genre {
     int id;
     String name;

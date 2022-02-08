@@ -6,11 +6,13 @@ import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.service.MovieSeanceService;
 import com.example.cinema.model.service.PaginationService;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Random;
 
+/**
+ * The command that is responsible for generating page with all seances
+ *
+ */
 public class GenerateSeancesPage implements ActionCommand {
     private static final String SORTING_BY_DATE = "date";
     private static final String SORTING_BY_SEATS = "freeSeats";

@@ -12,7 +12,7 @@ import java.security.spec.KeySpec;
 
 /**
  * The class contains all the logic of ciphering password.
- * It handles data, that is given from DAO, and then sends the result to certain command or another service.
+ * This layer is located between DAO and Controller layers
  *
  */
 public class CipherService {

@@ -1,8 +1,6 @@
 package com.example.cinema.controller.comand.admin;
 
-import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
-import com.example.cinema.controller.comand.common.LoginCommand;
 import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.service.MovieSeanceService;
 import org.apache.log4j.Logger;
@@ -10,6 +8,10 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 
+/**
+ * The command that is responsible for adding new movies
+ *
+ */
 public class AddMovieCommand implements ActionCommand {
 
     private static Logger log = Logger.getLogger(AddMovieCommand.class);

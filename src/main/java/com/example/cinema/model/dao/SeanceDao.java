@@ -20,7 +20,6 @@ import java.util.List;
  * Data access object for Seance-entity. (Singleton pattern is implemented)
  *
  */
-
 public class SeanceDao {
     private static Logger log = Logger.getLogger(SeanceDao.class);
     public static SeanceDao instance = null;
@@ -74,6 +73,7 @@ public class SeanceDao {
 
                     list.add(seance);
                 }
+                log.info("Successfully got list of all Seance objects from DB");
             }
 
         } catch (SQLException e) {
@@ -85,6 +85,7 @@ public class SeanceDao {
 
 
     public Seance getSeanceById(int id) {
+        log.info("Getting`seance` object by id("+ id +") from DB");
         Seance seance = new Seance();
         Movie movie = new Movie();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -109,11 +110,12 @@ public class SeanceDao {
                     seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
                     seance.setMovie(movie);
                 }
+                log.info("Successfully Seance object by id ("+id+") from DB");
             }
 
         } catch (SQLException e) {
             log.error("SQLException in SeanceDao.getSeanceById() " + e.getMessage());
-            throw new DaoException("Couldn't get seance by id", e);
+            throw new DaoException("Couldn't get seances by id ("+id+")", e);
         }
         return seance;
     }
@@ -144,16 +146,17 @@ public class SeanceDao {
 
                     list.add(seance);
                 }
+                log.info("Successfully got list of Seance objects for movie with id "+movie.getId()+" from DB");
             }
 
         } catch (SQLException e) {
             log.error("SQLException in SeanceDao.getCertainMovieSeances() " + e.getMessage());
-            throw new DaoException("Couldn't get films from DB", e);
+            throw new DaoException("Couldn't get movies for seance with id ("+ movie.getId() +") from DB", e);
         }
         return list;
     }
 
-    public List<Movie> getUniqueFutureSeancesPaginated(int startId, int total) {
+    public List<Movie> getUniqueSeancesPaginated(int startId, int total) {
         List<Movie> list = new LinkedList<>();
         log.info("Getting " + startId + " unique future `seance` objects from DB");
 
@@ -175,12 +178,13 @@ public class SeanceDao {
 
                     list.add(movie);
                 }
-                log.info("Successfully got " + startId + " unique future `seance` objects from DB");
+                log.info("Successfully got " + startId + " unique `seance` objects from DB");
             }
 
         } catch (SQLException e) {
             log.error("SQLException in SeanceDao.getUniqueFutureSeancesPaginated() " + e.getMessage());
-            throw new DaoException("Couldn't get unique future seances from DB", e);
+            throw new DaoException("Couldn't get unique future seances from DB (beginning from"+startId +" element," +
+                    " "+total+" elements in total", e);
         }
         return list;
     }
@@ -203,45 +207,6 @@ public class SeanceDao {
             throw new DaoException("Couldn't get number of unique seances", e);
         }
         return numberOfSeances;
-    }
-
-    public List<Seance> getFutureSeancesPaginated(int startId, int total) {
-        List<Seance> list = new LinkedList<>();
-        log.info("Getting " + startId + " unique future `seance` objects from DB");
-
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_FUTURE_SEANCES_PAGINATED)) {
-            statement.setLong(1, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
-            statement.setInt(2,startId);
-            statement.setInt(3,total);
-
-            try (ResultSet resSet = statement.executeQuery()) {
-                while(resSet.next()) {
-                    Movie movie = new Movie();
-                    movie.setId(resSet.getInt("movie_id"));
-                    movie.setTitle(resSet.getString("title"));
-                    movie.setDirector(resSet.getString("director"));
-                    movie.setProductionYear(resSet.getInt("production_year"));
-                    movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
-                    movie.setImagePath(resSet.getString("image_path"));
-
-                    Seance seance = new Seance();
-                    long epoch = resSet.getInt("startDateSeconds");
-
-                    seance.setId(resSet.getInt("seance_id"));
-                    seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
-                    seance.setMovie(movie);
-
-                    list.add(seance);
-                }
-                log.info("Successfully got " + startId + " unique future `seance` objects from DB");
-            }
-
-        } catch (SQLException e) {
-            log.error("SQLException in SeanceDao.getUniqueFutureSeancesPaginated() " + e.getMessage());
-            throw new DaoException("Couldn't get unique future seances from DB", e);
-        }
-        return list;
     }
 
     public int getSeancesQuantity() {
@@ -274,7 +239,7 @@ public class SeanceDao {
             statement.setLong(2, seconds);
 
             statement.execute();
-
+            log.info("New Seance was successfully added to DB");
         } catch (SQLException e) {
             log.error("SQLException in SeanceDao.addSeance() " + e.getMessage());
             throw new DaoException("Couldn't add seance to DB", e);

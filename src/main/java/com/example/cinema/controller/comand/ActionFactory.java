@@ -2,10 +2,12 @@ package com.example.cinema.controller.comand;
 
 import com.example.cinema.controller.MessageManager;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
 
+/**
+ * The class is responsible for determining the desired command
+ *
+ */
 public class ActionFactory {
     private static Logger log = Logger.getLogger(ActionFactory.class);
 

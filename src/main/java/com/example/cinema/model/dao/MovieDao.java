@@ -59,6 +59,7 @@ public class MovieDao {
                     movie.setImagePath(resSet.getString("image_path"));
                     list.add(movie);
                 }
+                log.info("Successfully got all movies from DB");
             }
 
         } catch (SQLException e) {
@@ -88,11 +89,12 @@ public class MovieDao {
                     movie.setImagePath(resSet.getString("image_path"));
                     list.add(movie);
                 }
+                log.info("Successfully got all movies paginated (beginning from "+startId+" element, "+totalOnPage +" elements in total) from DB");
             }
 
         } catch (SQLException e) {
             log.error("SQLException in MovieDao.getAllMoviesPaginated() " + e.getMessage());
-            throw new DaoException("Couldn't get films from DB", e);
+            throw new DaoException("Failed at getting all movies paginated (beginning from "+startId+" element, "+totalOnPage +" elements in total) from DB");
         }
         return list;
     }

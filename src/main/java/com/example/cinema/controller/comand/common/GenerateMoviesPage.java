@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * The command that is responsible for getting and sending back all films, that have active seances
+ * The command that is responsible for generating page with all movies
  *
  */
 public class GenerateMoviesPage implements ActionCommand {
@@ -41,7 +41,7 @@ public class GenerateMoviesPage implements ActionCommand {
 
         String movieView = req.getParameter("view");
         if (movieView == null || movieView.equalsIgnoreCase("futureOnly")) {
-            list = service.getUniqueFutureSeancesPaginated((moviePage-1)*totalOnPage, totalOnPage);
+            list = service.getMoviesWithSeancesPaginated((moviePage-1)*totalOnPage, totalOnPage);
             moviesQuantity = service.getUniqueSeancesQuantity();
             req.setAttribute("view","futureOnly");
         }

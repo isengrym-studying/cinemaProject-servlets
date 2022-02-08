@@ -10,6 +10,10 @@ import com.example.cinema.model.service.TicketService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The command is responsible for buying ticket
+ *
+ */
 public class TicketConfirmationCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {

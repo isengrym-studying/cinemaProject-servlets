@@ -10,6 +10,10 @@ import com.example.cinema.model.service.GenreService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The command that is responsible for generating movie creating page
+ *
+ */
 public class GenerateNewMoviePage implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {

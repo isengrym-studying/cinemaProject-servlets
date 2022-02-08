@@ -10,7 +10,7 @@ import com.example.cinema.model.service.validator.PasswordValidator;
 
 /**
  * The class contains all the logic for working with users.
- * It handles data, that is given from DAO, and then sends the result to certain command or another service.
+ * This layer is located between DAO and Controller layers
  *
  */
 public class UserService {
@@ -48,7 +48,8 @@ public class UserService {
 
 
     /**
-     * Method is being used for getting User object by email
+     * Method just resends to the relevant DAO method and contains no
+     * additional logic
      * @param email email of potential User. (DB TABLE `users` COLUMN `email`)
      * @return Returns User-object filled with DB data of field, where `email` column equals to given email.
      * Returns empty User-object (If there were no fields with given email)
@@ -114,10 +115,28 @@ public class UserService {
         return true;
     }
 
+    /**
+     * Method for updating user, that is given as parameter.
+     * Method just resends to the relevant DAO method and contains no
+     * additional logic
+     * @param user simple user object
+     * @return Returns true (If there were no issues).
+     * Returns false (If there are issues).
+     *
+     */
     public boolean updateUser(User user) {
         return userDao.updateUser(user);
     }
 
+    /**
+     * Method for deleting user, that is given as parameter.
+     * Method just resends to the relevant DAO method and contains no
+     * additional logic
+     * @param user simple user object
+     * @return Returns true (If there were no issues).
+     * Returns false (If there are issues).
+     *
+     */
     public boolean deleteUser(User user) {
         return userDao.deleteUser(user);
     }

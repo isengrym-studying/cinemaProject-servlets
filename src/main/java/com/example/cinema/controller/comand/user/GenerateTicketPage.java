@@ -10,6 +10,11 @@ import com.example.cinema.model.service.MovieSeanceService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
+/**
+ * The command is responsible for generating definite ticket page with
+ * buy confirmation
+ */
 public class GenerateTicketPage implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {

@@ -1,5 +1,9 @@
 package com.example.cinema.model.dao.exceptions;
 
+/**
+ * Custom exception for DAO-layer
+ *
+ */
 public class DaoException extends RuntimeException{
 
     public DaoException(String message) {

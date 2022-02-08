@@ -11,6 +11,11 @@ import com.example.cinema.model.service.TicketService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+
+/**
+ * The command is responsible for generating the ticket selection page
+ *
+ */
 public class GenerateTicketChoicePage implements ActionCommand {
 
     @Override

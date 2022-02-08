@@ -6,10 +6,14 @@ import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Role;
 import com.example.cinema.model.entity.User;
 import com.example.cinema.model.service.MovieSeanceService;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+
+/**
+ * The command that is responsible for generating seance creating page
+ *
+ */
 public class GenerateNewSeancePage implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {

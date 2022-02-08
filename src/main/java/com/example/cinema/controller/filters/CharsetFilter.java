@@ -4,6 +4,10 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
+/**
+ * The filter is responsible for changing encoding to UTF-8
+ *
+ */
 @WebFilter("/*")
 public class CharsetFilter implements Filter {
     private String encoding;

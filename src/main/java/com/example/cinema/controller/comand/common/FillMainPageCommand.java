@@ -11,8 +11,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
+
 /**
- *
+ * The command that is responsible for filling main page with content
  *
  */
 public class FillMainPageCommand implements ActionCommand {

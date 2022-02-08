@@ -15,7 +15,7 @@ import java.io.IOException;
 
 
 /**
- * Controller, that redirects the request to certain command,
+ * Controller, that redirects the request to definite command,
  * which is specified as a parameter by calling it (controller)
  *
  */

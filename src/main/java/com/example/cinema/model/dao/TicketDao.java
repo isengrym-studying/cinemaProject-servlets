@@ -19,7 +19,7 @@ import java.util.List;
  *
  */
 public class TicketDao {
-    private static Logger log = Logger.getLogger(UserDao.class);
+    private static Logger log = Logger.getLogger(TicketDao.class);
     private static TicketDao ticketDao;
 
     public static synchronized TicketDao getInstance() {
@@ -32,7 +32,7 @@ public class TicketDao {
     private TicketDao() {}
 
     /**
-     * Method is being used to find if there is user with given email value in DB's `users` table
+     * Method is being used to find whether there is user with given email value in DB's `users` table
      * @param seanceId id of certain seance, for which the ticket list is going to be formed
      * @return List<Ticket> (if there are tickets for given seance)
      * Empty List<Ticket> (if there are no tickets for given seance)

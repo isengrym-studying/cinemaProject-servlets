@@ -5,6 +5,10 @@ import com.example.cinema.model.service.MovieSeanceService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The command that is responsible for deleting seances
+ *
+ */
 public class DeleteSeanceCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {

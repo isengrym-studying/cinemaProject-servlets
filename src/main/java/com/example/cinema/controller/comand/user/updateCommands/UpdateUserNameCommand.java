@@ -13,6 +13,10 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
+/**
+ * The command that is responsible for updating user name
+ *
+ */
 public class UpdateUserNameCommand implements ActionCommand {
     private static Logger log = Logger.getLogger(LoginCommand.class);
 

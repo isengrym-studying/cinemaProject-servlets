@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+/**
+ * The command that is responsible for adding new seances
+ *
+ */
 public class AddSeanceCommand implements ActionCommand {
 
     private static Logger log = Logger.getLogger(AddMovieCommand.class);

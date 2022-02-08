@@ -1,5 +1,9 @@
 package com.example.cinema.model.service.exceptions;
 
+/**
+ * Custom exception for service-layer
+ *
+ */
 public class ServiceException extends RuntimeException{
 
     public ServiceException(String message) {

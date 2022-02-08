@@ -6,6 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * The filter is responsible for getting query of page
+ *
+ */
 @WebFilter("/*")
 public class QueryString implements Filter {
     @Override

@@ -9,8 +9,8 @@ import com.example.cinema.model.service.TicketService;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The command that is responsible for getting full users information,
- * including registration data and tickets
+ * The command that is responsible for generating user profile
+ *
  *
  */
 public class GenerateProfilePage implements ActionCommand {
