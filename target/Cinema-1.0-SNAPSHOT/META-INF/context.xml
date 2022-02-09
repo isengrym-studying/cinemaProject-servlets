@@ -1,0 +1,14 @@
+<Context>
+    <!-- Specify a JDBC datasource -->
+    <Resource name="jdbc/connectionPool"
+    auth="Container"
+    type="javax.sql.DataSource"
+    username="root"
+    password="h7fhk"
+    driverClassName="com.mysql.cj.jdbc.Driver"
+    url="jdbc:mysql://localhost:3306/CinemaProject?useUnicode=true"
+    validationQuery="select 1"
+    maxActive="100"
+    maxIdle="80"/>
+
+</Context>

@@ -1,0 +1,29 @@
+body {
+    font-family: "Lato", sans-serif;
+    color: #000;
+}
+
+.navbar-brand-centered {
+    position: absolute;
+    left: 50%;
+    display: block;
+    width: 160px;
+    text-align: center;
+    background-color: transparent;
+}
+.navbar>.container .navbar-brand-centered,
+.navbar>.container-fluid .navbar-brand-centered {
+    margin-left: -80px;
+}
+
+.navbar {
+    padding-top: 5px;
+}
+
+.navbar a {
+    transition: 0.25s;
+}
+.navbar a:hover {
+    bottom-border: 2px solid #000;
+}
+
