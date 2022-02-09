@@ -31,7 +31,7 @@ public class QueryString implements Filter {
                 .orElse("");
 
 
-        if (!queryString.equals("command=changelanguage")) request.getSession().setAttribute("pageQuery", queryString);
+        if (!queryString.equals("command=changelanguage") && !queryString.equals("login")) request.getSession().setAttribute("pageQuery", queryString);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

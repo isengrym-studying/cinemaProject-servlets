@@ -27,12 +27,14 @@ public class ChangeLanguage implements ActionCommand {
         if (language.equals("ru")) {
             session.setAttribute("language", "en");
             session.setAttribute("languageButtonLabel", "RU");
+            session.setAttribute("locale","en");
             log.info("Attribute language is set to `en`");
 
         }
         else if (language.equals("en")) {
             session.setAttribute("language", "ru");
             session.setAttribute("languageButtonLabel", "EN");
+            session.setAttribute("locale","ru");
             log.info("Attribute language is set to `ru`");
         }
 
@@ -41,8 +43,8 @@ public class ChangeLanguage implements ActionCommand {
                 .map(String::trim)
                 .orElse("");
 
-        if (queryString.contains("command=")) page = "/controller?" + queryString;
 
+        if (queryString.contains("command=")) page = "/controller?" + queryString;
         log.info("Going back to" + page);
         return page;
     }
