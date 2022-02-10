@@ -17,15 +17,17 @@ public class AddSeanceCommand implements ActionCommand {
     private static Logger log = Logger.getLogger(AddMovieCommand.class);
     private static final String PARAM_NAME_TITLE_ID = "movies";
     private static final String PARAM_NAME_DATE = "dateTime";
+    private static final String PARAM_NAME_PRICE = "price";
 
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
         int movieId = Integer.parseInt(req.getParameter(PARAM_NAME_TITLE_ID));
         LocalDateTime date = LocalDateTime.parse(req.getParameter(PARAM_NAME_DATE));
+        int price = Integer.parseInt(req.getParameter(PARAM_NAME_PRICE));
 
         MovieSeanceService service = MovieSeanceService.getInstance();
-        service.addSeance(movieId, date.toEpochSecond(ZoneOffset.UTC));
+        service.addSeance(movieId, date.toEpochSecond(ZoneOffset.UTC),price);
         page = "/controller?command=getseances";
 
         return page;

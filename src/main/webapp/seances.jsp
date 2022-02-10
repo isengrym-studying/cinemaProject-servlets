@@ -87,7 +87,7 @@
                 <a href="/controller?command=getfullmovie&movieId=${seance.movie.id}"type="button">
                     <div class="seance-item row">
                         <div class="left-side col-lg-3">
-                            <img src="${seance.movie.imagePath}" alt="" width="150" height="227">
+                            <img src="${seance.movie.imagePath}" alt="" width="170" height="257">
                         </div>
                         <div class="right-side col-lg-8">
                             <h3>${seance.movie.title}</h3>
@@ -98,13 +98,16 @@
                             <h5><span><fmt:message key = "movieItem.endTime"/></span><br>
                                     ${seance.endDate.getHour()}:${seance.endDate.getMinute()}<c:if test="${seance.endDate.getMinute() == 0}">0</c:if>
                             </h5>
+                            <h5><span><fmt:message key = "movieItem.freePlaces"/></span><br>
+                                    ${seance.freePlaces}
+                            </h5>
                             <a href="/controller?command=ticketChoicePage&seanceId=${seance.id}">
                                 <button class="action-button">
                                     <fmt:message key = "ticket.buy"/>
                                 </button>
                             </a>
                             <c:if test="${user.role == 'Admin'}">
-                                <a href="/controller?command=deleteSeance&seanceId=${seance.id}">
+                                <a onclick="return confirm('<fmt:message key = "button.confirmText"/>')" href="/controller?command=deleteSeance&seanceId=${seance.id}">
                                     <button class="action-button">
                                         <fmt:message key = "admin.deleteSeance"/>
                                     </button>

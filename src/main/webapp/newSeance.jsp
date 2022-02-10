@@ -45,6 +45,11 @@
                 <input name="dateTime" type="datetime-local" required class="form-control">
             </div>
 
+            <div class="form-group">
+                <label><fmt:message key = "movieItem.price" /></label>
+                <input name="price" type="number" required class="form-control">
+            </div>
+
             <button type="submit" class="btn btn-black"><fmt:message key = "admin.addSeance" /></button>
 
             <c:if test="${not empty registrationError}" >

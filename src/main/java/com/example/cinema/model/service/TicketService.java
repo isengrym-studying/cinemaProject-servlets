@@ -1,5 +1,6 @@
 package com.example.cinema.model.service;
 
+import com.example.cinema.model.dao.SeanceDao;
 import com.example.cinema.model.dao.TicketDao;
 import com.example.cinema.model.entity.Ticket;
 
@@ -43,8 +44,8 @@ public class TicketService {
      * Returns false (If there are issues).
      *
      */
-    public boolean createTicket(Ticket ticket) {
-        return ticketDao.createTicket(ticket);
+    public void createTicket(Ticket ticket) {
+        ticketDao.createTicket(ticket);
     }
 
     /**

@@ -45,7 +45,6 @@ public class GenerateSeancesPage implements ActionCommand {
 
         List<Seance> list = movieSeanceService.getSeancesByParametersPaginated(movieId,sorting,order,(seancePage-1)*totalOnPage, totalOnPage);
         seancesQuantity = movieSeanceService.getSeancesQuantityByParameters(movieId);
-
         seancePagesQuantity = paginationService.сountPagesQuantity(totalOnPage, seancesQuantity);
 
         req.setAttribute("seances", list);

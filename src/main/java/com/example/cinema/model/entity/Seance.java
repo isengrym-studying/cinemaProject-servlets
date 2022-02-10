@@ -11,6 +11,8 @@ public class Seance {
     private int id;
     private Movie movie;
     private LocalDateTime startDate;
+    private int ticketPrice;
+    private int freePlaces;
 
     public Seance() {}
 
@@ -43,6 +45,14 @@ public class Seance {
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
+
+    public int getTicketPrice() { return ticketPrice; }
+
+    public void setTicketPrice(int ticketPrice) { this.ticketPrice = ticketPrice; }
+
+    public int getFreePlaces() { return freePlaces; }
+
+    public void setFreePlaces(int freePlaces) { this.freePlaces = freePlaces; }
 
     public LocalDateTime getEndDate() { return this.getStartDate().plus(this.getMovie().getDuration()); }
 

@@ -33,57 +33,6 @@ public class SeanceDao {
 
     private SeanceDao() {}
 
-
-    /**
-     * Method is being used for getting all seances (all fields from DB `seances` TABLE) as list.
-     * Returns empty list if nothing was found
-     * @return Returns List<Seance> (if there are fields in `seances` TABLE).
-     * Returns empty list (if there are no fields in `seances` TABLE).
-     * @exception DaoException catches SQLException and throws custom DAO-layer exception.
-     */
-    public List<Seance> getAllSeances() {
-        List<Seance> list = new LinkedList<>();
-        log.info("Getting all `seance` objects from DB");
-
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_ALL_SEANCES)) {
-
-            try (ResultSet resSet = statement.executeQuery()) {
-                while(resSet.next()) {
-                    Movie movie = new Movie();
-                    movie.setId(resSet.getInt("movie_id"));
-                    movie.setTitle(resSet.getString("title"));
-                    movie.setDirector(resSet.getString("director"));
-                    movie.setProductionYear(resSet.getInt("production_year"));
-                    movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
-                    movie.setImagePath(resSet.getString("image_path"));
-
-                    Seance seance = new Seance();
-
-                    int seanceId = resSet.getInt("seance_id");
-                    int year = resSet.getInt("year");
-                    int month = resSet.getInt("month");
-                    int day = resSet.getInt("day");
-                    int hour = resSet.getInt("hour");
-                    int minute = resSet.getInt("minute");
-                    seance.setId(seanceId);
-                    seance.setStartDate(LocalDateTime.of(year,month,day,hour,minute));
-
-                    seance.setMovie(movie);
-
-                    list.add(seance);
-                }
-                log.info("Successfully got list of all Seance objects from DB");
-            }
-
-        } catch (SQLException e) {
-            log.error("SQLException in SeanceDao.getAllSeances() " + e.getMessage());
-            throw new DaoException("Couldn't get films from DB", e);
-        }
-        return list;
-    }
-
-
     public Seance getSeanceById(int id) {
         log.info("Getting`seance` object by id("+ id +") from DB");
         Seance seance = new Seance();
@@ -103,11 +52,12 @@ public class SeanceDao {
                     movie.setDuration(Duration.ofMinutes(resSet.getInt("duration_minutes")));
                     movie.setImagePath(resSet.getString("image_path"));
 
-
                     long epoch = resSet.getInt("startDateSeconds");
 
                     seance.setId(resSet.getInt("seance_id"));
                     seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
+                    seance.setTicketPrice(resSet.getInt("ticket_price"));
+                    seance.setFreePlaces(resSet.getInt("free_places"));
                     seance.setMovie(movie);
                 }
                 log.info("Successfully Seance object by id ("+id+") from DB");
@@ -133,7 +83,8 @@ public class SeanceDao {
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_SEANCES_FOR_MOVIE)) {
-            statement.setInt(1,movie.getId());
+            statement.setLong(1, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setInt(2,movie.getId());
             try (ResultSet resSet = statement.executeQuery()) {
                 while(resSet.next()) {
 
@@ -142,6 +93,8 @@ public class SeanceDao {
 
                     seance.setId(resSet.getInt("seance_id"));
                     seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
+                    seance.setTicketPrice(resSet.getInt("ticket_price"));
+                    seance.setFreePlaces(resSet.getInt("free_places"));
                     seance.setMovie(movie);
 
                     list.add(seance);
@@ -229,7 +182,7 @@ public class SeanceDao {
         return numberOfSeances;
     }
 
-    public void addSeance(int movieId, long seconds) {
+    public void addSeance(int movieId, long seconds, int price) {
         log.info("Adding new seance to DB");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -237,6 +190,7 @@ public class SeanceDao {
 
             statement.setInt(1, movieId);
             statement.setLong(2, seconds);
+            statement.setInt(3, price);
 
             statement.execute();
             log.info("New Seance was successfully added to DB");
@@ -263,91 +217,30 @@ public class SeanceDao {
     }
 
     public List<Seance> getSeancesByDatePaginated(String order, int startId, int totalOnPage) {
-        List<Seance> list = new LinkedList<>();
         log.info("Getting " + startId + " `seance` objects from DB ordered by date");
-        String s = String.format(SQLQuery.MoviesSeancesQuery.GET_SEANCES_BY_DATE_PAGINATED,order);
+        String query = String.format(SQLQuery.MoviesSeancesQuery.GET_SEANCES_BY_DATE_PAGINATED,order);
 
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(s)) {
-            statement.setLong(1, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
-            statement.setInt(2,startId);
-            statement.setInt(3,totalOnPage);
-
-            try (ResultSet resSet = statement.executeQuery()) {
-                while(resSet.next()) {
-                    Movie movie = new Movie();
-                    movie.setId(resSet.getInt("movie_id"));
-                    movie.setTitle(resSet.getString("title"));
-                    movie.setDirector(resSet.getString("director"));
-                    movie.setProductionYear(resSet.getInt("production_year"));
-                    movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
-                    movie.setImagePath(resSet.getString("image_path"));
-
-                    Seance seance = new Seance();
-                    long epoch = resSet.getInt("startDateSeconds");
-
-                    seance.setId(resSet.getInt("seance_id"));
-                    seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
-                    seance.setMovie(movie);
-
-                    list.add(seance);
-                }
-                log.info("Successfully got " + startId + " unique future `seance` objects from DB");
-            }
-
-        } catch (SQLException e) {
-            log.error("SQLException in SeanceDao.getSeancesByDatePaginated() " + e.getMessage());
-            throw new DaoException("Couldn't get seances from DB ordered by date", e);
-        }
-        return list;
+        return getSeancesPaginated(query, startId, totalOnPage);
     }
 
-    public List<Seance> getSeancesBySeatsPaginated(String order, int i, int totalOnPage) {
-        return new LinkedList<>();
+    public List<Seance> getSeancesBySeatsPaginated(String order, int startId, int totalOnPage) {
+        log.info("Getting " + startId + " `seance` objects from DB ordered by date");
+        String query = String.format(SQLQuery.MoviesSeancesQuery.GET_SEANCES_BY_FREE_PLACES_PAGINATED, order);
+
+        return getSeancesPaginated(query, startId, totalOnPage);
     }
 
     public List<Seance> getSeancesForMovieByDatePaginated(int movieId, String order, int startId, int totalOnPage) {
-        List<Seance> list = new LinkedList<>();
         log.info("Getting " + startId + " `seance` objects from DB ordered by date for movie with id (" +movieId +")");
-        String s = String.format(SQLQuery.MoviesSeancesQuery.GET_SEANCES_FOR_MOVIE_BY_DATE_PAGINATED,order);
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(s)) {
-            statement.setLong(1, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
-            statement.setInt(2, movieId);
-            statement.setInt(3,startId);
-            statement.setInt(4,totalOnPage);
+        String query = String.format(SQLQuery.MoviesSeancesQuery.GET_SEANCES_FOR_MOVIE_BY_DATE_PAGINATED,order);
 
-            try (ResultSet resSet = statement.executeQuery()) {
-                while(resSet.next()) {
-                    Movie movie = new Movie();
-                    movie.setId(resSet.getInt("movie_id"));
-                    movie.setTitle(resSet.getString("title"));
-                    movie.setDirector(resSet.getString("director"));
-                    movie.setProductionYear(resSet.getInt("production_year"));
-                    movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
-                    movie.setImagePath(resSet.getString("image_path"));
-
-                    Seance seance = new Seance();
-                    long epoch = resSet.getInt("startDateSeconds");
-
-                    seance.setId(resSet.getInt("seance_id"));
-                    seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
-                    seance.setMovie(movie);
-
-                    list.add(seance);
-                }
-                log.info("Successfully got " + startId + " `seance` objects from DB ordered by date for movie with id (" +movieId +")");
-            }
-
-        } catch (SQLException e) {
-            log.error("SQLException in SeanceDao.getSeancesForMovieByDatePaginated() " + e.getMessage());
-            throw new DaoException("Couldn't get seances from DB ordered by date for movie", e);
-        }
-        return list;
+        return getSeancesForMoviePaginated(query, movieId, startId, totalOnPage);
     }
 
-    public List<Seance> getSeancesForMovieBySeatsPaginated(int movieId, String order, int i, int totalOnPage) {
-        return new LinkedList<>();
+    public List<Seance> getSeancesForMovieBySeatsPaginated(int movieId, String order, int startId, int totalOnPage) {
+        log.info("Getting " + startId + " `seance` objects from DB ordered by date for movie with id (" +movieId +")");
+        String query = String.format(SQLQuery.MoviesSeancesQuery.GET_SEANCES_FOR_MOVIE_BY_FREE_PLACES_PAGINATED,order);
+        return getSeancesForMoviePaginated(query, movieId, startId, totalOnPage);
     }
 
     public int getSeancesQuantityForMovie(int movieId) {
@@ -370,4 +263,85 @@ public class SeanceDao {
         }
         return numberOfSeances;
     }
+
+    private List<Seance> getSeancesPaginated(String query, int startId, int totalOnPage) {
+        List<Seance> list = new LinkedList<>();
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setInt(2,startId);
+            statement.setInt(3,totalOnPage);
+
+            try (ResultSet resSet = statement.executeQuery()) {
+                while(resSet.next()) {
+                    Movie movie = new Movie();
+                    movie.setId(resSet.getInt("movie_id"));
+                    movie.setTitle(resSet.getString("title"));
+                    movie.setDirector(resSet.getString("director"));
+                    movie.setProductionYear(resSet.getInt("production_year"));
+                    movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
+                    movie.setImagePath(resSet.getString("image_path"));
+
+                    Seance seance = new Seance();
+                    long epoch = resSet.getInt("startDateSeconds");
+
+                    seance.setId(resSet.getInt("seance_id"));
+                    seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
+                    seance.setTicketPrice(resSet.getInt("ticket_price"));
+                    seance.setFreePlaces(resSet.getInt("free_places"));
+                    seance.setMovie(movie);
+
+                    list.add(seance);
+                }
+                log.info("Successfully got " + startId + " unique future `seance` objects from DB");
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.getSeancesByDatePaginated() " + e.getMessage());
+            throw new DaoException("Couldn't get seances from DB ordered by date", e);
+        }
+        return list;
+    }
+
+    private List<Seance> getSeancesForMoviePaginated(String query, int movieId, int startId, int totalOnPage) {
+        List<Seance> list = new LinkedList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setInt(2, movieId);
+            statement.setInt(3,startId);
+            statement.setInt(4,totalOnPage);
+
+            try (ResultSet resSet = statement.executeQuery()) {
+                while(resSet.next()) {
+                    Movie movie = new Movie();
+                    movie.setId(resSet.getInt("movie_id"));
+                    movie.setTitle(resSet.getString("title"));
+                    movie.setDirector(resSet.getString("director"));
+                    movie.setProductionYear(resSet.getInt("production_year"));
+                    movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
+                    movie.setImagePath(resSet.getString("image_path"));
+
+                    Seance seance = new Seance();
+                    long epoch = resSet.getInt("startDateSeconds");
+
+                    seance.setId(resSet.getInt("seance_id"));
+                    seance.setStartDate(LocalDateTime.ofEpochSecond(epoch,0, ZoneOffset.UTC));
+                    seance.setTicketPrice(resSet.getInt("ticket_price"));
+                    seance.setFreePlaces(resSet.getInt("free_places"));
+                    seance.setMovie(movie);
+
+                    list.add(seance);
+                }
+                log.info("Successfully got " + startId + " `seance` objects from DB ordered by date for movie with id (" +movieId +")");
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in SeanceDao.getSeancesForMovieByDatePaginated() " + e.getMessage());
+            throw new DaoException("Couldn't get seances from DB ordered by date for movie", e);
+        }
+        return list;
+    }
+
 }

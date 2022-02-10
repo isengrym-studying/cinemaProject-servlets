@@ -8,6 +8,7 @@ import com.example.cinema.model.service.MovieSeanceService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +27,10 @@ public class GenerateMoviePage implements ActionCommand {
 
         Movie movie = service.getMovieById(movieId);
 
-        List<Seance> seanceList = service.getCertainMovieSeances(movie);
-        List<Seance> futureSeanceList = service.getOnlyFutureSeances(seanceList);
-        List<LocalDate> dates = service.getDatesOfSeances(futureSeanceList);
-        Map<LocalDate,List<Seance>> mapDateSeance = service.groupSeancesByDate(dates,futureSeanceList);
+        List<Seance> seancesList = service.getCertainMovieSeances(movie);
 
+        List<LocalDate> dates = service.getDatesOfSeances(seancesList);
+        Map<LocalDate,List<Seance>> mapDateSeance = service.groupSeancesByDate(dates,seancesList);
         req.setAttribute("movie", movie);
         req.setAttribute("durationMin",movie.getDuration().getSeconds()/60);
 

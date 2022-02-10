@@ -59,7 +59,7 @@
                 </div>
                 <div class="form-group">
                     <label><fmt:message key = "movieItem.image" /></label>
-                    <input name="image" type="file" required class="form-control">
+                    <input name="image" type="url" required class="form-control">
                 </div>
 
                 <button type="submit" class="btn btn-black"><fmt:message key = "admin.addMovie" /></button>

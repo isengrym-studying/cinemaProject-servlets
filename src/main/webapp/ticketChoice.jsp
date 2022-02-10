@@ -75,6 +75,9 @@
             <h4 class="movie-info"><span><fmt:message key = "movieItem.endTime"/></span><br>
                     ${seance.endDate.getHour()}:${seance.endDate.getMinute()}<c:if test="${seance.endDate.getMinute() == 0}">0</c:if>
             </h4>
+            <h4 class="movie-info"><span><fmt:message key = "movieItem.price"/></span><br>
+                    ${seance.ticketPrice}₴
+            </h4>
         </div>
     </div>
 

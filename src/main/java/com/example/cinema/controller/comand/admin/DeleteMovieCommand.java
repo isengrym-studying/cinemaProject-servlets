@@ -15,7 +15,7 @@ public class DeleteMovieCommand implements ActionCommand {
         String page = null;
         MovieSeanceService service = MovieSeanceService.getInstance();
 
-        service.deleteSeance(Integer.parseInt(req.getParameter("movieId")));
+        service.deleteMovie(Integer.parseInt(req.getParameter("movieId")));
 
         page = "/controller?command=getMovies";
         return page;

@@ -55,14 +55,14 @@ body {
     margin-left: 140px;
 }
 
+.ticket-info span {
+    color: rgba(10, 10, 10, 0.36);
+}
+
 .ticket-title {
     padding-top: 10px;
     font-weight: 700;
     font-size: 17px;
-}
-
-.ticket-info .span {
-    background-color: #6c757d;
 }
 
 .ticket-item .left-side img {

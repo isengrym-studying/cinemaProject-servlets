@@ -7,10 +7,8 @@ import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -52,16 +50,6 @@ public class MovieSeanceService {
      */
     public int getMoviesQuantity() { return movieDao.getMovieQuantity(); }
 
-    /**
-     * Method for getting list of all seances. Method just resends to the relevant DAO method and
-     * contains no additional logic
-     * @return Returns filled List<Seance> (If seances were found).
-     * Returns empty List<Seance> (If no seances were found).
-     *
-     */
-    public List<Seance> getAllSeances() {
-        return seanceDao.getAllSeances();
-    }
 
     /**
      * Method for getting a movie by id given as parameter. Method just resends to the relevant DAO method and
@@ -124,19 +112,7 @@ public class MovieSeanceService {
         return seanceDao.getCertainMovieSeances(movie);
     }
 
-    /**
-     * Method for getting list of seances, that haven't finished from other list of seances.
-     * @param seancesList simple list of seances. May contain no future seances.
-     * @return List<Seance> (list with future seances)
-     *
-     */
-    public List<Seance> getOnlyFutureSeances(List<Seance> seancesList) {
-        List<Seance> futureSeanceslist = new LinkedList<>();
-        for (Seance seance : seancesList) {
-            if (LocalDateTime.now().isBefore(seance.getStartDate())) futureSeanceslist.add(seance);
-        }
-        return futureSeanceslist;
-    }
+
     /**
      * Method for getting list of dates, when there are seances.
      * @param seancesList simple list of seances. May contain no future seances.
@@ -161,7 +137,7 @@ public class MovieSeanceService {
      *
      */
     public Map<LocalDate,List<Seance>> groupSeancesByDate(List<LocalDate> datesList, List<Seance> seanceList) {
-        Map<LocalDate,List<Seance>> map = new HashMap<>();
+        Map<LocalDate,List<Seance>> map = new TreeMap<>();
         for(LocalDate date : datesList) {
             List<Seance> seances = new LinkedList<>();
             for(Seance seance : seanceList) {
@@ -215,8 +191,8 @@ public class MovieSeanceService {
      * @return Returns void
      *
      */
-    public void addSeance(int seanceId, long seconds) {
-        seanceDao.addSeance(seanceId, seconds);
+    public void addSeance(int seanceId, long seconds, int price) {
+        seanceDao.addSeance(seanceId, seconds, price);
     }
 
     /**

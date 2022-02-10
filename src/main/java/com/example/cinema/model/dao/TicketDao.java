@@ -60,7 +60,6 @@ public class TicketDao {
 
                     ticket.setRowNumber(resSet.getInt("row_number"));
                     ticket.setPlaceNumber(resSet.getInt("place_number"));
-                    ticket.setPrice(resSet.getInt("price"));
                     ticketList.add(ticket);
                 }
                 log.info("Tickets were successfully collected");
@@ -73,19 +72,33 @@ public class TicketDao {
         return ticketList;
     }
 
-    public boolean createTicket(Ticket ticket) {
+    public void createTicket(Ticket ticket) {
         log.info("Adding ticket to DB ("+ ticket + ")");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLQuery.TicketQuery.ADD_TICKET)) {
+             PreparedStatement statementAdd = connection.prepareStatement(SQLQuery.TicketQuery.ADD_TICKET);
+             PreparedStatement statementSubtract = connection.prepareStatement(SQLQuery.TicketQuery.SUBTRACT_ONE_PLACE)) {
 
-            statement.setInt(1, ticket.getUserId());
-            statement.setInt(2, ticket.getSeance().getId());
-            statement.setInt(3, ticket.getRowNumber());
-            statement.setInt(4, ticket.getPlaceNumber());
+            connection.setAutoCommit(false);
+            statementAdd.setInt(1, ticket.getUserId());
+            statementAdd.setInt(2, ticket.getSeance().getId());
+            statementAdd.setInt(3, ticket.getRowNumber());
+            statementAdd.setInt(4, ticket.getPlaceNumber());
 
-            log.info("Ticket was successfully added to DB");
-            return statement.execute();
+            statementSubtract.setInt(1, ticket.getSeance().getId());
+
+            statementAdd.execute();
+            statementSubtract.execute();
+            connection.commit();
+            if (statementAdd.execute() && statementSubtract.execute()){
+                connection.commit();
+                log.info("Ticket was successfully added to DB");
+            }
+            else {
+                connection.rollback();
+                log.info("Ticket addition has failed");
+            }
+
         } catch (SQLException e) {
             log.error("SQLException in UserDao.checkUserExistence() " + e.getMessage());
             throw new DaoException("Couldn't add ticket to ticket table", e);
@@ -116,7 +129,6 @@ public class TicketDao {
 
                     ticket.setRowNumber(resSet.getInt("row_number"));
                     ticket.setPlaceNumber(resSet.getInt("place_number"));
-                    ticket.setPrice(resSet.getInt("price"));
                     ticketList.add(ticket);
                 }
                 log.info(total + " tickets from the"+ startItem + " item were successfully collected");

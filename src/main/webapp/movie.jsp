@@ -63,7 +63,7 @@
                             <h4><span><fmt:message key = "movieItem.duration" /></span> <br>${durationMin} <fmt:message key = "movieItem.minutes" /></h4>
 
                             <c:if test="${user.role == 'Admin'}">
-                                <a href="/controller?command=deleteMovie&movieId=${movie.id}">
+                                <a onclick="return confirm('<fmt:message key = "button.confirmText"/>')" href="/controller?command=deleteMovie&movieId=${movie.id}">
                                     <button>
                                         <h4><fmt:message key = "admin.deleteMovie" /></h4>
                                     </button>

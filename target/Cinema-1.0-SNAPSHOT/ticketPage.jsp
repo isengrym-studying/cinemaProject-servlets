@@ -7,7 +7,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="assets/css/ticketPage.css">
-    <title>Title</title>
+    <title><fmt:message key = "ticket.title"/></title>
 </head>
 <body>
 <%--<jsp:include page="header.jsp" />--%>
@@ -25,7 +25,8 @@
         </div>
         <div class="time">
             <h2>
-                ${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if>
+                    ${seance.startDate.getDayOfMonth()} <fmt:message key = "${seance.startDate.getMonth()}"/>,
+                <fmt:message key = "${seance.startDate.getDayOfWeek()}"/>, ${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if>
             </h2>
             <span><fmt:message key = "ticket.dateTime"/> </span>
         </div>
@@ -35,9 +36,9 @@
         <div class="eye"></div>
         <div class="number">
             <h3>${rowId}</h3>
-            <span>row</span>
+            <span><fmt:message key = "ticket.row"/></span>
             <h3>${placeId}</h3>
-            <span>seat</span>
+            <span><fmt:message key = "ticket.seat"/></span>
         </div>
     </div>
 
@@ -47,12 +48,12 @@
 
         <a href="controller?command=confirmTicket&action=confirm">
             <div class="action-button submit-button col-lg-1">
-                <h4>Submit</h4>
+                <h4><fmt:message key = "button.confirm"/></h4>
             </div>
         </a>
         <a href="controller?command=confirmTicket&action=decline">
             <div class="action-button decline-button col-lg-1">
-                <h4>Decline</h4>
+                <h4><fmt:message key = "button.decline"/></h4>
             </div>
         </a>
 

@@ -32,24 +32,7 @@ public class AddMovieCommand implements ActionCommand {
         int genreId = Integer.parseInt(req.getParameter(PARAM_NAME_GENRE));
         int age = Integer.parseInt(req.getParameter(PARAM_NAME_AGE));
         int duration = Integer.parseInt(req.getParameter(PARAM_NAME_DURATION));
-//
-//        Part filePart = null;
-//        try {
-//            filePart = req.getPart(PARAM_NAME_IMAGE);
-//            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-//            InputStream fileContent = filePart.getInputStream();
-//        } catch (IOException | ServletException e) {
-//            e.printStackTrace();
-//        }
-//
-//        File uploads = new File(ConfigurationManager.getProperty("path.images"));
-//        File file = new File(uploads, "somefilename.ext");
-//
-//        try (InputStream input = filePart.getInputStream()) {
-//            Files.copy(input, file.toPath());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        String imageUrl = req.getParameter(PARAM_NAME_IMAGE);
 
         MovieSeanceService service = MovieSeanceService.getInstance();
         Movie movie = new Movie();
@@ -59,7 +42,7 @@ public class AddMovieCommand implements ActionCommand {
         movie.setGenre(String.valueOf(genreId));
         movie.setDuration(Duration.ofMinutes(duration));
         movie.setAgeRestriction(age);
-        movie.setImagePath("/images/uncharted.jpg");
+        movie.setImagePath(imageUrl);
         if (service.addMovie(movie)) {
             page = "/controller?command=getmovies";
         }

@@ -36,6 +36,7 @@
                                                     ${ticket.seance.startDate.getHour()}:${ticket.seance.startDate.getMinute()}<c:if test="${ticket.seance.startDate.getMinute() == 0}">0</c:if> </h6>
                                             <h6 class="ticket-info"><span> <fmt:message key = "ticket.row"/>: </span> ${ticket.rowNumber}</h6>
                                             <h6 class="ticket-info"><span> <fmt:message key = "ticket.seat"/>: </span> ${ticket.placeNumber}</h6>
+                                            <h6 class="ticket-info"><span> <fmt:message key = "ticket.price"/>: </span> ${ticket.seance.ticketPrice}₴</h6>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -72,7 +73,7 @@
                     <a class="change" href="passwordUpdate.jsp"><fmt:message key = "profile.change" />
                     </a>
                 </h4>
-                <a href="controller?command=deleteUser">
+                <a onclick="return confirm('<fmt:message key = "button.confirmText"/>')" href="controller?command=deleteUser">
                     <button class="command-button" type="button" ><fmt:message key = "profile.deleteAcc" /></button>
                 </a>
             </div>

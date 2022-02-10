@@ -41,7 +41,6 @@ public class TicketConfirmationCommand implements ActionCommand {
 
         page = "/controller?command=ticketChoicePage&seanceId="+seance.getId();
 
-        System.out.println(page);
         session.removeAttribute("seance");
         session.removeAttribute("rowId");
         session.removeAttribute("placeId");
