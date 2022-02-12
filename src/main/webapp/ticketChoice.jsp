@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <%@ taglib prefix="ctg" uri="customtags" %>
 
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="language">
@@ -18,29 +19,26 @@
         <div class="hall-body">
             <h3 class="movie-title"><fmt:message key = "ticket.screen"/></h3>
 
-            <% for(int i = 1; i < 8; i+=1) { %>
+            <c:forEach begin="1" end="7" varStatus="row">
             <div class = "row">
-                <h5><%= i %></h5>
-                <% for(int j = 1; j < 12; j+=1) { %>
+                <h5>${row.index}</h5>
+                <c:forEach begin="1" end="11" varStatus="place">
                 <c:if test="${not empty ticketList}">
 
-                    <c:set var="row" scope="request" value="<%= i %>"></c:set>
-                    <c:set var="place" scope="request" value="<%= j %>"></c:set>
                     <c:set var="alreadyExists" scope="request" value="false"></c:set>
-
                 <c:forEach var="ticket" items="${ticketList}">
                         <c:if test="${ticket.rowNumber==row && ticket.placeNumber==place}">
-                            <div class="seat-object seat-object-disabled" row-id="${row}" seat-id="${place}">
-                                <p><%=j%></p>
+                            <div class="seat-object seat-object-disabled" row-id="${row.index}" seat-id="${place.index}">
+                                <p>${place.index}</p>
                             </div>
                             <c:set var="alreadyExists" scope="request" value="true"></c:set>
                         </c:if>
                 </c:forEach>
 
                     <c:if test="${(ticket.rowNumber!=row || ticket.placeNumber!=place) && alreadyExists == false}">
-                        <a href="controller?command=ticketPage&rowId=${row}&placeId=${place}&seanceId=${seance.id}">
-                            <div class="seat-object seat-object-active" row-id="${row}" seat-id="${place}">
-                                <p><%=j%></p>
+                        <a href="controller?command=ticketPage&rowId=${row.index}&placeId=${place.index}&seanceId=${seance.id}">
+                            <div class="seat-object seat-object-active" row-id="${row.index}" seat-id="${place.index}">
+                                <p>${row.index}</p>
                             </div>
                             <c:set var="alreadyExists" scope="request" value="true"></c:set>
                         </a>
@@ -48,15 +46,15 @@
                 </c:if>
 
                 <c:if test="${empty ticketList}">
-                    <a href="controller?command=ticketPage&rowId=<%= i %>&placeId=<%= j %>&seanceId=${seance.id}">
-                        <div class="seat-object seat-object-active" row-id="<%= i %>" seat-id="<%= j %>">
-                            <p><%=j%></p>
+                    <a href="controller?command=ticketPage&rowId=${row.index}&placeId=${place.index}&seanceId=${seance.id}">
+                        <div class="seat-object seat-object-active" row-id="${row.index}" seat-id="${place.index}">
+                            <p>${place.index}</p>
                         </div>
                     </a>
                 </c:if>
-                <% } %>
+                </c:forEach>
             </div>
-            <% } %>
+            </c:forEach>
             <h3 class="movie-title"><fmt:message key = "ticket.chooseClick"/></h3>
         </div>
     </div>
@@ -70,10 +68,10 @@
                 <fmt:message key = "${seance.startDate.getDayOfWeek()}"/>
             </h4>
             <h4 class="movie-info"><span><fmt:message key = "movieItem.startTime"/></span><br>
-                    ${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if>
+                <ctg:start-time seance="${seance}"/>
             </h4>
             <h4 class="movie-info"><span><fmt:message key = "movieItem.endTime"/></span><br>
-                    ${seance.endDate.getHour()}:${seance.endDate.getMinute()}<c:if test="${seance.endDate.getMinute() == 0}">0</c:if>
+                <ctg:end-time seance="${seance}"/>
             </h4>
             <h4 class="movie-info"><span><fmt:message key = "movieItem.price"/></span><br>
                     ${seance.ticketPrice}₴

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="language">
@@ -93,10 +94,10 @@
                             <h3>${seance.movie.title}</h3>
                             <h5><span><fmt:message key = "movieItem.startDate"/></span><br>
                                     ${seance.startDate.getDayOfMonth()} <fmt:message key = "${seance.startDate.getMonth()}"/>,
-                                <fmt:message key = "${seance.startDate.getDayOfWeek()}"/>, ${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if>
+                                <fmt:message key = "${seance.startDate.getDayOfWeek()}"/>, <ctg:start-time seance="${seance}"/>
                             </h5>
                             <h5><span><fmt:message key = "movieItem.endTime"/></span><br>
-                                    ${seance.endDate.getHour()}:${seance.endDate.getMinute()}<c:if test="${seance.endDate.getMinute() == 0}">0</c:if>
+                                <ctg:end-time seance="${seance}"/>
                             </h5>
                             <h5><span><fmt:message key = "movieItem.freePlaces"/></span><br>
                                     ${seance.freePlaces}
@@ -128,10 +129,9 @@
 
 
     <div class="page-number-block col-lg-12">
-        <% for(int i = 1; i < (Integer)request.getAttribute("seancePagesQuantity")+1; i+=1) { %>
-            <c:set var="number" scope="request" value="<%= i %>"></c:set>
-            <a class="page-number-link" href="/controller?command=getseances&seancePage=${number}&movieId=${movieId}&sorting=${sorting}&order=${order}"><p class="page-number-item">${number}</p></a>
-        <%}%>
+        <c:forEach begin="1" end="${seancePagesQuantity}" varStatus="loop">
+            <a class="page-number-link" href="/controller?command=getseances&seancePage=${loop.index}&movieId=${movieId}&sorting=${sorting}&order=${order}"><p class="page-number-item">${loop.index}</p></a>
+        </c:forEach>
     </div>
 
     </body>

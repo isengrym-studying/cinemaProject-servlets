@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="language">
@@ -26,7 +27,7 @@
         <div class="time">
             <h2>
                     ${seance.startDate.getDayOfMonth()} <fmt:message key = "${seance.startDate.getMonth()}"/>,
-                <fmt:message key = "${seance.startDate.getDayOfWeek()}"/>, ${seance.startDate.getHour()}:${seance.startDate.getMinute()}<c:if test="${seance.startDate.getMinute() == 0}">0</c:if>
+                <fmt:message key = "${seance.startDate.getDayOfWeek()}"/>, <ctg:start-time seance="${seance}"/>
             </h2>
             <span><fmt:message key = "ticket.dateTime"/> </span>
         </div>

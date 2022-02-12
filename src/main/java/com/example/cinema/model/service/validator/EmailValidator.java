@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 /**
  * Class is used for email fields validation
  */
-public class EmailValidator {
+public class EmailValidator{
     public static boolean validate(String email) {
-        if(email.length() != 0) {
+        if (email != null && email.length() != 0) {
             Pattern pattern = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
             return pattern.matcher(email).matches();
         }

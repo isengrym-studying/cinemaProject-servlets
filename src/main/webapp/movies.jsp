@@ -69,10 +69,10 @@
 
 
                     <div class="page-number-block col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <% for(int i = 1; i < (Integer)request.getAttribute("moviePagesQuantity")+1; i+=1) { %>
-                        <c:set var="number" scope="request" value="<%= i %>"></c:set>
-                        <a href="/controller?command=getmovies&moviePage=${number}&view=${view}"><p class="page-number-item">${number}</p></a>
-                        <%}%>
+                        <c:forEach begin="1" end="${moviePagesQuantity}" varStatus="loop">
+                            <a href="/controller?command=getmovies&moviePage=${loop.index}&view=${view}"><p class="page-number-item">${loop.index}</p></a>
+                        </c:forEach>
+
                     </div>
                 </div>
 

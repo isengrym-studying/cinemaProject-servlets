@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 
 <fmt:setLocale value="${language}"/>
 <fmt:bundle basename="language">
@@ -32,8 +33,8 @@
                                             <h6 class="ticket-info ticket-title">${ticket.seance.movie.title}</h6>
                                             <h6 class="ticket-info"><span> <fmt:message key = "ticket.when"/>: </span>
                                                     ${ticket.seance.startDate.getDayOfMonth()} <fmt:message key = "${ticket.seance.startDate.getMonth()}"/>,
-                                                <fmt:message key = "${ticket.seance.startDate.getDayOfWeek()}"/>.
-                                                    ${ticket.seance.startDate.getHour()}:${ticket.seance.startDate.getMinute()}<c:if test="${ticket.seance.startDate.getMinute() == 0}">0</c:if> </h6>
+                                                <fmt:message key = "${ticket.seance.startDate.getDayOfWeek()}"/>
+                                                <ctg:start-time seance="${ticket.seance}"/> </h6>
                                             <h6 class="ticket-info"><span> <fmt:message key = "ticket.row"/>: </span> ${ticket.rowNumber}</h6>
                                             <h6 class="ticket-info"><span> <fmt:message key = "ticket.seat"/>: </span> ${ticket.placeNumber}</h6>
                                             <h6 class="ticket-info"><span> <fmt:message key = "ticket.price"/>: </span> ${ticket.seance.ticketPrice}₴</h6>
@@ -42,10 +43,10 @@
                                 </c:forEach>
 
                 <div class="page-number-block">
-                    <% for(int i = 1; i < (Integer)request.getAttribute("ticketPagesQuantity")+1; i+=1) { %>
-                        <c:set var="number" scope="request" value="<%= i %>"></c:set>
-                        <a href="/controller?command=profile&ticketPage=${number}"><p class="page-number-item">${number}</p></a>
-                    <%}%>
+                    <c:forEach begin="1" end="${ticketPagesQuantity}" varStatus="loop">
+                        <a href="/controller?command=profile&ticketPage=${loop.index}&view=${view}"><p class="page-number-item">${loop.index}</p></a>
+                    </c:forEach>
+
                 </div>
             </div>
 

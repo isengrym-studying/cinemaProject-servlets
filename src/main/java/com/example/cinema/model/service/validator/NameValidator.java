@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  */
 public class NameValidator {
     public static boolean validate(String name) {
-        if(name.length() != 0) {
+        if(name != null && name.length() != 0) {
             Pattern pattern = Pattern.compile("^[a-zA-Zа-яА-Яєїё']+$");
             return pattern.matcher(name).matches();
         }
