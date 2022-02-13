@@ -1,5 +1,4 @@
 <Context>
-    <!-- Specify a JDBC datasource -->
     <Resource name="jdbc/connectionPool"
     auth="Container"
     type="javax.sql.DataSource"
@@ -10,5 +9,4 @@
     validationQuery="select 1"
     maxActive="100"
     maxIdle="80"/>
-
 </Context>

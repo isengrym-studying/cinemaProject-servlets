@@ -8,6 +8,8 @@
     <html>
         <head>
             <link rel="stylesheet" href="assets/css/movie.css">
+            <link rel="stylesheet" href="assets/css/style.css">
+            <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
             <title>${movie.title}</title>
         </head>
 
@@ -40,7 +42,7 @@
                                         <fmt:message key = "${date.key.getDayOfWeek()}"/></h5>
 
                                     <c:forEach var="seance" items="${date.value}">
-                                        <a href="controller?command=ticketChoicePage&seanceId=${seance.id}"type="button">
+                                            <a href="controller?command=ticketChoicePage&seanceId=${seance.id}"type="button">
                                             <button>
                                                 <ctg:start-time seance="${seance}"/>
                                             </button>
@@ -67,17 +69,72 @@
                             <c:if test="${user.role == 'Admin'}">
                                 <a onclick="return confirm('<fmt:message key = "button.confirmText"/>')" href="/controller?command=deleteMovie&movieId=${movie.id}">
                                     <button>
-                                        <h4><fmt:message key = "admin.deleteMovie" /></h4>
+                                        <fmt:message key = "admin.deleteMovie" />
                                     </button>
                                 </a>
                             </c:if>
                         </div>
-
                     </div>
 
+
+                    <div class="reviews-block row col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <h2 class="headline review-headline"><fmt:message key = "review.headline" /></h2>
+
+                        <c:if test="${not empty user}">
+                            <c:if test="${reviewExists == true}">
+                                <div class="col-lg-12">
+                                    <form class="review-form" action="controller" method="post">
+                                        <input type="hidden" name="command" value="updateReview">
+                                        <input type="hidden" name="movieId" value="${movie.id}">
+                                        <div class="col-lg-12">
+                                            <textarea type="text" name="reviewText" required minlength="20" maxlength="250" placeholder="<fmt:message key = "review.placeholder" />">${userReviewText}</textarea>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <button type="submit"><fmt:message key = "button.edit" /></button>
+                                        </div>
+                                    </form>
+
+                                    <a onclick="return confirm('<fmt:message key = "button.confirmText"/>')" href="/controller?command=deleteReview&movieId=${movie.id}">
+                                        <button class="delete-button">
+                                            <fmt:message key = "review.delete" />
+                                        </button>
+                                    </a>
+
+                                </div>
+
+                            </c:if>
+
+                            <c:if test="${reviewExists == false}">
+                            <div class="col-lg-12">
+                                <form class="review-form" action="controller" method="post">
+                                    <input type="hidden" name="command" value="addReview">
+                                    <input type="hidden" name="movieId" value="${movie.id}">
+                                    <div class="col-lg-12">
+                                        <textarea type="text" name="reviewText" required minlength="20" maxlength="250" placeholder="<fmt:message key = "review.placeholder" />"></textarea>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <button type="submit"><fmt:message key = "review.publish" /></button>
+                                    </div>
+                                </form>
+                            </div>
+                            </c:if>
+                        </c:if>
+
+                        <c:forEach var="review" items="${reviews}">
+                            <div class="review-item col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h4>${review.user.name} ${review.user.surname}</h4>
+                                <h5>${review.text}</h5>
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <div class="page-number-block row col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <c:forEach begin="1" end="${reviewPagesQuantity}" varStatus="loop">
+                            <a href="/controller?command=getfullmovie&movieId=${movie.id}&commentPage=${loop.index}"><p class="page-number-item">${loop.index}</p></a>
+                        </c:forEach>
+
+                    </div>
                 </div>
             </div>
-
         </body>
     </html>
 </fmt:bundle>

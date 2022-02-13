@@ -96,3 +96,59 @@ body {
 .right-half button:hover {
     transform: scale(1.04);
 }
+
+.reviews-block {
+    margin-left: 15px;
+}
+
+.reviews-block .review-item {
+    background-color: #f5f5f5;
+    padding: 20px;
+    padding-top: 10px;
+    margin-left: 15px;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #414141;
+}
+.reviews-block .review-item h4 {
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+.reviews-block .review-headline {
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.reviews-block form {
+    margin-left:-15px;
+}
+.reviews-block form textarea {
+    text-align: start;
+    width: 400px;
+    height: 100px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+
+.reviews-block form button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: none;
+    text-align: center;
+    transition: 0.15s;
+    font-size: 16px;
+    width: 190px;
+    height: 43px;
+    margin-right: 15px;
+    background-color: black;
+    color: white;
+}
+
+.reviews-block .review-form button:hover {
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    transform: scale(1.03);
+}

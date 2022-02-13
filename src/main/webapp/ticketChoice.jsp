@@ -27,7 +27,7 @@
 
                     <c:set var="alreadyExists" scope="request" value="false"></c:set>
                 <c:forEach var="ticket" items="${ticketList}">
-                        <c:if test="${ticket.rowNumber==row && ticket.placeNumber==place}">
+                        <c:if test="${ticket.rowNumber==row.index && ticket.placeNumber==place.index}">
                             <div class="seat-object seat-object-disabled" row-id="${row.index}" seat-id="${place.index}">
                                 <p>${place.index}</p>
                             </div>
@@ -35,7 +35,7 @@
                         </c:if>
                 </c:forEach>
 
-                    <c:if test="${(ticket.rowNumber!=row || ticket.placeNumber!=place) && alreadyExists == false}">
+                    <c:if test="${(ticket.rowNumber!=row.index || ticket.placeNumber!=place.index) && alreadyExists == false}">
                         <a href="controller?command=ticketPage&rowId=${row.index}&placeId=${place.index}&seanceId=${seance.id}">
                             <div class="seat-object seat-object-active" row-id="${row.index}" seat-id="${place.index}">
                                 <p>${row.index}</p>
@@ -61,7 +61,9 @@
 
     <div class="col-sm-6 col-md-6 col-lg-6">
         <div class="film-body">
-            <img src="${movie.imagePath}" alt="">
+            <a href="/controller?command=getfullmovie&movieId=${movie.id}">
+                <img src="${movie.imagePath}" alt="">
+            </a>
             <h3 class="movie-title">${movie.title}</h3>
             <h4 class="movie-info"> <span><fmt:message key = "movieItem.startDate"/></span><br>
                     ${seance.startDate.getDayOfMonth()} <fmt:message key = "${seance.startDate.getMonth()}"/>,

@@ -83,6 +83,11 @@
             </c:if>
         </div>
 
+        <c:if test="${empty seances}">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h2 class="headline"><fmt:message key = "movie.noSeances" /></h2>
+            </div>
+        </c:if>
         <c:forEach var="seance" items="${seances}">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <a href="/controller?command=getfullmovie&movieId=${seance.movie.id}"type="button">
@@ -128,7 +133,7 @@
     </div>
 
 
-    <div class="page-number-block col-lg-12">
+    <div class="page-number-block col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <c:forEach begin="1" end="${seancePagesQuantity}" varStatus="loop">
             <a class="page-number-link" href="/controller?command=getseances&seancePage=${loop.index}&movieId=${movieId}&sorting=${sorting}&order=${order}"><p class="page-number-item">${loop.index}</p></a>
         </c:forEach>

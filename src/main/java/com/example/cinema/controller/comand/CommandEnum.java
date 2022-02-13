@@ -3,6 +3,9 @@ package com.example.cinema.controller.comand;
 import com.example.cinema.controller.comand.admin.*;
 import com.example.cinema.controller.comand.common.*;
 import com.example.cinema.controller.comand.user.*;
+import com.example.cinema.controller.comand.user.reviewCommands.AddReviewCommand;
+import com.example.cinema.controller.comand.user.reviewCommands.DeleteReviewCommand;
+import com.example.cinema.controller.comand.user.reviewCommands.UpdateReviewCommand;
 import com.example.cinema.controller.comand.user.updateCommands.UpdateUserEmailCommand;
 import com.example.cinema.controller.comand.user.updateCommands.UpdateUserNameCommand;
 import com.example.cinema.controller.comand.user.updateCommands.UpdateUserPasswordCommand;
@@ -126,6 +129,21 @@ public enum CommandEnum {
     DELETESEANCE {
         {
             this.command = new DeleteSeanceCommand();
+        }
+    },
+    ADDREVIEW {
+        {
+            this.command = new AddReviewCommand();
+        }
+    },
+    UPDATEREVIEW {
+        {
+            this.command = new UpdateReviewCommand();
+        }
+    },
+    DELETEREVIEW {
+        {
+            this.command = new DeleteReviewCommand();
         }
     };
 

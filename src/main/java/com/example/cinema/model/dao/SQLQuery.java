@@ -52,4 +52,15 @@ public class SQLQuery {
     static class GenresQuery {
         public static final String GET_ALL_GENRES = "SELECT * FROM `genres`";
     }
+
+    static class ReviewsQuery {
+        public static final String GET_REVIEW_BY_USER_AND_MOVIE = "SELECT `reviews`.*, `users`.name, `users`.surname FROM `reviews` " +
+                "INNER JOIN `users` ON `reviews`.`user_id` = `users`.`user_id` WHERE `reviews`.`user_id`=? and `movie_id`=?";
+        public static final String GET_REVIEWS_FOR_MOVIE_PAGINATED = "SELECT `reviews`.*, `users`.name, `users`.surname FROM `reviews` " +
+                "INNER JOIN `users` ON `reviews`.`user_id` = `users`.`user_id` WHERE `reviews`.`movie_id`=? LIMIT ?,?";
+        public static final String COUNT_REVIEWS_FOR_MOVIE = "SELECT COUNT(*) AS count FROM `reviews` WHERE `movie_id`=?";
+        public static final String ADD_REVIEW = "INSERT INTO `reviews` VALUES(DEFAULT,?,?,?)";
+        public static final String UPDATE_REVIEW = "UPDATE `reviews` SET `review_text`= ? WHERE `user_id` = ? and movie_id=?";
+        public static final String DELETE_REVIEW = "DELETE FROM `reviews` WHERE `user_id`=? and `movie_id`=?";
+    }
 }

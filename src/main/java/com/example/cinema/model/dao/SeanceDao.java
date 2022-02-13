@@ -111,7 +111,7 @@ public class SeanceDao {
 
     public List<Movie> getUniqueSeancesPaginated(int startId, int total) {
         List<Movie> list = new LinkedList<>();
-        log.info("Getting " + startId + " unique future `seance` objects from DB");
+        log.info("Getting " + total + " unique future `seance` objects from DB");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.MoviesSeancesQuery.GET_UNIQUE_FUTURE_SEANCES_PAGINATED)) {
@@ -131,7 +131,7 @@ public class SeanceDao {
 
                     list.add(movie);
                 }
-                log.info("Successfully got " + startId + " unique `seance` objects from DB");
+                log.info("Successfully got " + total + " unique `seance` objects from DB");
             }
 
         } catch (SQLException e) {

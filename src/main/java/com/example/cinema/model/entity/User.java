@@ -13,6 +13,10 @@ public class User {
     private byte[] salt;
     private String role;
 
+    public User(int id) {
+        this.id = id;
+    }
+
     public User(User user) {
         this.id = user.id;
         this.name = user.name;
