@@ -1,4 +1,4 @@
-# cinema![dbSchema](https://user-images.githubusercontent.com/82778074/153761616-12e1c5dd-5a8a-4290-aaea-cb8a48be10b4.png)
+[dbSchema](https://user-images.githubusercontent.com/82778074/153761616-12e1c5dd-5a8a-4290-aaea-cb8a48be10b4.png)
 
 # Кінотеатр
 
