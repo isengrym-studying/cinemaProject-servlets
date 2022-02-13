@@ -56,6 +56,9 @@ public class Seance {
 
     public LocalDateTime getEndDate() { return this.getStartDate().plus(this.getMovie().getDuration()); }
 
+    public boolean isExpired() { return LocalDateTime.now().isAfter(this.startDate);
+    }
+
     @Override
     public String toString() {
         return "Seance{" +

@@ -4,13 +4,14 @@ import com.example.cinema.model.connectionpool.ConnectionPool;
 import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.entity.Ticket;
-import com.example.cinema.model.service.MovieSeanceService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -108,13 +109,20 @@ public class TicketDao {
     public List<Ticket> getUserTicketsPaginated(int userId, int startItem, int total) {
         log.info("Getting from DB "+ total +" tickets beginning from "+ startItem +" item ");
         List<Ticket> ticketList = new LinkedList<>();
-
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.TicketQuery.GET_USER_TICKETS_PAGINATED)) {
 
             statement.setInt(1, userId);
-            statement.setInt(2, startItem);
-            statement.setInt(3, total);
+            statement.setLong(2, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setInt(3, userId);
+            statement.setLong(4, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setInt(5, startItem);
+            statement.setInt(6, total);
+
+//            statement.setInt(1, userId);
+//            statement.setLong(2, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+//            statement.setInt(3, startItem);
+//            statement.setInt(4, total);
 
             try (ResultSet resSet = statement.executeQuery()) {
                 while (resSet.next()) {
@@ -147,6 +155,7 @@ public class TicketDao {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.TicketQuery.COUNT_USER_TICKETS)) {
             statement.setInt(1, id);
+            statement.setLong(2, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
             try (ResultSet resSet = statement.executeQuery()) {
                 if (resSet.next()) {
                     numberOfTickets = resSet.getInt("count");

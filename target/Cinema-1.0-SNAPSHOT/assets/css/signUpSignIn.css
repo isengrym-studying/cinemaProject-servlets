@@ -72,4 +72,10 @@ body {
 .btn-black{
     background-color: #000 !important;
     color: #fff;
+    transition: 0.15s;
+}
+.btn-black:hover {
+    background-color: #000 !important;
+    color: #fff;
+    transform: scale(1.04);
 }

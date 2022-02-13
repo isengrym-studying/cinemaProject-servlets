@@ -48,6 +48,8 @@ public class ReviewDao {
                     review.setUser(user);
                     review.setMovieId(resSet.getInt("movie_id"));
                     review.setText(resSet.getString("review_text"));
+                    long epoch = resSet.getInt("review_date");
+                    review.setDate(LocalDateTime.ofEpochSecond(epoch, 0, ZoneOffset.UTC));
                     log.info("Successfully found review with id ("+review.getId()+") from DB");
                 }
                 else {
@@ -77,11 +79,14 @@ public class ReviewDao {
                     Review review = new Review();
                     User user = new User();
                     review.setId(resSet.getInt("review_id"));
+                    user.setId(resSet.getInt("user_id"));
                     user.setName(resSet.getString("name"));
                     user.setSurname(resSet.getString("surname"));
                     review.setUser(user);
                     review.setMovieId(resSet.getInt("movie_id"));
                     review.setText(resSet.getString("review_text"));
+                    long epoch = resSet.getInt("review_date");
+                    review.setDate(LocalDateTime.ofEpochSecond(epoch, 0, ZoneOffset.UTC));
                     list.add(review);
                 }
                 log.info("Successfully got " + total + " reviews from DB");
@@ -123,6 +128,7 @@ public class ReviewDao {
             statement.setInt(1, review.getUser().getId());
             statement.setInt(2, review.getMovieId());
             statement.setString(3, review.getText());
+            statement.setLong(4,LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
 
             statement.executeUpdate();
             log.info("Adding review ("+ review.getId() + ") to DB was successfully finished");
@@ -139,8 +145,9 @@ public class ReviewDao {
              PreparedStatement statement = connection.prepareStatement(SQLQuery.ReviewsQuery.UPDATE_REVIEW)) {
 
             statement.setString(1, review.getText());
-            statement.setInt(2, review.getUser().getId());
-            statement.setInt(3, review.getMovieId());
+            statement.setLong(2, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setInt(3, review.getUser().getId());
+            statement.setInt(4, review.getMovieId());
 
             statement.executeUpdate();
             log.info("Update review ("+ review.getId() + ") to DB was successfully finished");

@@ -145,6 +145,11 @@ public enum CommandEnum {
         {
             this.command = new DeleteReviewCommand();
         }
+    },
+    DELETEUSERREVIEW {
+        {
+            this.command = new DeleteUserReviewCommand();
+        }
     };
 
     ActionCommand command;

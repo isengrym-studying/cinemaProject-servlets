@@ -29,5 +29,21 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    <tag>
+        <name>numeric-date-time</name>
+        <tag-class>com.example.cinema.controller.tags.NumericDateTimeTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>date</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>now-epoch</name>
+        <tag-class>com.example.cinema.controller.tags.NowEpochSeconds</tag-class>
+        <body-content>empty</body-content>
+
+    </tag>
 
 </taglib>

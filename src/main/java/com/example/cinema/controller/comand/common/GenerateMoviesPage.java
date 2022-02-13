@@ -49,7 +49,6 @@ public class GenerateMoviesPage implements ActionCommand {
             list = service.getAllMoviesPaginated((moviePage-1)*totalOnPage, totalOnPage);
             moviesQuantity = service.getMoviesQuantity();
             req.setAttribute("view","all");
-
         }
 
         moviePagesQuantity = paginationService.сountPagesQuantity(totalOnPage, moviesQuantity);

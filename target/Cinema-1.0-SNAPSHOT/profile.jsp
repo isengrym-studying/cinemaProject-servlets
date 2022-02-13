@@ -22,30 +22,43 @@
 
             <div class="ticket-list col-sm-12 col-md-6 col-lg-4">
                 <h3 class="headline"><fmt:message key = "profile.tickets" /></h3>
-                                <c:forEach var="ticket" items="${ticketList}">
-                                        <div class="ticket-item">
-                                            <div class="left-side">
-                                                <a href="/controller?command=ticketChoicePage&seanceId=${ticket.seance.id}">
-                                                    <img class="ticket-image" src="${ticket.seance.movie.imagePath}" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="right-side">
-                                                <h6 class="ticket-info ticket-title">${ticket.seance.movie.title}</h6>
-                                                <h6 class="ticket-info"><span> <fmt:message key = "ticket.when"/>: </span>
-                                                        ${ticket.seance.startDate.getDayOfMonth()} <fmt:message key = "${ticket.seance.startDate.getMonth()}"/>,
-                                                    <fmt:message key = "${ticket.seance.startDate.getDayOfWeek()}"/>
-                                                    <ctg:start-time seance="${ticket.seance}"/> </h6>
-                                                <h6 class="ticket-info"><span> <fmt:message key = "ticket.row"/>: </span> ${ticket.rowNumber}</h6>
-                                                <h6 class="ticket-info"><span> <fmt:message key = "ticket.seat"/>: </span> ${ticket.placeNumber}</h6>
-                                                <h6 class="ticket-info"><span> <fmt:message key = "ticket.price"/>: </span> ${ticket.seance.ticketPrice}₴</h6>
-                                            </div>
-                                        </div>
+                        <c:forEach var="ticket" items="${ticketList}">
+                                <div class="ticket-item">
+                                    <div class="left-side">
+                                        <c:if test="${not ticket.seance.isExpired()}">
+                                            <a href="/controller?command=ticketChoicePage&seanceId=${ticket.seance.id}">
+                                                <img class="ticket-image" src="${ticket.seance.movie.imagePath}" alt="">
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${ticket.seance.isExpired()}">
+                                            <a href="/controller?command=getfullmovie&movieId=${ticket.seance.movie.id}">
+                                                <img class="ticket-image" src="${ticket.seance.movie.imagePath}" alt="">
+                                            </a>
+                                        </c:if>
+                                    </div>
 
-                                </c:forEach>
+                                    <div class="right-side">
+                                        <c:if test="${ticket.seance.isExpired()}">
+                                            <h6 class="ticket-expired ticket-info ticket-title">${ticket.seance.movie.title} (<fmt:message key = "ticket.expired"/>)</h6>
+                                        </c:if>
+                                        <c:if test="${not ticket.seance.isExpired()}">
+                                            <h6 class="ticket-info ticket-title">${ticket.seance.movie.title}</h6>
+                                        </c:if>
+                                        <h6 class="ticket-info"><span> <fmt:message key = "ticket.when"/>: </span>
+                                                ${ticket.seance.startDate.getDayOfMonth()} <fmt:message key = "${ticket.seance.startDate.getMonth()}"/>,
+                                            <fmt:message key = "${ticket.seance.startDate.getDayOfWeek()}"/>
+                                            <ctg:start-time seance="${ticket.seance}"/> </h6>
+                                        <h6 class="ticket-info"><span> <fmt:message key = "ticket.row"/>: </span> ${ticket.rowNumber}</h6>
+                                        <h6 class="ticket-info"><span> <fmt:message key = "ticket.seat"/>: </span> ${ticket.placeNumber}</h6>
+                                        <h6 class="ticket-info"><span> <fmt:message key = "ticket.price"/>: </span> ${ticket.seance.ticketPrice}₴</h6>
+                                    </div>
+                                </div>
+
+                        </c:forEach>
 
                 <div class="page-number-block">
                     <c:forEach begin="1" end="${ticketPagesQuantity}" varStatus="loop">
-                        <a href="/controller?command=profile&ticketPage=${loop.index}&view=${view}"><p class="page-number-item">${loop.index}</p></a>
+                        <a href="/controller?command=profile&ticketPage=${loop.index}"><p class="page-number-item">${loop.index}</p></a>
                     </c:forEach>
 
                 </div>
