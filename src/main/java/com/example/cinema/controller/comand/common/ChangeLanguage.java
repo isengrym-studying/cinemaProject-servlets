@@ -1,5 +1,6 @@
 package com.example.cinema.controller.comand.common;
 
+import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
 import org.apache.log4j.Logger;
 
@@ -38,13 +39,15 @@ public class ChangeLanguage implements ActionCommand {
             log.info("Attribute language is set to `ru`");
         }
 
-        String queryString = Optional.ofNullable(req.getSession().getAttribute("pageQuery"))
-                .map(Object::toString)
-                .map(String::trim)
-                .orElse("");
+//        String queryString = Optional.ofNullable(req.getSession().getAttribute("pageQuery"))
+//                .map(Object::toString)
+//                .map(String::trim)
+//                .orElse("");
+//
+//
+//        if (queryString.contains("command=")) page = "/controller?" + queryString;
 
-
-        if (queryString.contains("command=")) page = "/controller?" + queryString;
+        page = ConfigurationManager.getProperty("path.page.index");
         log.info("Going back to" + page);
         return page;
     }

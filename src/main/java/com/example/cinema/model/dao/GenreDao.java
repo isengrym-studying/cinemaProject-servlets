@@ -1,16 +1,14 @@
 package com.example.cinema.model.dao;
 
-import com.example.cinema.model.connectionpool.ConnectionPool;
+import com.example.cinema.model.dao.exceptions.connectionpool.ConnectionPool;
 import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.entity.Genre;
-import com.example.cinema.model.entity.Movie;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 

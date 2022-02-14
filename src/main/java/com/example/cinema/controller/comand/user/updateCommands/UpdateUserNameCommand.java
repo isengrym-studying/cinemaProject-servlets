@@ -1,13 +1,14 @@
 package com.example.cinema.controller.comand.user.updateCommands;
 
+import com.example.cinema.controller.AccessStatus;
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.MessageManager;
 import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.controller.comand.common.LoginCommand;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.model.service.CipherService;
-import com.example.cinema.model.service.UserService;
-import com.example.cinema.model.service.validator.NameValidator;
+import com.example.cinema.service.CipherService;
+import com.example.cinema.service.UserService;
+import com.example.cinema.service.validator.NameValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ public class UpdateUserNameCommand implements ActionCommand {
 
         String page = null;
         User user = (User) req.getSession().getAttribute("user");
-        if (user == null) {
+        if (!AccessStatus.isUser(user)) {
             page = ConfigurationManager.getProperty("path.page.login");
             return page;
         }

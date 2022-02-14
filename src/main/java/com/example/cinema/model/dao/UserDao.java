@@ -1,9 +1,8 @@
 package com.example.cinema.model.dao;
 
-import com.example.cinema.model.connectionpool.ConnectionPool;
+import com.example.cinema.model.dao.exceptions.connectionpool.ConnectionPool;
 import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.model.service.CipherService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;

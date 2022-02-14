@@ -1,7 +1,6 @@
 package com.example.cinema.validator;
 
-import com.example.cinema.model.service.validator.NameValidator;
-import com.example.cinema.model.service.validator.PasswordValidator;
+import com.example.cinema.service.validator.PasswordValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

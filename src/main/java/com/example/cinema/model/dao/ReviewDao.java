@@ -1,10 +1,8 @@
 package com.example.cinema.model.dao;
 
-import com.example.cinema.model.connectionpool.ConnectionPool;
+import com.example.cinema.model.dao.exceptions.connectionpool.ConnectionPool;
 import com.example.cinema.model.dao.exceptions.DaoException;
-import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Review;
-import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.entity.User;
 import org.apache.log4j.Logger;
 
@@ -12,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.LinkedList;
@@ -50,6 +47,7 @@ public class ReviewDao {
                     review.setText(resSet.getString("review_text"));
                     long epoch = resSet.getInt("review_date");
                     review.setDate(LocalDateTime.ofEpochSecond(epoch, 0, ZoneOffset.UTC));
+
                     log.info("Successfully found review with id ("+review.getId()+") from DB");
                 }
                 else {

@@ -46,12 +46,12 @@ public class SQLQuery {
 
 
         public static final String GET_USER_TICKETS_PAGINATED =
-                "((SELECT `tickets`.*,`seances`.`startDateSeconds` FROM `tickets` INNER JOIN `seances` ON `tickets`.`seance_id` = `seances`.`seance_id` WHERE `user_id`=? and `startDateSeconds`>=? ORDER BY `startDateSeconds` DESC) " +
+                "((SELECT `tickets`.*,`seances`.`startDateSeconds` FROM `tickets` INNER JOIN `seances` ON `tickets`.`seance_id` = `seances`.`seance_id` WHERE `user_id`=? and `startDateSeconds`>=? ORDER BY `startDateSeconds` ASC) " +
                 "UNION " +
-                "(SELECT `tickets`.*,`seances`.`startDateSeconds` FROM `tickets` INNER JOIN `seances` ON `tickets`.`seance_id` = `seances`.`seance_id` WHERE `user_id`=? and `startDateSeconds`< ? ORDER BY `startDateSeconds` DESC)) LIMIT ?,?";
+                "(SELECT `tickets`.*,`seances`.`startDateSeconds` FROM `tickets` INNER JOIN `seances` ON `tickets`.`seance_id` = `seances`.`seance_id` WHERE `user_id`=? and `startDateSeconds`< ? ORDER BY `startDateSeconds` ASC)) LIMIT ?,?";
 
         public static final String COUNT_USER_TICKETS = "SELECT COUNT(*) AS count FROM `tickets` " +
-                "INNER JOIN `seances` ON `tickets`.`seance_id` = `seances`.`seance_id` WHERE `user_id`=? and `startDateSeconds`>=?";
+                "INNER JOIN `seances` ON `tickets`.`seance_id` = `seances`.`seance_id` WHERE `user_id`=?";
         public static final String SUBTRACT_ONE_PLACE = "UPDATE `seances` SET `free_places` = `free_places`-1 WHERE `seance_id` = ?";
 
     }

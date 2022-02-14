@@ -1,6 +1,6 @@
 package com.example.cinema.model.dao;
 
-import com.example.cinema.model.connectionpool.ConnectionPool;
+import com.example.cinema.model.dao.exceptions.connectionpool.ConnectionPool;
 import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.entity.Ticket;
@@ -111,18 +111,14 @@ public class TicketDao {
         List<Ticket> ticketList = new LinkedList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.TicketQuery.GET_USER_TICKETS_PAGINATED)) {
-
+            long now = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
             statement.setInt(1, userId);
-            statement.setLong(2, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setLong(2, now);
             statement.setInt(3, userId);
-            statement.setLong(4, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            statement.setLong(4, now);
             statement.setInt(5, startItem);
             statement.setInt(6, total);
 
-//            statement.setInt(1, userId);
-//            statement.setLong(2, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
-//            statement.setInt(3, startItem);
-//            statement.setInt(4, total);
 
             try (ResultSet resSet = statement.executeQuery()) {
                 while (resSet.next()) {
@@ -155,7 +151,6 @@ public class TicketDao {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQLQuery.TicketQuery.COUNT_USER_TICKETS)) {
             statement.setInt(1, id);
-            statement.setLong(2, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
             try (ResultSet resSet = statement.executeQuery()) {
                 if (resSet.next()) {
                     numberOfTickets = resSet.getInt("count");

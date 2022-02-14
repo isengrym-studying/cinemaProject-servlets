@@ -47,12 +47,12 @@
 
     </div>
 
-        <a href="controller?command=confirmTicket&action=confirm">
+        <a href="controller?command=confirmTicket&seanceId=${seance.id}&action=confirm">
             <div class="action-button submit-button col-lg-1">
                 <h4><fmt:message key = "button.confirm"/></h4>
             </div>
         </a>
-        <a href="controller?command=confirmTicket&action=decline">
+        <a href="controller?command=confirmTicket&seanceId=${seance.id}&action=decline">
             <div class="action-button decline-button col-lg-1">
                 <h4><fmt:message key = "button.decline"/></h4>
             </div>

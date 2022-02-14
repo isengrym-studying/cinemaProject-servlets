@@ -1,6 +1,6 @@
 package com.example.cinema.model.dao;
 
-import com.example.cinema.model.connectionpool.ConnectionPool;
+import com.example.cinema.model.dao.exceptions.connectionpool.ConnectionPool;
 import com.example.cinema.model.dao.exceptions.DaoException;
 import com.example.cinema.model.entity.Movie;
 import org.apache.log4j.Logger;
@@ -10,8 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,7 +31,6 @@ public class MovieDao {
 
     private MovieDao() {
     }
-
 
     /**
      * Method is being used for getting all movies (all fields from DB `movies` TABLE) as list.
@@ -57,6 +54,7 @@ public class MovieDao {
                     movie.setProductionYear(resSet.getInt("production_year"));
                     movie.setDuration(Duration.ofMinutes(resSet.getLong("duration_minutes")));
                     movie.setImagePath(resSet.getString("image_path"));
+
                     list.add(movie);
                 }
                 log.info("Successfully got all movies from DB");
@@ -140,8 +138,7 @@ public class MovieDao {
         return movie;
     }
 
-
-    public boolean addMovie(Movie movie) {
+    public void addMovie(Movie movie) {
         log.info("Adding new movie to DB");
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -161,7 +158,8 @@ public class MovieDao {
             statement.setInt(5, (int)movie.getDuration().getSeconds()/60);
             statement.setInt(6, movie.getAgeRestriction());
             statement.setString(7, movie.getImagePath());
-            return statement.execute();
+
+            statement.execute();
 
         } catch (SQLException e) {
             log.error("SQLException in MovieDao.addMovie() " + e.getMessage());

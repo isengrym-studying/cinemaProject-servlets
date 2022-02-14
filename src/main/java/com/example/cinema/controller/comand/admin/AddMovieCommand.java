@@ -1,8 +1,14 @@
 package com.example.cinema.controller.comand.admin;
 
+import com.example.cinema.controller.AccessStatus;
+import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
+import com.example.cinema.controller.comand.common.GenerateMoviePage;
+import com.example.cinema.controller.comand.common.GenerateMoviesPage;
 import com.example.cinema.model.entity.Movie;
-import com.example.cinema.model.service.MovieSeanceService;
+import com.example.cinema.model.entity.Role;
+import com.example.cinema.model.entity.User;
+import com.example.cinema.service.MovieSeanceService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +32,12 @@ public class AddMovieCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
+        User user = (User)req.getSession().getAttribute("user");
+        if (!AccessStatus.isAdmin(user)) {
+            page = ConfigurationManager.getProperty("path.page.index");
+            return page;
+        }
+
         String title = req.getParameter(PARAM_NAME_TITLE);
         String director = req.getParameter(PARAM_NAME_DIRECTOR);
         int year = Integer.parseInt(req.getParameter(PARAM_NAME_YEAR));
@@ -43,10 +55,11 @@ public class AddMovieCommand implements ActionCommand {
         movie.setDuration(Duration.ofMinutes(duration));
         movie.setAgeRestriction(age);
         movie.setImagePath(imageUrl);
-        if (service.addMovie(movie)) {
-            page = "/controller?command=getmovies";
-        }
-        else page = (String)req.getAttribute("queryString");
+
+        service.addMovie(movie);
+
+        GenerateMoviesPage command = new GenerateMoviesPage();
+        page = command.execute(req);
 
         return page;
     }

@@ -52,14 +52,6 @@
 
             <button type="submit" class="btn btn-black"><fmt:message key = "admin.addSeance" /></button>
 
-            <c:if test="${not empty registrationError}" >
-                <h5><fmt:message key = "${registrationError}" /></h5>
-            </c:if>
-
-            <c:if test="${not empty userAlreadyExists}" >
-                <h5><fmt:message key = "${userAlreadyExists}" /></h5>
-            </c:if>
-
             <h5>${wrongAction}</h5>
             <h5>${nullPage}</h5>
         </form>

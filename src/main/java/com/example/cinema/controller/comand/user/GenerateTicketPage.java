@@ -1,11 +1,12 @@
 package com.example.cinema.controller.comand.user;
 
+import com.example.cinema.controller.AccessStatus;
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.model.service.MovieSeanceService;
+import com.example.cinema.service.MovieSeanceService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,7 +22,7 @@ public class GenerateTicketPage implements ActionCommand {
         String page = null;
 
         User user = (User) req.getSession().getAttribute("user");
-        if (user == null) {
+        if (!AccessStatus.isUser(user)) {
             page = ConfigurationManager.getProperty("path.page.login");
             return page;
         }
@@ -42,8 +43,7 @@ public class GenerateTicketPage implements ActionCommand {
         req.setAttribute("movie", movie);
 
         page = ConfigurationManager.getProperty("path.page.ticketPage");
-
-
+        req.getSession().setAttribute("returnPage", page);
         return page;
     }
 }

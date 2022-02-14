@@ -1,11 +1,14 @@
 package com.example.cinema.controller.comand.user;
 
+import com.example.cinema.controller.AccessStatus;
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
+import com.example.cinema.controller.comand.common.GenerateMoviePage;
+import com.example.cinema.controller.comand.common.GenerateTicketChoicePage;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.entity.Ticket;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.model.service.TicketService;
+import com.example.cinema.service.TicketService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +22,7 @@ public class TicketConfirmationCommand implements ActionCommand {
     public String execute(HttpServletRequest req) {
         String page = null;
         User user = (User) req.getSession().getAttribute("user");
-        if (user == null) {
+        if (!AccessStatus.isUser(user)) {
             page = ConfigurationManager.getProperty("path.page.login");
             return page;
         }
@@ -39,12 +42,14 @@ public class TicketConfirmationCommand implements ActionCommand {
             service.createTicket(ticket);
         }
 
-        page = "/controller?command=ticketChoicePage&seanceId="+seance.getId();
+        GenerateTicketChoicePage command = new GenerateTicketChoicePage();
+        page = command.execute(req);
 
         session.removeAttribute("seance");
         session.removeAttribute("rowId");
         session.removeAttribute("placeId");
 
+        req.getSession().setAttribute("returnPage", page);
         return page;
     }
 }

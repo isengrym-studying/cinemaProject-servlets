@@ -6,13 +6,12 @@ import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Review;
 import com.example.cinema.model.entity.Seance;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.model.service.MovieSeanceService;
-import com.example.cinema.model.service.PaginationService;
-import com.example.cinema.model.service.ReviewService;
+import com.example.cinema.service.MovieSeanceService;
+import com.example.cinema.service.PaginationService;
+import com.example.cinema.service.ReviewService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -70,9 +69,7 @@ public class GenerateMoviePage implements ActionCommand {
 
 
         page = ConfigurationManager.getProperty("path.page.movie");
-
-
-//        ActionCommand.pageAdress(req);
+        req.getSession().setAttribute("returnPage", page);
         return page;
     }
 

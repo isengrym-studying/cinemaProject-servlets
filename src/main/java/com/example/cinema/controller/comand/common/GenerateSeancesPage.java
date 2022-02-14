@@ -4,8 +4,8 @@ import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Seance;
-import com.example.cinema.model.service.MovieSeanceService;
-import com.example.cinema.model.service.PaginationService;
+import com.example.cinema.service.MovieSeanceService;
+import com.example.cinema.service.PaginationService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class GenerateSeancesPage implements ActionCommand {
         req.setAttribute("pageHeadlineProperty", "seances.headline");
 
         page = ConfigurationManager.getProperty("path.page.seances");
-
+        req.getSession().setAttribute("returnPage", page);
         return page;
     }
 }

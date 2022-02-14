@@ -2,14 +2,9 @@ package com.example.cinema.controller.comand.common;
 
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
-import com.example.cinema.model.entity.Movie;
-import com.example.cinema.model.entity.Seance;
-import com.example.cinema.model.service.MovieSeanceService;
+import com.example.cinema.service.MovieSeanceService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.List;
 
 
 /**
@@ -21,9 +16,8 @@ public class FillMainPageCommand implements ActionCommand {
     public String execute(HttpServletRequest req) {
         String page = null;
 
-        MovieSeanceService service = MovieSeanceService.getInstance();
         page = ConfigurationManager.getProperty("path.page.main");
-
+        req.getSession().setAttribute("returnPage", page);
         return page;
     }
 }

@@ -18,6 +18,7 @@ public class LogoutCommand implements ActionCommand {
         String page = ConfigurationManager.getProperty("path.page.index");
         req.getSession().removeAttribute("user");
         log.info("User with email has logged out");
+        req.getSession().setAttribute("returnPage", page);
         return page;
     }
 }

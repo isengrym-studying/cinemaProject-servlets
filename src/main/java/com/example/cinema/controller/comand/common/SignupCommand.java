@@ -5,7 +5,7 @@ import com.example.cinema.controller.MessageManager;
 import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.Role;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.model.service.UserService;
+import com.example.cinema.service.UserService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +56,7 @@ public class SignupCommand implements ActionCommand {
             log.warn("Registration process failed");
         }
 
-
+        req.getSession().setAttribute("returnPage", page);
         return page;
     }
 }

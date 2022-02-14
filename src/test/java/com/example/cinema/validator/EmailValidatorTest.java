@@ -1,6 +1,6 @@
 package com.example.cinema.validator;
 
-import com.example.cinema.model.service.validator.EmailValidator;
+import com.example.cinema.service.validator.EmailValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

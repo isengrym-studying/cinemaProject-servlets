@@ -38,7 +38,7 @@
                     <c:if test="${(ticket.rowNumber!=row.index || ticket.placeNumber!=place.index) && alreadyExists == false}">
                         <a href="controller?command=ticketPage&rowId=${row.index}&placeId=${place.index}&seanceId=${seance.id}">
                             <div class="seat-object seat-object-active" row-id="${row.index}" seat-id="${place.index}">
-                                <p>${row.index}</p>
+                                <p>${place.index}</p>
                             </div>
                             <c:set var="alreadyExists" scope="request" value="true"></c:set>
                         </a>

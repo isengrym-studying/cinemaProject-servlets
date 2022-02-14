@@ -1,9 +1,10 @@
 package com.example.cinema.controller.comand.user;
 
+import com.example.cinema.controller.AccessStatus;
 import com.example.cinema.controller.ConfigurationManager;
 import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.model.service.UserService;
+import com.example.cinema.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +18,7 @@ public class DeleteUserCommand implements ActionCommand {
 
         String page = null;
         User user = (User) req.getSession().getAttribute("user");
-        if (user == null) {
+        if (!AccessStatus.isUser(user)) {
             page = ConfigurationManager.getProperty("path.page.login");
             return page;
         }
@@ -26,6 +27,7 @@ public class DeleteUserCommand implements ActionCommand {
         service.deleteUser(user);
         req.getSession().invalidate();
         page = ConfigurationManager.getProperty("path.page.index");
+        req.getSession().setAttribute("returnPage", page);
         return page;
     }
 }

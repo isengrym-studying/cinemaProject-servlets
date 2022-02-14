@@ -5,8 +5,8 @@ import com.example.cinema.controller.comand.ActionCommand;
 import com.example.cinema.model.entity.Movie;
 import com.example.cinema.model.entity.Role;
 import com.example.cinema.model.entity.User;
-import com.example.cinema.model.service.MovieSeanceService;
-import com.example.cinema.model.service.PaginationService;
+import com.example.cinema.service.MovieSeanceService;
+import com.example.cinema.service.PaginationService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -57,7 +57,7 @@ public class GenerateMoviesPage implements ActionCommand {
         req.setAttribute("moviePagesQuantity",moviePagesQuantity);
 
         page = ConfigurationManager.getProperty("path.page.movies");
-
+        req.getSession().setAttribute("returnPage", page);
         return page;
     }
 
