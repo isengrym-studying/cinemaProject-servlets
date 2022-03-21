@@ -7,6 +7,7 @@
 <head>
 
 </head>
+
 <body>
 <jsp:forward page="controller?command=fillmainpage"/>
 </body>

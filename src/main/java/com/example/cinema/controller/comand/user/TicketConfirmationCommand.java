@@ -39,7 +39,10 @@ public class TicketConfirmationCommand implements ActionCommand {
             ticket.setSeance(seance);
             ticket.setUserId(user.getId());
 
-            service.createTicket(ticket);
+            if (!service.ticketExists(ticket)) service.createTicket(ticket);
+            else {
+                req.setAttribute("ticketExists", true);
+            }
         }
 
         GenerateTicketChoicePage command = new GenerateTicketChoicePage();

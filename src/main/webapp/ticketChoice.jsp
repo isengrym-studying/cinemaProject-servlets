@@ -3,7 +3,12 @@
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@ taglib prefix="ctg" uri="customtags" %>
 
-<fmt:setLocale value="${language}"/>
+<c:if test="${not empty cookie['lang']}">
+    <fmt:setLocale value="${cookie['lang'].getValue()}"/>
+</c:if>
+<c:if test="${empty cookie['lang']}">
+    <fmt:setLocale value="ru"/>
+</c:if>
 <fmt:bundle basename="language">
     <html>
     <head>
@@ -56,6 +61,9 @@
             </div>
             </c:forEach>
             <h3 class="movie-title"><fmt:message key = "ticket.chooseClick"/></h3>
+            <c:if test="${ticketExists == true}">
+                <h3 class="movie-title">><fmt:message key = "ticket.exists" /></h3>
+            </c:if>
         </div>
     </div>
 

@@ -34,6 +34,10 @@ public class TicketService {
         return ticketDao.getTicketsForSeance(seanceId);
     }
 
+    public boolean ticketExists(Ticket ticket) {
+        return ticketDao.ticketExists(ticket);
+    }
+
     /**
      * Method for creating tickets, based on information that contains ticket,
      * which is given as parameter. Method just resends to the relevant DAO method and contains no

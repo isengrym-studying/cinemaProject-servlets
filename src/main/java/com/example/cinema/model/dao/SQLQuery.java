@@ -42,6 +42,8 @@ public class SQLQuery {
     }
     static class TicketQuery {
         public static final String GET_TICKETS_FOR_SEANCE = "SELECT * FROM `tickets` WHERE `seance_id`=?";
+        public static final String FIND_TICKET = "SELECT * FROM `tickets` WHERE `seance_id` =? " +
+                "AND `row_number`=? AND `place_number`=?";
         public static final String ADD_TICKET = "INSERT INTO `tickets` VALUES(DEFAULT,?,?,?,?)";
 
 

@@ -2,13 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${language}"/>
+<c:if test="${not empty cookie['lang']}">
+    <fmt:setLocale value="${cookie['lang'].getValue()}"/>
+</c:if>
+<c:if test="${empty cookie['lang']}">
+    <fmt:setLocale value="ru"/>
+</c:if>
+
 <fmt:bundle basename="language">
 
 <html>
 <head>
     <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css' id="bootstrap-css">
     <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/js/scripts.js">
 
     <title><fmt:message key = "header.home" /></title>
 </head>
@@ -46,8 +53,16 @@
                     <li><a href="controller?command=profile"><fmt:message key = "header.profile" /></a></li>
                 </c:if>
 
-                <li><a href="controller?command=changelanguage">${languageButtonLabel}</a></li>
+<%--                <li><a href="controller?command=changelanguage">${languageButtonLabel}</a></li>--%>
 
+                <c:choose>
+                    <c:when test="${cookie['lang'].getValue() == 'ru'}">
+                        <li><a href="javascript:changeLanguage('en')">EN</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="javascript:changeLanguage('ru')">RU</a></li>
+                    </c:otherwise>
+                </c:choose>
 
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -57,3 +72,10 @@
 </body>
 </html>
 </fmt:bundle>
+
+<script>
+    function changeLanguage(language) {
+        document.cookie = "lang=" + language + "; page=/; max-age=" + (10*365*24*60*60);
+        location.reload();
+    }
+</script>

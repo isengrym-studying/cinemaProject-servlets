@@ -72,6 +72,29 @@ public class TicketDao {
 
         return ticketList;
     }
+    public boolean ticketExists(Ticket ticket) {
+        log.info("Checking ticket existence ("+ ticket + ")");
+
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLQuery.TicketQuery.FIND_TICKET)) {
+            statement.setInt(1, ticket.getSeance().getId());
+            statement.setInt(2, ticket.getRowNumber());
+            statement.setInt(3, ticket.getPlaceNumber());
+
+            try (ResultSet resSet = statement.executeQuery()) {
+                if (resSet.next()) {
+                    log.info("Such ticket already exists");
+                    return true;
+                }
+                else return false;
+            }
+
+        } catch (SQLException e) {
+            log.error("SQLException in UserDao.confirmUserExistence() " + e.getMessage());
+            throw new DaoException("Couldn't authorize user", e);
+        }
+
+    }
 
     public void createTicket(Ticket ticket) {
         log.info("Adding ticket to DB ("+ ticket + ")");
@@ -101,7 +124,7 @@ public class TicketDao {
             }
 
         } catch (SQLException e) {
-            log.error("SQLException in UserDao.checkUserExistence() " + e.getMessage());
+            log.error("SQLException in UserDao.createTicket() " + e.getMessage());
             throw new DaoException("Couldn't add ticket to ticket table", e);
         }
     }

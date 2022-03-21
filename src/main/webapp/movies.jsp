@@ -2,7 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${language}"/>
+<c:if test="${not empty cookie['lang']}">
+    <fmt:setLocale value="${cookie['lang'].getValue()}"/>
+</c:if>
+<c:if test="${empty cookie['lang']}">
+    <fmt:setLocale value="ru"/>
+</c:if>
 <fmt:bundle basename="language">
     <html>
         <head>
