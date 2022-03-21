@@ -19,11 +19,11 @@
         <body>
             <jsp:include page="header.jsp" />
 
-            <div class="row col-lg-12">
+
                 <div class="col-lg-2">
 
                 </div>
-                <div class="film-page-title col-lg-8">
+                <div class="film-page-title col-lg-12">
                     <h2 class="headline"><fmt:message key = "movies.headline" /></h2>
                         <div class="form">
                             <c:if test="${empty number}"><a href="/controller?command=getmovies&moviePage=1&view=all"></c:if>
@@ -35,20 +35,15 @@
                                 <button><fmt:message key = "movies.onlyWithSeances" /></button>
                             </a>
                         </div>
-
                 </div>
-            </div>
 
 
-            <div class="col-xs-0 col-sm-0 col-md-1 col-lg-2">
 
-            </div>
-
-                <div class="film-items col-xs-12 col-sm-12 col-md-10 col-lg-8">
+                <div class="film-items col-xs-12 col-sm-12 col-md-10 col-lg-12">
 
                     <c:if test="${sessionScope.user.role == 'Admin'}">
                         <a href="/controller?command=newMoviePage">
-                            <div class = "film_item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class = "film_item col-xs-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="poster">
                                     <img src="/images/dummy.jpg" alt="" width="218" height="322">
                                 </div>
@@ -61,7 +56,7 @@
 
                     <c:forEach var="movie" items="${movies}">
                         <a href="controller?command=getfullmovie&movieId=${movie.id}">
-                        <div class = "film_item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class = "film_item col-xs-12 col-sm-6 col-md-4 col-lg-4">
                             <div class="poster">
                                 <img src="${movie.imagePath}" alt="" width="218" height="322">
                             </div>
@@ -80,10 +75,6 @@
 
                     </div>
                 </div>
-
-            <div class="col-xs-0 col-sm-0 col-md-1 col-lg-2">
-
-            </div>
 
         </body>
     </html>
